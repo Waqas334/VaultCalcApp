@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name">Calculator Vault</string>
+    <string name="CNew">Enter new folder name</string>
+    <string name="Int">Internal</string>
+    <string name="New">New Folder</string>
+    <string name="add_audio">Add Audio</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_video">Add Video</string>
+    <string name="all">Select All</string>
+    <string name="audio">Audio</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="device_admin_disabled">Uninstall Protection deactivated</string>
+    <string name="device_admin_enabled">Unistall Protection activated</string>
+    <string name="ext">SD Card</string>
+    <string name="file">File</string>
+    <string name="image">Image</string>
+    <string name="no_app_found">No application found to perform this action!</string>
+    <string name="no_item_found">There is nothing here.</string>
+    <string name="none">None</string>
+    <string name="ok">Select</string>
+    <string name="select_file">Select File</string>
+    <string name="video">Video</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="hint">If you forgot pin then reopen your app. and hit 11223344
+            on calculator to recover your password."
+</string>
+
+</resources>

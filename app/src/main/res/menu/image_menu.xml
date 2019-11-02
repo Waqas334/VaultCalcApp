@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu>
+    <item xmlns:n1="http://schemas.android.com/apk/res/android"
+        xmlns:n2="http://schemas.android.com/apk/res-auto"
+        n1:id="@+id/itm_select"
+        n1:icon="@drawable/ic_check_box_outline"
+        n1:orderInCategory="300"
+        n1:title="Select All"
+        n1:visible="false"
+        n2:showAsAction="always" />
+    <item xmlns:n3="http://schemas.android.com/apk/res/android"
+        xmlns:n4="http://schemas.android.com/apk/res-auto"
+        n3:id="@+id/itm_edit"
+        n3:icon="@drawable/ic_edit"
+        n3:orderInCategory="300"
+        n3:title="Edit"
+        n3:visible="false"
+        n4:showAsAction="always" />
+    <item xmlns:n5="http://schemas.android.com/apk/res/android"
+        xmlns:n6="http://schemas.android.com/apk/res-auto"
+        n5:id="@+id/itm_delete"
+        n5:icon="@drawable/ic_delete"
+        n5:orderInCategory="100"
+        n5:title="Delete"
+        n5:visible="false"
+        n6:showAsAction="always" />
+</menu>

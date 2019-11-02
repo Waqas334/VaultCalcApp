@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.safe.gallery.calculator">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.camera2.full" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <permission
+        android:name="com.safe.gallery.calculator.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.safe.gallery.calculator.permission.C2D_MESSAGE" />
+
+    <application
+        android:name=".app.MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/appicon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@drawable/appicon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.UnAuthorisedActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.ConfirmCalcActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.CalcActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.safe.gallery.calculator.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0ce6f17679679c8352cf0e5ef02141b9890d837c" />
+
+        <activity
+            android:name=".activities.HomeActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".image.ImageActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".image.ImagesActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".image.add.AddImageActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".fullscreenimage.FullScreenImageActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".video.VideoActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".audios.AudiosActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".files.FilesActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".files.FileSelectionActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".files.FolderSelectionsActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".audios.add.AddAudiosActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".video.add.AddVideoActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".activities.ChangePasswordActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".activities.SecurityQuestionActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+        <activity
+            android:name=".privacy.PrivacyPolicyActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+
+        <receiver android:name=".utils.PolicyManager">
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample" />
+        </receiver>
+
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="com.safe.gallery.calculator.firebaseinitprovider"
+            android:exported="false"
+            android:initOrder="100" />
+
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.safe.gallery.calculator" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.firebase.iid.FirebaseInstanceIdService"
+            android:exported="true">
+            <intent-filter android:priority="-500">
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

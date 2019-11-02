@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/banner_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical" />
+
+    <ViewAnimator
+        android:id="@+id/viewanimator"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/banner_container">
+
+        <include layout="@layout/progress_view" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_error"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_lock"
+            android:drawablePadding="10.0dip"
+            android:gravity="center"
+            android:text="No Item Found.\nPlease tap add button to add one."
+            android:textColor="@color/white" />
+
+    </ViewAnimator>
+
+    <Button
+        android:id="@+id/btn_unhide"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_80sdp"
+        android:background="@drawable/btn_back"
+        android:text="Unhide"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+    <android.support.design.widget.FloatingActionButton xmlns:n2="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20.0dip"
+        android:src="@drawable/ic_add"
+        n2:backgroundTint="@color/main_color"
+        n2:fabSize="normal"
+        android:layout_above="@+id/layoutViewAdd"/>
+
+    <LinearLayout
+        android:id="@+id/layoutViewAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_bottom_tips"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible" />
+
+
+
+
+</RelativeLayout>

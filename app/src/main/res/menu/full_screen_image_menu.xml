@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu>
+    <item xmlns:n1="http://schemas.android.com/apk/res/android"
+        xmlns:n2="http://schemas.android.com/apk/res-auto"
+        n1:id="@+id/itm_share"
+        n1:icon="@drawable/ic_share_white_24dp"
+        n1:title="Share"
+        n2:showAsAction="always" />
+    <item xmlns:n3="http://schemas.android.com/apk/res/android"
+        xmlns:n4="http://schemas.android.com/apk/res-auto"
+        n3:id="@id/itm_delete"
+        n3:icon="@drawable/ic_delete_white_24dp"
+        n3:title="Delete"
+        n4:showAsAction="always" />
+</menu>

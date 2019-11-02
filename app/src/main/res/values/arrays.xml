@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="questions">
+        <item>Who is your girlfriend?</item>
+        <item>"What is your father's name?"</item>
+        <item>"What is your brother's name?"</item>
+        <item>"What is your mother's name?"</item>
+        <item>What is your childhood dream?</item>
+        <item>How many siblings you have?</item>
+        <item>Who is your boyfriend?</item>
+    </string-array>
+
+    <string-array name="ld_activityScreenTitles">
+
+        <item>Change Password</item>
+        <item>Change Question </item>
+        <item>Share App</item>
+        <item>Rate Us</item>
+        <item>Privacy Policy</item>
+        <item>Intruder access</item>
+    </string-array>
+
+    <array name="ld_activityScreenIcons">
+
+        <item>@drawable/password</item>
+        <item>@drawable/question</item>
+        <item>@drawable/share</item>
+        <item>@drawable/rateus</item>
+        <item>@drawable/privacy</item>
+        <item>@drawable/key</item>
+    </array>
+
+</resources>

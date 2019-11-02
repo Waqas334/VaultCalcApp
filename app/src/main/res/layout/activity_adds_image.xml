@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@id/toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@id/banner_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:orientation="vertical" />
+
+    <ViewAnimator
+        android:id="@+id/viewanimator"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/banner_container">
+
+        <include layout="@layout/progress_view" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/recyclerview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <TextView
+            android:id="@+id/txt_error"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_item_found"
+            android:textColor="@color/white" />
+
+    </ViewAnimator>
+
+    <Button
+        android:layout_above="@+id/layoutViewAdd"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:id="@+id/btn_hide"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_30sdp"
+        android:background="@drawable/btn_back"
+        android:text="Hide"
+        android:textColor="@color/white"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/layoutViewAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_bottom_tips"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible" />
+
+</RelativeLayout>
+
