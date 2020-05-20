@@ -33,9 +33,6 @@ public class Adapter_ImageFolder extends RecyclerView.Adapter<Adapter_ImageFolde
         public void onItemClick(View view, int position);
     }
 
-    public String getPackageName(Context context) {
-        return context.getPackageName();
-    }
 
     public Adapter_ImageFolder(Context context, ArrayList<File> al_video,OnItemClickListener onItemClickListener) {
         this.al_my_photos = al_video;
@@ -51,9 +48,9 @@ public class Adapter_ImageFolder extends RecyclerView.Adapter<Adapter_ImageFolde
 
         public ViewHolder(View v) {
             super(v);
-            img = (ImageView) v.findViewById(R.id.img);
-            name = (TextView) v.findViewById(R.id.name);
-            lnselect = (LinearLayout) v.findViewById(R.id.lnselect);
+            img = v.findViewById(R.id.img);
+            name = v.findViewById(R.id.name);
+            lnselect =v.findViewById(R.id.lnselect);
         }
     }
 
@@ -84,21 +81,6 @@ public class Adapter_ImageFolder extends RecyclerView.Adapter<Adapter_ImageFolde
 
             }
         });
-
-       /* Picasso.with(context)
-                .load(al_my_photos.get(position))
-                .fit()
-                .into(holder.img, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        //holder.progressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });*/
 
     }
 
