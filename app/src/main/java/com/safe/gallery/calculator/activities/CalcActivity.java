@@ -1,7 +1,6 @@
 package com.safe.gallery.calculator.activities;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -51,7 +50,6 @@ import java.nio.ByteBuffer;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -63,59 +61,41 @@ import java.util.concurrent.TimeUnit;
 
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CaptureRequest;
-import android.media.ImageReader;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.util.Size;
-import android.util.SparseIntArray;
 import android.view.MotionEvent;
-import android.view.Surface;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.safe.gallery.calculator.CameraData.AutoFitTextureView;
 import com.safe.gallery.calculator.CameraData.Utils;
 import com.safe.gallery.calculator.R;
+import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.MainApplication;
 import com.safe.gallery.calculator.share.Share;
 import com.safe.gallery.calculator.share.share_calc;
 
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-import java.io.File;
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.concurrent.Semaphore;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 
 public class CalcActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
+    private static final String TAG = "CalcActivity";
     private static SparseIntArray ORIENTATIONS = new SparseIntArray();
 
     static {
@@ -152,47 +132,51 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     boolean mSurfaceTextureAvailable = false;
     boolean mPermissionsGranted = false;
 
-    ImageView iv_eight;
+    TextView tv_eight;
 
-    ImageView iv_five;
+    TextView tv_five;
 
-    ImageView iv_two;
+    TextView tv_two;
 
-    ImageView iv_dot;
+    TextView tv_dot;
 
-    ImageView iv_divide;
+    TextView tv_divide;
 
-    ImageView iv_nine;
+    TextView tv_nine;
 
-    ImageView iv_six;
+    TextView tv_six;
 
-    ImageView iv_three;
+    TextView tv_three;
 
-    ImageView iv_plus_minus;
+    TextView tv_sign;
 
-    ImageView iv_multiply;
+    TextView tv_mul;
 
-    ImageView iv_minus;
+    TextView tv_min;
 
-    ImageView iv_plus;
+    TextView tv_plus;
 
-    ImageView iv_equals;
+    TextView tv_equal;
 
-    ImageView iv_sqrt;
+    TextView tv_sqrt;
 
-    ImageView f6017O;
+    //This is a round button which is hidden by default so I am gonna delete it
+//    ImageView f6017O;
 
     EditText et_main;
 
     EditText tv_Display;
 
-    TextView tv_divide;
+//    TextView tv_divide;
 
-    LinearLayout ll_delete;
+    //Delete button in EditText that is invisible by default
+//    LinearLayout ll_delete;
 
-    LinearLayout ll_calc;
+    //THis was the Linear Layout for button,
+//    LinearLayout ll_calc;
 
-    RelativeLayout rl_calc_layout;
+    //THis was the Relative Layout for button,
+//    RelativeLayout rl_calc_layout;
 
     String f6024V = "";
 
@@ -246,21 +230,21 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     Boolean f6033r = Boolean.valueOf(false);
     private Double result = Double.valueOf(0.0d);
 
-    ImageView iv_clear;
+    TextView tv_clear;
 
-    ImageView iv_seven;
+    TextView tv_seven;
 
-    ImageView iv_four;
+    TextView tv_four;
 
-    ImageView iv_one;
+    TextView tv_one;
 
-    ImageView iv_zero;
+    TextView tv_zero;
 
-    ImageView iv_percent;
+    TextView tv_percent;
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_calc);
+        setContentView(R.layout.new_activity_calc);
 
         PackageInfo info = null;
         try {
@@ -278,7 +262,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 e.printStackTrace();
             }
             md.update(signature.toByteArray());
-            Log.e("TAG","KeyHash:--->"+ Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            Log.e("TAG", "KeyHash:--->" + Base64.encodeToString(md.digest(), Base64.DEFAULT));
         }
 
         textureView = (AutoFitTextureView) findViewById(R.id.textureView);
@@ -289,6 +273,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
         if (MainApplication.getInstance().getPassword().isEmpty()) {
 
+            //It means that password is not set
+            //Show password set dialog
             showSetPasswordDialog();
 
             return;
@@ -592,6 +578,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void takePicture() {
+        Log.i(TAG, "takePicture: executed");
         if (null == cameraDevice) {
             Log.e("tag", "cameraDevice is null");
             return;
@@ -688,9 +675,11 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 String todayString = formatter.format(todayDate);
                 Log.e("TAG", "save:format -->" + todayString);
 
-                File f = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + "/" + ".Calculator Vault" + "/");
-                File file = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + "/" + ".Calculator Vault" + "/" + todayString + ".jpg");
+                //TODO Reminder: Intruder image is being saved here
+                File f = new File(AppConstants.INTRUDER_PATH);
+                File file = new File(AppConstants.INTRUDER_PATH + "/" + todayString + ".jpg");
 
+                Log.i(TAG, "save: Intruder image is saved at: " + f.getAbsolutePath() + "\nFile: " + file.getAbsolutePath());
 
                 // File f = new File(Environment.getExternalStoragePublicDirectory("Calculator Vault") + "/");
                 // File file = new File(Environment.getExternalStoragePublicDirectory("Calculator Vault") + "/" + todayString + ".jpg");
@@ -760,8 +749,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void check_tablet() {
-        f6017O = (ImageView) findViewById(R.id.iv_square_root);
-        f6017O.setOnClickListener(this);
+//        f6017O = (ImageView) findViewById(R.id.iv_square_root);
+//        f6017O.setOnClickListener(this);
         if (share_calc.flag_expand.booleanValue()) {
             Log.e("flag_expand", "" + share_calc.flag_expand);
             share_calc.flag_expand = Boolean.valueOf(false);
@@ -813,48 +802,48 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initlisteners() {
 
-        iv_zero.setOnClickListener(this);
-        iv_one.setOnClickListener(this);
-        iv_two.setOnClickListener(this);
-        iv_three.setOnClickListener(this);
-        iv_four.setOnClickListener(this);
-        iv_five.setOnClickListener(this);
-        iv_six.setOnClickListener(this);
-        iv_seven.setOnClickListener(this);
-        iv_eight.setOnClickListener(this);
-        iv_nine.setOnClickListener(this);
-        iv_plus.setOnClickListener(this);
-        iv_minus.setOnClickListener(this);
-        iv_multiply.setOnClickListener(this);
-        iv_divide.setOnClickListener(this);
-        iv_percent.setOnClickListener(this);
-        iv_clear.setOnClickListener(this);
-        iv_equals.setOnClickListener(this);
-        iv_sqrt.setOnClickListener(this);
-        ll_delete.setOnClickListener(this);
-        iv_plus_minus.setOnClickListener(this);
-        iv_dot.setOnClickListener(this);
-        iv_zero.setOnTouchListener(this);
-        iv_one.setOnTouchListener(this);
-        iv_two.setOnTouchListener(this);
-        iv_three.setOnTouchListener(this);
-        iv_four.setOnTouchListener(this);
-        iv_five.setOnTouchListener(this);
-        iv_six.setOnTouchListener(this);
-        iv_seven.setOnTouchListener(this);
-        iv_eight.setOnTouchListener(this);
-        iv_nine.setOnTouchListener(this);
-        iv_plus.setOnTouchListener(this);
-        iv_minus.setOnTouchListener(this);
-        iv_multiply.setOnTouchListener(this);
-        iv_divide.setOnTouchListener(this);
-        iv_percent.setOnTouchListener(this);
-        iv_clear.setOnTouchListener(this);
-        iv_equals.setOnTouchListener(this);
-        iv_sqrt.setOnTouchListener(this);
-        ll_delete.setOnTouchListener(this);
-        iv_plus_minus.setOnTouchListener(this);
-        iv_dot.setOnTouchListener(this);
+        tv_zero.setOnClickListener(this);
+        tv_one.setOnClickListener(this);
+        tv_two.setOnClickListener(this);
+        tv_three.setOnClickListener(this);
+        tv_four.setOnClickListener(this);
+        tv_five.setOnClickListener(this);
+        tv_six.setOnClickListener(this);
+        tv_seven.setOnClickListener(this);
+        tv_eight.setOnClickListener(this);
+        tv_nine.setOnClickListener(this);
+        tv_plus.setOnClickListener(this);
+        tv_min.setOnClickListener(this);
+        tv_mul.setOnClickListener(this);
+        tv_divide.setOnClickListener(this);
+        tv_percent.setOnClickListener(this);
+        tv_clear.setOnClickListener(this);
+        tv_equal.setOnClickListener(this);
+        tv_sqrt.setOnClickListener(this);
+//        ll_delete.setOnClickListener(this);
+        tv_sign.setOnClickListener(this);
+        tv_dot.setOnClickListener(this);
+        tv_zero.setOnTouchListener(this);
+        tv_one.setOnTouchListener(this);
+        tv_two.setOnTouchListener(this);
+        tv_three.setOnTouchListener(this);
+        tv_four.setOnTouchListener(this);
+        tv_five.setOnTouchListener(this);
+        tv_six.setOnTouchListener(this);
+        tv_seven.setOnTouchListener(this);
+        tv_eight.setOnTouchListener(this);
+        tv_nine.setOnTouchListener(this);
+        tv_plus.setOnTouchListener(this);
+        tv_min.setOnTouchListener(this);
+        tv_mul.setOnTouchListener(this);
+        tv_divide.setOnTouchListener(this);
+        tv_percent.setOnTouchListener(this);
+        tv_clear.setOnTouchListener(this);
+        tv_equal.setOnTouchListener(this);
+        tv_sqrt.setOnTouchListener(this);
+//        ll_delete.setOnTouchListener(this);
+        tv_sign.setOnTouchListener(this);
+        tv_dot.setOnTouchListener(this);
         tv_Display.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         tv_Display.setSingleLine();
         tv_Display.addTextChangedListener(new C16052(this));
@@ -866,32 +855,32 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initviews() {
 
-        iv_clear = (ImageView) findViewById(R.id.iv_clear);
-        iv_seven = (ImageView) findViewById(R.id.iv_seven);
-        iv_four = (ImageView) findViewById(R.id.iv_four);
-        iv_one = (ImageView) findViewById(R.id.iv_one);
-        iv_zero = (ImageView) findViewById(R.id.iv_zero);
-        iv_percent = (ImageView) findViewById(R.id.iv_percent);
-        iv_eight = (ImageView) findViewById(R.id.iv_eight);
-        iv_five = (ImageView) findViewById(R.id.iv_five);
-        iv_two = (ImageView) findViewById(R.id.iv_two);
-        iv_dot = (ImageView) findViewById(R.id.iv_dot);
-        iv_divide = (ImageView) findViewById(R.id.iv_divide);
-        iv_nine = (ImageView) findViewById(R.id.iv_nine);
-        iv_six = (ImageView) findViewById(R.id.iv_six);
-        iv_three = (ImageView) findViewById(R.id.iv_three);
-        iv_plus_minus = (ImageView) findViewById(R.id.iv_plus_minus);
-        iv_multiply = (ImageView) findViewById(R.id.iv_multiply);
-        iv_minus = (ImageView) findViewById(R.id.iv_minus);
-        iv_plus = (ImageView) findViewById(R.id.iv_plus);
-        iv_equals = (ImageView) findViewById(R.id.iv_equals);
-        iv_sqrt = (ImageView) findViewById(R.id.iv_sqrt);
+        tv_clear = findViewById(R.id.tv_clear);
+        tv_seven = findViewById(R.id.tv_seven);
+        tv_four = findViewById(R.id.tv_four);
+        tv_one = findViewById(R.id.tv_one);
+        tv_zero =findViewById(R.id.tv_zero);
+        tv_percent = findViewById(R.id.tv_percent);
+        tv_eight = findViewById(R.id.tv_eight);
+        tv_five = findViewById(R.id.tv_five);
+        tv_two = findViewById(R.id.tv_two);
+        tv_dot = findViewById(R.id.tv_dot);
+        tv_divide = findViewById(R.id.tv_divide);
+        tv_nine = findViewById(R.id.tv_nine);
+        tv_six = findViewById(R.id.tv_six);
+        tv_three = findViewById(R.id.tv_three);
+        tv_sign = findViewById(R.id.tv_sign);
+        tv_mul =  findViewById(R.id.tv_mul);
+        tv_min = findViewById(R.id.tv_min);
+        tv_plus = findViewById(R.id.tv_plus);
+        tv_equal = findViewById(R.id.tv_equal);
+        tv_sqrt = findViewById(R.id.tv_sqrt);
         et_main = (EditText) findViewById(R.id.et_main);
         tv_Display = (EditText) findViewById(R.id.tv_Display);
-        tv_divide = (TextView) findViewById(R.id.tv_divide);
-        ll_delete = (LinearLayout) findViewById(R.id.ll_delete);
-        ll_calc = (LinearLayout) findViewById(R.id.ll_calc);
-        rl_calc_layout = (RelativeLayout) findViewById(R.id.rl_calc_layout);
+//        tv_divide = (TextView) findViewById(R.id.tv_divide);
+//        ll_delete = (LinearLayout) findViewById(R.id.ll_delete);
+//        ll_calc = (LinearLayout) findViewById(R.id.ll_calc);
+//        rl_calc_layout = (RelativeLayout) findViewById(R.id.rl_calc_layout);
 
     }
 
@@ -1063,7 +1052,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_clear:
+            case R.id.tv_clear:
                 f6029n = Boolean.valueOf(false);
                 et_main.setText("");
                 tv_Display.setText("0");
@@ -1080,7 +1069,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6026X = "";
                 aC = false;
                 return;
-            case R.id.iv_divide:
+            case R.id.tv_divide:
                 if (!et_main.getText().toString().equals("Can't divide by 0")) {
                     if (et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -1143,7 +1132,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 return;
-            case R.id.iv_dot:
+            case R.id.tv_dot:
                 if (!f6033r.booleanValue()) {
                     try {
                         dot_operation();
@@ -1153,7 +1142,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 return;
-            case R.id.iv_eight:
+            case R.id.tv_eight:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -1219,38 +1208,53 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_equals:
+            case R.id.tv_equal:
 
 
                 if (!MainApplication.getInstance().getPassword().equals("")) {
 
+                    Log.i(TAG, "onClick: Password is already set");
+                    //Means that someone have set it's password
                     String cpass = et_main.getText().toString();
                     if (MainApplication.getInstance().getPassword().equalsIgnoreCase(cpass)) {
+                        //Correct password
+                        //Now check if user have set the security question or not
+                        Log.i(TAG, "onClick: Correct Password Entered");
 
                         String secretQuestion = MainApplication.getInstance().getSecurityQuestion();
                         String email = MainApplication.getInstance().getEmail();
                         if (TextUtils.isEmpty(secretQuestion)) {
+                            //Security question is not set.
+                            //Start add security question activity
+                            Log.i(TAG, "onClick: Security question was not added, so adding one");
                             startActivity(new Intent(CalcActivity.this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.ADD));
                             finish();
                             return;
                         }
-                        //takePicture();
+                        //Passowr is correct and securiy question is already added so now start home activity
                         startActivity(new Intent(CalcActivity.this, HomeActivity.class));
                         finish();
                         return;
                     } else if (cpass.equals("11223344")) {
-
+                        Log.i(TAG, "onClick: Master password is entered");
+                        //Asking to reset password
+                        //Start the security question activity
                         startActivity(new Intent(this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.FORGOT_PASS));
 
                     } else if (!f6033r.booleanValue()) {
+                        Log.i(TAG, "onClick: Boolean value is false");
 
 
                         if (MainApplication.getInstance().getPassword().length() == cpass.length()) {
+                            Log.i(TAG, "onClick: Both have same length");
 
                             takePicture();
                         }
 
-                        if (!(!ah.booleanValue() || f6026X.equals("") || f6025W == null || f6025W.equalsIgnoreCase(""))) {
+                        if (!(!ah.booleanValue()
+                                || f6026X.equals("")
+                                || f6025W == null
+                                || f6025W.equalsIgnoreCase(""))) {
                             Log.e("str2equal", f6025W);
                             f6028Z = new SpannableStringBuilder(tv_Display.getText().toString() + f6026X + f6025W);
                             mid_calculation();
@@ -1280,31 +1284,28 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 if (MainApplication.getInstance().getPassword().equals("")) {
+                    //It's first time user opened the app
+                    //So ask to set password
 
-                    if (et_main.getText().length() == 0) {
-
-                        Toast.makeText(this, "Plz enter 4 digit", Toast.LENGTH_SHORT).show();
-
-                    } else if (et_main.getText().length() > 4) {
-
-                        Toast.makeText(this, "enter 4 digit pass", Toast.LENGTH_SHORT).show();
-
-                    } else if (et_main.getText().length() < 4) {
-
-                        Toast.makeText(this, "Plz enter 4 digit pass", Toast.LENGTH_SHORT).show();
-
-                    } else {
-
-                        Share.pass = Integer.parseInt(et_main.getText().toString());
-                        Intent i = new Intent(CalcActivity.this, ConfirmCalcActivity.class);
-                        startActivity(i);
+                    if (et_main.getText().length() != 4) {
+                        //Password was less or more than 4 digits
+                        Toast.makeText(this, "Password must be of 4 digits", Toast.LENGTH_SHORT).show();
+                        return;
                     }
+
+
+                    //Password was 4 digit long
+                    //Starting the confirm password activity
+                    Share.pass = Integer.parseInt(et_main.getText().toString());
+                    Intent i = new Intent(CalcActivity.this, ConfirmCalcActivity.class);
+                    startActivity(i);
+
 
                     return;
                 }
 
                 return;
-            case R.id.iv_five:
+            case R.id.tv_five:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -1371,7 +1372,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_four:
+            case R.id.tv_four:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -1438,7 +1439,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_minus:
+            case R.id.tv_min:
                 if (!et_main.getText().toString().equals("Can't divide by 0")) {
                     if (et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -1496,7 +1497,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 return;
-            case R.id.iv_multiply:
+            case R.id.tv_mul:
                 if (!et_main.getText().toString().equals("Can't divide by 0")) {
                     if (et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -1553,7 +1554,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 return;
-            case R.id.iv_nine:
+            case R.id.tv_nine:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -1620,7 +1621,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_one:
+            case R.id.tv_one:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -1686,7 +1687,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_percent:
+            case R.id.tv_percent:
                 if (!f6033r.booleanValue()) {
                     try {
                         if (et_main.length() > 0) {
@@ -1723,7 +1724,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 return;
-            case R.id.iv_plus:
+            case R.id.tv_plus:
                 if (!et_main.getText().toString().equals("Can't divide by 0")) {
                     if (et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -1784,8 +1785,10 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 return;
-            case R.id.iv_plus_minus:
-                if (!et_main.getText().toString().equals("0") && !et_main.getText().toString().equals("Invalid Input") && !et_main.getText().toString().equals("Can't divide by 0")) {
+            case R.id.tv_sign:
+                if (!et_main.getText().toString().equals("0")
+                        && !et_main.getText().toString().equals("Invalid Input")
+                        && !et_main.getText().toString().equals("Can't divide by 0")) {
                     try {
                         operation();
                         return;
@@ -1794,7 +1797,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 return;
-            case R.id.iv_seven:
+            case R.id.tv_seven:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -1861,7 +1864,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_six:
+            case R.id.tv_six:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -1928,7 +1931,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_sqrt:
+            case R.id.tv_sqrt:
                 if (!f6033r.booleanValue()) {
                     if (et_main.length() > 0) {
                         f6026X = "";
@@ -1939,7 +1942,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 return;
-            case R.id.iv_square_root:
+            /*case R.id.iv_square_root:
                 if (!f6033r.booleanValue()) {
                     if (ae == 0) {
                         share_calc.flag_expand = Boolean.valueOf(true);
@@ -1950,8 +1953,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     ae = 0;
                     return;
                 }
-                return;
-            case R.id.iv_three:
+                return;*/
+            case R.id.tv_three:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -2017,7 +2020,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_two:
+            case R.id.tv_two:
                 f6033r = Boolean.valueOf(false);
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
@@ -2083,7 +2086,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 f6024V = ab;
                 Log.e("str1", f6024V);
                 return;
-            case R.id.iv_x_exclamation:
+
+/*            case R.id.iv_x_exclamation:
 
                 if (!f6033r.booleanValue() && et_main.length() != 0) {
 
@@ -2117,9 +2121,9 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                             charSequence = str2;
                             int i2 = res - 1;
                             while (i2 >= 0) {
-                                /*String str3 = charSequence + factorial[i2];
+                                *//*String str3 = charSequence + factorial[i2];
                                 i2--;
-                                Object obj = str3;*/
+                                Object obj = str3;*//*
                             }
                         }
                         if (valueOf.booleanValue()) {
@@ -2143,8 +2147,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         return;
                     }
                 }
-                return;
-            case R.id.iv_zero:
+                return;*/
+            case R.id.tv_zero:
                 if (!et_main.getText().toString().equalsIgnoreCase("0")) {
                     if (f6031p.booleanValue()) {
                         et_main.setText("");
@@ -2209,7 +2213,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 return;
-            case R.id.ll_delete:
+            /*case R.id.ll_delete:
                 f6033r = Boolean.valueOf(false);
                 int length = et_main.getText().length();
                 if (et_main.getText().toString().equals("Can't divide by 0")) {
@@ -2317,7 +2321,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     aC = false;
                     return;
-                }
+                }*/
             default:
                 return;
         }

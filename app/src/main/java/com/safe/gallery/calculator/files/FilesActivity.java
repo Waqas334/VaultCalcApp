@@ -20,6 +20,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,11 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.BaseActivity;
@@ -45,7 +41,6 @@ import com.safe.gallery.calculator.files.adapter.FilesAdapter;
 import com.safe.gallery.calculator.fullscreenimage.FullScreenImageActivity;
 import com.safe.gallery.calculator.model.AllFilesModel;
 import com.safe.gallery.calculator.model.AllImagesModel;
-import com.safe.gallery.calculator.utils.CenterTitleToolbar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,7 +74,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
     private ProgressBar progressbar;
     RecyclerView recyclerview;
     private Timer timer;
-    CenterTitleToolbar toolbar;
+    Toolbar toolbar;
     private TextView txtCount;
     TextView txtError;
     ViewAnimator viewanimator;
@@ -105,7 +100,6 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
 
         setHeaderInfo();
         initViews();
-        addBanner();
     }
 
     private void findViews() {
@@ -119,75 +113,13 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
 
     }
 
-    public void addBanner() {
-
-        final AdView mAdView = new AdView(this);
-        mAdView.setAdSize(AdSize.BANNER);
-        final View adContainer = findViewById(R.id.layoutViewAdd);
-
-
-        mAdView.setAdUnitId(Constant.bannerId);
-
-        ((LinearLayout) adContainer).addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A")
-                .addTestDevice("3C5740EB2F36FB5F0FEFA773607D27CE") // mi white
-                .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samsung max
-                .build();
-
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-
-
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-
-                adContainer.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
-
     private void setHeaderInfo() {
 
         //toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.file));
-        if (getSupportActionBar() != null) {
-            Drawable drawable = getResources().getDrawable(R.drawable.ic_arrow);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
-
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
     }
 
@@ -217,7 +149,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
 
             case R.id.fab_add:
 
-                startActivityForResult(new Intent(this, FileSelectionActivity.class), 1012);
+                startActivityForResult(new Intent(this, AddFileActivity.class), 1012);
                 overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
                 return;
 
@@ -259,7 +191,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
                         }
                         if (menuItemSelect != null) {
                             menuItemSelect.setVisible(false);
-                            menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                            menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                         }
                         if (menuItemDelete != null) {
                             menuItemDelete.setVisible(false);
@@ -267,12 +199,8 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
                         isEditable = false;
                         //toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
                         if (getSupportActionBar() != null) {
-                            Drawable drawable = getResources().getDrawable(R.drawable.ic_arrow);
-                            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+                            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
                         }
 
@@ -446,23 +374,15 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
                 if (adapter != null) {
                     adapter.isItemEditable(true);
                 }
-                if (getSupportActionBar() != null) {
-
-                    Drawable drawable = getResources().getDrawable(R.drawable.ic_close);
-                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                    Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                    newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    getSupportActionBar().setHomeAsUpIndicator(newdrawable);
-
-                }
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
 
                 break;
             case R.id.itm_select:
                 if (menuItemSelect != null) {
                     if (!isSelectAll) {
-                        menuItemSelect.setIcon(R.drawable.ic_check_filled);
+                        menuItemSelect.setIcon(R.drawable.ic_check_box_white_48dp);
                         if (adapter != null) {
                             adapter.selectAllItem();
                         }
@@ -470,7 +390,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
                         isSelectAll = true;
                         break;
                     }
-                    menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                    menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                     if (adapter != null) {
                         adapter.deSelectAllItem();
                     }
@@ -505,7 +425,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
 
     public void showSelectAllButton(boolean needToShow) {
         if (menuItemSelect != null) {
-            menuItemSelect.setIcon(needToShow ? R.drawable.ic_check_filled : R.drawable.ic_check_box_outline);
+            menuItemSelect.setIcon(needToShow ? R.drawable.ic_check_box_white_48dp : R.drawable.ic_check_box_outline_white_48dp);
             isSelectAll = needToShow;
         }
     }
@@ -521,6 +441,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
             }
             if (menuItemSelect != null) {
                 menuItemSelect.setVisible(false);
+                menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
             }
             if (menuItemDelete != null) {
                 menuItemDelete.setVisible(false);
@@ -529,15 +450,16 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
             if (adapter != null) {
                 adapter.isItemEditable(false);
             }
-            if (getSupportActionBar() != null) {
-                Drawable drawable = getResources().getDrawable(R.drawable.ic_arrow);
-                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+            if (adapter != null) {
+                adapter.deSelectAllItem();
 
             }
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+
+            }
+            btnUnhide.setVisibility(View.INVISIBLE);
 
             //toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
             return;
@@ -572,8 +494,8 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
     public void openFile(String path) {
         try {
             Intent intent = new Intent();
-            intent.addFlags(268435456);
-            intent.setAction("android.intent.action.VIEW");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setAction(Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.fromFile(new File(path)), "application/*");
             startActivity(intent);
         } catch (Exception e) {

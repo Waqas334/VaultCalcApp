@@ -5,17 +5,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,10 +22,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
 import com.safe.gallery.calculator.BuildConfig;
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.album.AlbumsFragment;
+import com.safe.gallery.calculator.album.HomeFragment;
 import com.safe.gallery.calculator.app.BaseActivity;
 import com.safe.gallery.calculator.app.MainApplication;
 import com.safe.gallery.calculator.privacy.PrivacyPolicyActivity;
@@ -41,16 +34,15 @@ import java.util.Random;
 public class HomeActivity extends BaseActivity {
 
     String TAG = "TAG";
-    ImageView imgHint;
+    ImageView iv_settings;
 
-    Toolbar toolbar;
 
-    RecyclerView recyclerview;
+//    RecyclerView recyclerview;
 
-    private String[] screenTitles;
-    private Drawable[] screenIcons;
+//    private String[] screenTitles;
+//    private Drawable[] screenIcons;
 
-    RecyclerView.Adapter iv_recycler_Adapter;
+//    RecyclerView.Adapter iv_recycler_Adapter;
 
     int row_index = 0;
     int posofItem = 0;
@@ -59,7 +51,11 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView((int) R.layout.main_layout);
 
-        setHeaderInfo();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+//        getSupportActionBar().setLogo(R.drawable.appicon);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         findViews();
         initViews();
@@ -68,33 +64,34 @@ public class HomeActivity extends BaseActivity {
 
     private void findViews() {
 
-        imgHint = findViewById(R.id.hint);
-        recyclerview = findViewById(R.id.recyclerview);
-        toolbar = findViewById(R.id.toolbar);
+        iv_settings = findViewById(R.id.hint);
+//        recyclerview = findViewById(R.id.recyclerview);
     }
 
     private void initViews() {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.setDrawerListener(toggle);
+//        toggle.syncState();
 
-        screenIcons = loadScreenIcons();
-        screenTitles = loadScreenTitles();
+//        screenIcons = loadScreenIcons();
+//        screenTitles = loadScreenTitles();
 
-        recyclerview.setNestedScrollingEnabled(false);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        iv_recycler_Adapter = new RecyclerViewAdapter(HomeActivity.this, screenTitles, screenIcons, posofItem);
-        recyclerview.setAdapter(iv_recycler_Adapter);
+//        recyclerview.setNestedScrollingEnabled(false);
+//        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+//        iv_recycler_Adapter = new RecyclerViewAdapter(HomeActivity.this, screenTitles, screenIcons, posofItem);
+//        recyclerview.setAdapter(iv_recycler_Adapter);
 
         addFirstFragment();
 
-        imgHint.setOnClickListener(new View.OnClickListener() {
+        iv_settings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                showForgotPassHintDialog();
+                //TODO Start Settings Activity Here
+                startActivity(new Intent(HomeActivity.this,SettingsActivity.class));
+//                showForgotPassHintDialog();
             }
         });
 
@@ -103,13 +100,10 @@ public class HomeActivity extends BaseActivity {
 
     private void addFirstFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add((int) R.id.frame, new AlbumsFragment());
+        ft.add((int) R.id.frame, new HomeFragment());
         ft.commit();
     }
 
-    private void setHeaderInfo() {
-        setSupportActionBar(this.toolbar);
-    }
 
 
     protected void onResume() {
@@ -242,92 +236,11 @@ public class HomeActivity extends BaseActivity {
 
                     if (position == 0) {
 
-                        Random rand = new Random();
-                        int randomNum = 0 + rand.nextInt(5);
-                        if (randomNum == 0) {
-
-                            if (!MainApplication.getInstance().requestNewInterstitial()) {
-
-                                startActivity(new Intent(HomeActivity.this, ChangePasswordActivity.class));
-
-                            } else {
-
-                                MainApplication.getInstance().mInterstitialAd.setAdListener(new AdListener() {
-                                    @Override
-                                    public void onAdClosed() {
-                                        super.onAdClosed();
-
-                                        MainApplication.getInstance().mInterstitialAd.setAdListener(null);
-                                        MainApplication.getInstance().mInterstitialAd = null;
-                                        MainApplication.getInstance().ins_adRequest = null;
-                                        MainApplication.getInstance().LoadAds();
-
-
-                                        startActivity(new Intent(HomeActivity.this, ChangePasswordActivity.class));
-
-                                    }
-
-                                    @Override
-                                    public void onAdFailedToLoad(int i) {
-                                        super.onAdFailedToLoad(i);
-                                    }
-
-                                    @Override
-                                    public void onAdLoaded() {
-                                        super.onAdLoaded();
-                                    }
-                                });
-                            }
-                        } else {
-
-
-                            startActivity(new Intent(HomeActivity.this, ChangePasswordActivity.class));
-                        }
-
+                        startActivity(new Intent(HomeActivity.this, ChangePasswordActivity.class));
 
                     } else if (position == 1) {
 
-                        Random rand = new Random();
-                        int randomNum = 0 + rand.nextInt(5);
-                        if (randomNum == 0) {
-
-                            if (!MainApplication.getInstance().requestNewInterstitial()) {
-
-                                startActivity(new Intent(HomeActivity.this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.CHANGE));
-
-                            } else {
-
-                                MainApplication.getInstance().mInterstitialAd.setAdListener(new AdListener() {
-                                    @Override
-                                    public void onAdClosed() {
-                                        super.onAdClosed();
-
-                                        MainApplication.getInstance().mInterstitialAd.setAdListener(null);
-                                        MainApplication.getInstance().mInterstitialAd = null;
-                                        MainApplication.getInstance().ins_adRequest = null;
-                                        MainApplication.getInstance().LoadAds();
-
-                                        startActivity(new Intent(HomeActivity.this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.CHANGE));
-
-                                    }
-
-                                    @Override
-                                    public void onAdFailedToLoad(int i) {
-                                        super.onAdFailedToLoad(i);
-                                    }
-
-                                    @Override
-                                    public void onAdLoaded() {
-                                        super.onAdLoaded();
-                                    }
-                                });
-                            }
-                        } else {
-
-
-                            startActivity(new Intent(HomeActivity.this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.CHANGE));
-                        }
-
+                        startActivity(new Intent(HomeActivity.this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.CHANGE));
 
                     } else if (position == 2) {
 
@@ -339,56 +252,9 @@ public class HomeActivity extends BaseActivity {
 
                     } else if (position == 4) {
 
-                        Random rand = new Random();
-                        int randomNum = 0 + rand.nextInt(5);
-                        if (randomNum == 0) {
-
-                            if (!MainApplication.getInstance().requestNewInterstitial()) {
-
-                                startActivity(new Intent(HomeActivity.this, PrivacyPolicyActivity.class));
-
-                            } else {
-
-                                MainApplication.getInstance().mInterstitialAd.setAdListener(new AdListener() {
-                                    @Override
-                                    public void onAdClosed() {
-                                        super.onAdClosed();
-
-                                        MainApplication.getInstance().mInterstitialAd.setAdListener(null);
-                                        MainApplication.getInstance().mInterstitialAd = null;
-                                        MainApplication.getInstance().ins_adRequest = null;
-                                        MainApplication.getInstance().LoadAds();
-
-                                        startActivity(new Intent(HomeActivity.this, PrivacyPolicyActivity.class));
-
-                                    }
-
-                                    @Override
-                                    public void onAdFailedToLoad(int i) {
-                                        super.onAdFailedToLoad(i);
-                                    }
-
-                                    @Override
-                                    public void onAdLoaded() {
-                                        super.onAdLoaded();
-                                    }
-                                });
-                            }
-                        } else {
-
-
-                            startActivity(new Intent(HomeActivity.this, PrivacyPolicyActivity.class));
-
-                        }
-
-
-                    } else if (position == 5) {
-
-                        startActivity(new Intent(HomeActivity.this, UnAuthorisedActivity.class));
+                        startActivity(new Intent(HomeActivity.this, PrivacyPolicyActivity.class));
 
                     }
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    drawer.closeDrawer(GravityCompat.START);
 
                 }
             });
@@ -402,6 +268,7 @@ public class HomeActivity extends BaseActivity {
 
     private void rate() {
 
+        //TODO WAQAS Rate is being clicked here
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         builder.setMessage("Are you sure you want to rate this App?")
                 .setCancelable(false)
@@ -431,52 +298,33 @@ public class HomeActivity extends BaseActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-            String shareMessage = "Calculator Vault" + "\n\nLet me recommend you this application\n\n";
+            String shareMessage = getResources().getString(R.string.app_name)+ "\n\nGet this amazing application and have some privacy on your phone\n\n";
             shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-            startActivity(Intent.createChooser(shareIntent, "choose one"));
+            startActivity(Intent.createChooser(shareIntent, "Choose one"));
 
         } catch (Exception e) {
         }
 
     }
+//
+//    private String[] loadScreenTitles() {
+//        return getResources().getStringArray(R.array.ld_activityScreenTitles);
+//    }
+//
+//    private Drawable[] loadScreenIcons() {
+//
+//        TypedArray ta = getResources().obtainTypedArray(R.array.ld_activityScreenIcons);
+//        Drawable[] icons = new Drawable[ta.length()];
+//        for (int i = 0; i < ta.length(); i++) {
+//            int id = ta.getResourceId(i, 0);
+//            if (id != 0) {
+//                icons[i] = ContextCompat.getDrawable(this, id);
+//            }
+//        }
+//        ta.recycle();
+//        return icons;
+//    }
 
-    private String[] loadScreenTitles() {
-        return getResources().getStringArray(R.array.ld_activityScreenTitles);
-    }
-
-    private Drawable[] loadScreenIcons() {
-
-        TypedArray ta = getResources().obtainTypedArray(R.array.ld_activityScreenIcons);
-        Drawable[] icons = new Drawable[ta.length()];
-        for (int i = 0; i < ta.length(); i++) {
-            int id = ta.getResourceId(i, 0);
-            if (id != 0) {
-                icons[i] = ContextCompat.getDrawable(this, id);
-            }
-        }
-        ta.recycle();
-        return icons;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e(TAG, "onDestroy: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-
-    }
 }
 

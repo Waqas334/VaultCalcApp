@@ -100,7 +100,7 @@ public class AllVideoAdapter extends Adapter<ViewHolder> {
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ImageViewHolder(LayoutInflater.from(this.context).inflate(R.layout.item_hidevideo, parent, false));
+        return new ImageViewHolder(LayoutInflater.from(this.context).inflate(R.layout.item_video, parent, false));
     }
 
     public void onBindViewHolder(final ViewHolder holder, int position) {

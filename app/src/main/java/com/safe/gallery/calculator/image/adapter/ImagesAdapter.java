@@ -49,27 +49,6 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
         }
     }
 
-    public class ImageViewHolder_ViewBinding implements Unbinder {
-        private ImageViewHolder target;
-
-        @UiThread
-        public ImageViewHolder_ViewBinding(ImageViewHolder target, View source) {
-            this.target = target;
-            target.img = (ImageView) Utils.findRequiredViewAsType(source, R.id.img, "field 'img'", ImageView.class);
-            target.imgSelection = (ImageView) Utils.findRequiredViewAsType(source, R.id.img_selection, "field 'imgSelection'", ImageView.class);
-        }
-
-        @CallSuper
-        public void unbind() {
-            ImageViewHolder target = this.target;
-            if (target == null) {
-                throw new IllegalStateException("Bindings already cleared.");
-            }
-            this.target = null;
-            target.img = null;
-            target.imgSelection = null;
-        }
-    }
 
     public ImagesAdapter(Context context) {
         this.context = context;
@@ -87,18 +66,20 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
                 Glide.with(this.context).load(Uri.fromFile(new File(bucket.getImagePath()))).into(((ImageViewHolder) holder).img);
             }
             if (bucket.isSelected()) {
-                ((ImageViewHolder) holder).imgSelection.setImageResource(R.drawable.ic_check_white_24dp);
+                ((ImageViewHolder) holder).imgSelection.setVisibility(View.VISIBLE);
             } else {
-                ((ImageViewHolder) holder).imgSelection.setImageResource(0);
+                ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
+
             }
             ((ImageViewHolder) holder).mView.setOnClickListener(new OnClickListener() {
                 public void onClick(View view) {
                     if (bucket.isEditable()) {
                         bucket.setSelected(!bucket.isSelected());
                         if (bucket.isSelected()) {
-                            ((ImageViewHolder) holder).imgSelection.setImageResource(R.drawable.ic_check_white_24dp);
+                            ((ImageViewHolder) holder).imgSelection.setVisibility(View.VISIBLE);
                         } else {
-                            ((ImageViewHolder) holder).imgSelection.setImageResource(0);
+                            ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
+
                         }
                         checkIfAllFilesDeselected();
                         return;

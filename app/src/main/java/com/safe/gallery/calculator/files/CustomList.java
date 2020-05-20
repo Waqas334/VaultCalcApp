@@ -1,6 +1,7 @@
 package com.safe.gallery.calculator.files;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import java.io.File;
 
 public class CustomList extends ArrayAdapter<String> {
 
+    private static final String TAG = "CustomList";
     String ParentFolder;
     private final Activity context;
     int selectedPosition = -1;
@@ -32,19 +34,28 @@ public class CustomList extends ArrayAdapter<String> {
     public View getView(final int position, View view, ViewGroup parent) {
         View rowView = this.context.getLayoutInflater().inflate(R.layout.list_single, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
+        TextView txtFileType = (TextView) rowView.findViewById(R.id.tv_file_type);
         final CheckBox chk = (CheckBox) rowView.findViewById(R.id.myCheckBox);
         chk.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (chk.isChecked()) {
-                    ((FileSelectionActivity) CustomList.this.context).setFiles(true, CustomList.this.web[position]);
+                    ((AddFileActivity) CustomList.this.context).setFiles(true, CustomList.this.web[position]);
                 } else {
-                    ((FileSelectionActivity) CustomList.this.context).setFiles(false, CustomList.this.web[position]);
+                    ((AddFileActivity) CustomList.this.context).setFiles(false, CustomList.this.web[position]);
                 }
             }
         });
         txtTitle.setText(this.web[position]);
-        Picasso.with(this.context).load(new File(this.ParentFolder + "/" + this.web[position])).placeholder((int) R.drawable.document).resize(50, 50).into(imageView);
+        File file = new File(this.ParentFolder + "/" + this.web[position]);
+        String fileNameWithExtension = file.getName();
+        Log.i(TAG, "getView: name: " + file.getName());
+        Log.i(TAG, "getView: getAbsolute: " + file.getAbsolutePath());
+        Log.i(TAG, "getView: getPath: " + file.getPath());
+
+        String extension = fileNameWithExtension.substring(fileNameWithExtension.lastIndexOf(".") + 1);
+        txtFileType.setText(extension.toUpperCase());
+
+//        Picasso.with(this.context).load(new File(this.ParentFolder + "/" + this.web[position])).placeholder((int) R.drawable.document).resize(50, 50).into(imageView);
         return rowView;
     }
 

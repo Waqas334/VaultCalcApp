@@ -11,14 +11,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2.0dip"
-        android:background="@color/lock_bg_blue"
         android:gravity="center_vertical">
 
         <LinearLayout
             android:layout_margin="@dimen/_10sdp"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:background="@drawable/round_pink"
+            android:background="@drawable/circle_bg"
             android:gravity="center">
 
             <ImageView
@@ -28,7 +27,7 @@
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
                 android:src="@drawable/music1"
-                android:tint="@color/white" />
+                android:tint="@color/newColorAccent" />
 
         </LinearLayout>
 
@@ -52,7 +51,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="Title"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="14.0sp" />
 
                 <TextView
@@ -62,7 +61,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="20MB"
-                    android:textColor="@color/white"
+
                     android:textSize="12.0sp" />
             </LinearLayout>
 

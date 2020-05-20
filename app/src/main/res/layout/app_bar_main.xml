@@ -4,7 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -12,7 +12,7 @@
         style="@style/DrawerHamburgerStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="@color/newColorAccent"
         app:title="Home"
         app:titleTextColor="@color/colorAccent">
 
@@ -20,6 +20,25 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="70dp"
+                android:src="@drawable/appicon"
+                android:scaleType="fitStart"
+                android:id="@+id/iv_app_bar_app_icon"
+                android:padding="5dp"
+                android:layout_height="wrap_content"
+/>
+            <TextView
+                android:layout_toRightOf="@+id/iv_app_bar_app_icon"
+                android:layout_width="wrap_content"
+                android:text="Vault Calculator"
+                android:textColor="@android:color/white"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_height="wrap_content"/>
 
 
             <LinearLayout
@@ -35,17 +54,11 @@
                     android:id="@+id/hint"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/idea" />
+                    android:src="@drawable/ic_settings_white" />
 
             </LinearLayout>
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-
-    <FrameLayout
-        android:id="@+id/frame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
 </LinearLayout>

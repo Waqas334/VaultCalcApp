@@ -2,8 +2,6 @@ package com.safe.gallery.calculator.video.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.CallSuper;
-import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -26,9 +24,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import butterknife.Unbinder;
-import butterknife.internal.Utils;
 
 public class VideoAdapter extends Adapter<ViewHolder> {
     private ArrayList<AllVideosModel> buckets;
@@ -60,39 +55,13 @@ public class VideoAdapter extends Adapter<ViewHolder> {
         }
     }
 
-    public class ImageViewHolder_ViewBinding implements Unbinder {
-        private ImageViewHolder target;
-
-        @UiThread
-        public ImageViewHolder_ViewBinding(ImageViewHolder target, View source) {
-            this.target = target;
-            target.img = (ImageView) Utils.findRequiredViewAsType(source, R.id.img, "field 'img'", ImageView.class);
-            target.txtTitle = (TextView) Utils.findRequiredViewAsType(source, R.id.txt_title, "field 'txtTitle'", TextView.class);
-            target.txtSize = (TextView) Utils.findRequiredViewAsType(source, R.id.txt_size, "field 'txtSize'", TextView.class);
-            target.checkbox = (CheckBox) Utils.findRequiredViewAsType(source, R.id.checkbox, "field 'checkbox'", CheckBox.class);
-        }
-
-        @CallSuper
-        public void unbind() {
-            ImageViewHolder target = this.target;
-            if (target == null) {
-                throw new IllegalStateException("Bindings already cleared.");
-            }
-            this.target = null;
-            target.img = null;
-            target.txtTitle = null;
-            target.txtSize = null;
-            target.checkbox = null;
-        }
-    }
-
     public VideoAdapter(Context context) {
         this.context = context;
         this.buckets = new ArrayList();
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ImageViewHolder(LayoutInflater.from(this.context).inflate(R.layout.item_hidevideo, parent, false));
+        return new ImageViewHolder(LayoutInflater.from(this.context).inflate(R.layout.item_video, parent, false));
     }
 
     public void onBindViewHolder(final ViewHolder holder, int position) {

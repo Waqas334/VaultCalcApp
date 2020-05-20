@@ -21,6 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.BaseActivity;
@@ -56,11 +52,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -71,7 +65,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
     private LinearLayout adView;
     private VideoAdapter adapter;
-   
+
     Button btnUnhide;
     private int count;
     DBHelper dbHelper;
@@ -88,9 +82,9 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
     private ProgressDialog progressDialog;
     private ProgressBar progressbar;
     RecyclerView recyclerview;
-    
+
     private Timer timer;
-    CenterTitleToolbar toolbar;
+    Toolbar toolbar;
     private TextView txtCount;
     TextView txtError;
     ViewAnimator viewanimator;
@@ -110,12 +104,11 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
         setContentView((int) R.layout.activity_video);
         ButterKnife.bind((Activity) this);
         dbHelper = new DBHelper(this);
-        
+
         findViews();
         setHeaderInfo();
-        
+
         Init();
-        addBanner();
     }
 
     private void findViews() {
@@ -128,77 +121,12 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
         viewanimator = findViewById(R.id.viewanimator);
     }
 
-    public void addBanner() {
-
-
-        final AdView mAdView = new AdView(this);
-        mAdView.setAdSize(AdSize.BANNER);
-        final View adContainer = findViewById(R.id.layoutViewAdd);
-
-
-        mAdView.setAdUnitId(Constant.bannerId);
-
-        ((LinearLayout) adContainer).addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A")
-                .addTestDevice("3C5740EB2F36FB5F0FEFA773607D27CE") // mi white
-                .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samsung max
-                .build();
-
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-
-
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-
-                adContainer.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
-
     private void setHeaderInfo() {
         //toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.video));
-
-        if(getSupportActionBar()!=null){
-            Drawable drawable= getResources().getDrawable(R.drawable.ic_arrow);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
-
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void Init() {
@@ -237,7 +165,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
         if (adapter != null) {
             final List<String> selectedFiles = adapter.getSelectedImages();
             if (selectedFiles == null || selectedFiles.size() <= 0) {
-                Toast.makeText(this, "Please select at least one image!", 0).show();
+                Toast.makeText(this, "Please select at least one image!", Toast.LENGTH_LONG).show();
                 return;
             }
             showProgressDialog(selectedFiles);
@@ -265,19 +193,19 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
                         }
                         if (menuItemSelect != null) {
                             menuItemSelect.setVisible(false);
-                            menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                            menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                         }
                         if (menuItemDelete != null) {
                             menuItemDelete.setVisible(false);
                         }
                         isEditable = false;
-                        if(getSupportActionBar()!=null){
-                            Drawable drawable= getResources().getDrawable(R.drawable.ic_arrow);
-                            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                        if (getSupportActionBar() != null) {
+//                            Drawable drawable = getResources().getDrawable(R.drawable.ic_arrow);
+//                            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//                            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
+//                            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+                            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
                         }
                         //toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
@@ -397,7 +325,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
                 file.delete();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), 1).show();
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -431,6 +359,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
                 alertDialog.setButton(-1, (CharSequence) "Yes", new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         deleteSelectedFiles();
+                        onBackPressed();
                         alertDialog.dismiss();
                     }
                 });
@@ -451,20 +380,20 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
                     adapter.isItemEditable(true);
                 }
                 //toolbar.setNavigationIcon((int) R.drawable.ic_close);
-                if(getSupportActionBar()!=null){
-                    Drawable drawable= getResources().getDrawable(R.drawable.ic_close);
-                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                    Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                    newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                if (getSupportActionBar() != null) {
+//                    Drawable drawable = getResources().getDrawable(R.drawable.ic_close);
+//                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//                    Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
+//                    newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
                 }
                 break;
             case R.id.itm_select:
                 if (menuItemSelect != null) {
                     if (!isSelectAll) {
-                        menuItemSelect.setIcon(R.drawable.ic_check_filled);
+                        menuItemSelect.setIcon(R.drawable.ic_check_box_white_48dp);
                         if (adapter != null) {
                             adapter.selectAllItem();
                         }
@@ -472,7 +401,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
                         isSelectAll = true;
                         break;
                     }
-                    menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                    menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                     if (adapter != null) {
                         adapter.deSelectAllItem();
                     }
@@ -507,7 +436,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
     public void showSelectAllButton(boolean needToShow) {
         if (menuItemSelect != null) {
-            menuItemSelect.setIcon(needToShow ? R.drawable.ic_check_filled : R.drawable.ic_check_box_outline);
+            menuItemSelect.setIcon(needToShow ? R.drawable.ic_check_box_white_48dp : R.drawable.ic_check_box_outline_white_48dp);
             isSelectAll = needToShow;
         }
     }
@@ -523,7 +452,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
             }
             if (menuItemSelect != null) {
                 menuItemSelect.setVisible(false);
-                menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
             }
             if (menuItemDelete != null) {
                 menuItemDelete.setVisible(false);
@@ -535,17 +464,17 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
             if (adapter != null) {
                 adapter.deSelectAllItem();
             }
-            if(getSupportActionBar()!=null){
-                Drawable drawable= getResources().getDrawable(R.drawable.ic_arrow);
-                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+            if (getSupportActionBar() != null) {
+//                Drawable drawable = getResources().getDrawable(R.drawable.ic_arrow);
+//                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//                Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
+//                newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
             }
             //toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
-            btnUnhide.setVisibility(8);
+            btnUnhide.setVisibility(View.INVISIBLE);
             return;
         }
         setBackData();
@@ -578,63 +507,12 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
     public void openVideo(final String videoPath) {
 
 
-        Random rand = new Random();
-        int randomNum = 0 + rand.nextInt(5);
-
-        if (randomNum == 0) {
-            if (!MainApplication.getInstance().requestNewInterstitial()) {
-
-                try {
-                    Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(videoPath));
-                    intent.setDataAndType(Uri.parse(videoPath), "video/*");
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Toast.makeText(this, getString(R.string.no_app_found), 0).show();
-                }
-            } else {
-
-                MainApplication.getInstance().mInterstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-
-                        MainApplication.getInstance().mInterstitialAd.setAdListener(null);
-                        MainApplication.getInstance().mInterstitialAd = null;
-                        MainApplication.getInstance().ins_adRequest = null;
-                        MainApplication.getInstance().LoadAds();
-
-                        try {
-                            Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(videoPath));
-                            intent.setDataAndType(Uri.parse(videoPath), "video/*");
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            Toast.makeText(VideoActivity.this, getString(R.string.no_app_found), 0).show();
-                        }
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(int i) {
-                        super.onAdFailedToLoad(i);
-                    }
-
-                    @Override
-                    public void onAdLoaded() {
-                        super.onAdLoaded();
-                    }
-                });
-            }
-        } else {
-
-            try {
-
-                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(videoPath));
-                intent.setDataAndType(Uri.parse(videoPath), "video/*");
-                startActivity(intent);
-
-            } catch (Exception e) {
-
-                Toast.makeText(VideoActivity.this, getString(R.string.no_app_found), 0).show();
-            }
+        try {
+            Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(videoPath));
+            intent.setDataAndType(Uri.parse(videoPath), "video/*");
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, getString(R.string.no_app_found), Toast.LENGTH_LONG).show();
         }
 
 

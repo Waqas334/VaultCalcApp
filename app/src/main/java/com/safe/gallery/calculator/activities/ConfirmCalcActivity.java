@@ -17,8 +17,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,47 +37,49 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
 
     public static String Radian_Degree = "DEG";
 
-    ImageView f6003A;
+    TextView  tv_eight;
 
-    ImageView f6004B;
+    TextView  tv_five;
 
-    ImageView f6005C;
+    TextView  tv_two;
 
-    ImageView f6006D;
+    TextView  tv_dot;
 
-    ImageView f6007E;
+    TextView  tv_divide;
 
-    ImageView f6008F;
+    TextView tv_nine;
     /* renamed from: G */
-    ImageView f6009G;
+    TextView tv_six;
     /* renamed from: H */
-    ImageView f6010H;
+    TextView  tv_three;
     /* renamed from: I */
-    ImageView f6011I;
+    TextView  tv_sign;
     /* renamed from: J */
-    ImageView f6012J;
+    TextView  tv_mul;
     /* renamed from: K */
-    ImageView f6013K;
+    TextView  tv_min;
     /* renamed from: L */
-    ImageView f6014L;
+    TextView  tv_plus;
     /* renamed from: M */
-    ImageView f6015M;
+    TextView  tv_equal;
     /* renamed from: N */
-    ImageView f6016N;
+    TextView  tv_sqrt;
     /* renamed from: O */
-    ImageView f6017O;
+//    TextView  f6017O;
     /* renamed from: P */
     EditText et_main;
     /* renamed from: Q */
-    EditText f6019Q;
+    EditText et_result;
     /* renamed from: R */
-    TextView f6020R;
+//    TextView f6020R;
     /* renamed from: S */
-    LinearLayout f6021S;
+
+    //Delete layout
+//    LinearLayout f6021S;
     /* renamed from: T */
-    LinearLayout f6022T;
+//    LinearLayout f6022T;
     /* renamed from: U */
-    RelativeLayout f6023U;
+//    RelativeLayout f6023U;
     /* renamed from: V */
     String f6024V = "";
     /* renamed from: W */
@@ -142,17 +142,17 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
     int f6035t;
     private String text = "";
     /* renamed from: u */
-    ImageView f6036u;
+    TextView tv_clear;
     /* renamed from: v */
-    ImageView f6037v;
+    TextView tv_seven;
     /* renamed from: w */
-    ImageView f6038w;
+    TextView tv_four;
     /* renamed from: x */
-    ImageView f6039x;
+    TextView tv_one;
     /* renamed from: y */
-    ImageView f6040y;
+    TextView tv_zero;
     /* renamed from: z */
-    ImageView f6041z;
+    TextView tv_percent;
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -187,14 +187,14 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
         }
 
         public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            if (this.f6001a.f6019Q.getText().toString().equalsIgnoreCase("") || this.f6001a.f6019Q.getText().toString().equalsIgnoreCase("0")) {
-                this.f6001a.f6019Q.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+            if (this.f6001a.et_result.getText().toString().equalsIgnoreCase("") || this.f6001a.et_result.getText().toString().equalsIgnoreCase("0")) {
+                this.f6001a.et_result.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
             }
         }
 
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            if (!this.f6001a.f6019Q.getText().toString().equalsIgnoreCase("")) {
-                this.f6001a.f6019Q.setSelection(this.f6001a.f6019Q.getText().toString().length() - 1);
+            if (!this.f6001a.et_result.getText().toString().equalsIgnoreCase("")) {
+                this.f6001a.et_result.setSelection(this.f6001a.et_result.getText().toString().length() - 1);
             }
         }
     }
@@ -226,8 +226,8 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
 
 
     private void check_tablet() {
-        this.f6017O = (ImageView) findViewById(R.id.iv_square_root);
-        this.f6017O.setOnClickListener(this);
+//        this.f6017O = (ImageView) findViewById(R.id.iv_square_root);
+//        this.f6017O.setOnClickListener(this);
         if (share_calc.flag_expand.booleanValue()) {
             Log.e("flag_expand", "" + share_calc.flag_expand);
             share_calc.flag_expand = Boolean.valueOf(false);
@@ -243,7 +243,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
             if (this.ah.booleanValue()) {
                 this.et_main.setText("");
                 this.ab = "";
-                this.f6019Q.setText("0");
+                this.et_result.setText("0");
                 this.ah = Boolean.valueOf(false);
             }
             char[] toCharArray = this.ab.toCharArray();
@@ -257,13 +257,13 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
             }
             if (this.ad == 0 && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '.' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '+' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '-' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '/' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '*' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '%') {
                 char charAt = this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1);
-                this.f6019Q.setText(this.ab);
+                this.et_result.setText(this.ab);
                 Log.e("dot", "" + charAt);
                 if (charAt < '0' || charAt > '9') {
                     Log.e("dot", "else" + charAt);
                     this.et_main.append("* 0.");
                     this.ab += "";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                     return;
                 }
                 if (this.av.booleanValue()) {
@@ -272,95 +272,95 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 Log.e("dot", "if" + charAt);
                 this.et_main.append(".");
                 this.ab += ".";
-                this.f6019Q.setText(this.ab);
+                this.et_result.setText(this.ab);
             }
         }
     }
 
     private void initlisteners() {
-        this.f6040y.setOnClickListener(this);
-        this.f6039x.setOnClickListener(this);
-        this.f6005C.setOnClickListener(this);
-        this.f6010H.setOnClickListener(this);
-        this.f6038w.setOnClickListener(this);
-        this.f6004B.setOnClickListener(this);
-        this.f6009G.setOnClickListener(this);
-        this.f6037v.setOnClickListener(this);
-        this.f6003A.setOnClickListener(this);
-        this.f6008F.setOnClickListener(this);
-        this.f6014L.setOnClickListener(this);
-        this.f6013K.setOnClickListener(this);
-        this.f6012J.setOnClickListener(this);
-        this.f6007E.setOnClickListener(this);
-        this.f6041z.setOnClickListener(this);
-        this.f6036u.setOnClickListener(this);
-        this.f6015M.setOnClickListener(this);
-        this.f6016N.setOnClickListener(this);
-        this.f6021S.setOnClickListener(this);
-        this.f6011I.setOnClickListener(this);
-        this.f6006D.setOnClickListener(this);
-        this.f6040y.setOnTouchListener(this);
-        this.f6039x.setOnTouchListener(this);
-        this.f6005C.setOnTouchListener(this);
-        this.f6010H.setOnTouchListener(this);
-        this.f6038w.setOnTouchListener(this);
-        this.f6004B.setOnTouchListener(this);
-        this.f6009G.setOnTouchListener(this);
-        this.f6037v.setOnTouchListener(this);
-        this.f6003A.setOnTouchListener(this);
-        this.f6008F.setOnTouchListener(this);
-        this.f6014L.setOnTouchListener(this);
-        this.f6013K.setOnTouchListener(this);
-        this.f6012J.setOnTouchListener(this);
-        this.f6007E.setOnTouchListener(this);
-        this.f6041z.setOnTouchListener(this);
-        this.f6036u.setOnTouchListener(this);
-        this.f6015M.setOnTouchListener(this);
-        this.f6016N.setOnTouchListener(this);
-        this.f6021S.setOnTouchListener(this);
-        this.f6011I.setOnTouchListener(this);
-        this.f6006D.setOnTouchListener(this);
-        this.f6019Q.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
-        this.f6019Q.setSingleLine();
-        this.f6019Q.addTextChangedListener(new ConfirmCalcActivity.C16052(this));
+        this.tv_zero.setOnClickListener(this);
+        this.tv_one.setOnClickListener(this);
+        this.tv_two.setOnClickListener(this);
+        this.tv_three.setOnClickListener(this);
+        this.tv_four.setOnClickListener(this);
+        this.tv_five.setOnClickListener(this);
+        this.tv_six.setOnClickListener(this);
+        this.tv_seven.setOnClickListener(this);
+        this.tv_eight.setOnClickListener(this);
+        this.tv_nine.setOnClickListener(this);
+        this.tv_plus.setOnClickListener(this);
+        this.tv_min.setOnClickListener(this);
+        this.tv_mul.setOnClickListener(this);
+        this.tv_divide.setOnClickListener(this);
+        this.tv_percent.setOnClickListener(this);
+        this.tv_clear.setOnClickListener(this);
+        this.tv_equal.setOnClickListener(this);
+        this.tv_sqrt.setOnClickListener(this);
+//        this.f6021S.setOnClickListener(this);
+        this.tv_sign.setOnClickListener(this);
+        this.tv_dot.setOnClickListener(this);
+        this.tv_zero.setOnTouchListener(this);
+        this.tv_one.setOnTouchListener(this);
+        this.tv_two.setOnTouchListener(this);
+        this.tv_three.setOnTouchListener(this);
+        this.tv_four.setOnTouchListener(this);
+        this.tv_five.setOnTouchListener(this);
+        this.tv_six.setOnTouchListener(this);
+        this.tv_seven.setOnTouchListener(this);
+        this.tv_eight.setOnTouchListener(this);
+        this.tv_nine.setOnTouchListener(this);
+        this.tv_plus.setOnTouchListener(this);
+        this.tv_min.setOnTouchListener(this);
+        this.tv_mul.setOnTouchListener(this);
+        this.tv_divide.setOnTouchListener(this);
+        this.tv_percent.setOnTouchListener(this);
+        this.tv_clear.setOnTouchListener(this);
+        this.tv_equal.setOnTouchListener(this);
+        this.tv_sqrt.setOnTouchListener(this);
+//        this.f6021S.setOnTouchListener(this);
+        this.tv_sign.setOnTouchListener(this);
+        this.tv_dot.setOnTouchListener(this);
+        this.et_result.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+        this.et_result.setSingleLine();
+        this.et_result.addTextChangedListener(new ConfirmCalcActivity.C16052(this));
         this.et_main.setSingleLine();
-        this.f6019Q.setSingleLine();
+        this.et_result.setSingleLine();
         this.et_main.addTextChangedListener(new ConfirmCalcActivity.C16063(this));
     }
 
     private void initviews() {
-        this.f6036u = (ImageView) findViewById(R.id.iv_clear);
-        this.f6037v = (ImageView) findViewById(R.id.iv_seven);
-        this.f6038w = (ImageView) findViewById(R.id.iv_four);
-        this.f6039x = (ImageView) findViewById(R.id.iv_one);
-        this.f6040y = (ImageView) findViewById(R.id.iv_zero);
-        this.f6041z = (ImageView) findViewById(R.id.iv_percent);
-        this.f6003A = (ImageView) findViewById(R.id.iv_eight);
-        this.f6004B = (ImageView) findViewById(R.id.iv_five);
-        this.f6005C = (ImageView) findViewById(R.id.iv_two);
-        this.f6006D = (ImageView) findViewById(R.id.iv_dot);
-        this.f6007E = (ImageView) findViewById(R.id.iv_divide);
-        this.f6008F = (ImageView) findViewById(R.id.iv_nine);
-        this.f6009G = (ImageView) findViewById(R.id.iv_six);
-        this.f6010H = (ImageView) findViewById(R.id.iv_three);
-        this.f6011I = (ImageView) findViewById(R.id.iv_plus_minus);
-        this.f6012J = (ImageView) findViewById(R.id.iv_multiply);
-        this.f6013K = (ImageView) findViewById(R.id.iv_minus);
-        this.f6014L = (ImageView) findViewById(R.id.iv_plus);
-        this.f6015M = (ImageView) findViewById(R.id.iv_equals);
-        this.f6016N = (ImageView) findViewById(R.id.iv_sqrt);
+        this.tv_clear = findViewById(R.id.tv_clear);
+        this.tv_seven = findViewById(R.id.tv_seven);
+        this.tv_four = findViewById(R.id.tv_four);
+        this.tv_one = findViewById(R.id.tv_one);
+        this.tv_zero = findViewById(R.id.tv_zero);
+        this.tv_percent = findViewById(R.id.tv_percent);
+        this.tv_eight = findViewById(R.id.tv_eight);
+        this.tv_five = findViewById(R.id.tv_five);
+        this.tv_two = findViewById(R.id.tv_two);
+        this.tv_dot = findViewById(R.id.tv_dot);
+        this.tv_divide = findViewById(R.id.tv_divide);
+        this.tv_nine = findViewById(R.id.tv_nine);
+        this.tv_six = findViewById(R.id.tv_six);
+        this.tv_three = findViewById(R.id.tv_three);
+        this.tv_sign = findViewById(R.id.tv_sign);
+        this.tv_mul = findViewById(R.id.tv_mul);
+        this.tv_min = findViewById(R.id.tv_min);
+        this.tv_plus = findViewById(R.id.tv_plus);
+        this.tv_equal = findViewById(R.id.tv_equal);
+        this.tv_sqrt = findViewById(R.id.tv_sqrt);
         this.et_main = (EditText) findViewById(R.id.et_main);
-        this.f6019Q = (EditText) findViewById(R.id.tv_Display);
-        this.f6020R = (TextView) findViewById(R.id.tv_divide);
-        this.f6021S = (LinearLayout) findViewById(R.id.ll_delete);
-        this.f6022T = (LinearLayout) findViewById(R.id.ll_calc);
-        this.f6023U = (RelativeLayout) findViewById(R.id.rl_calc_layout);
+        this.et_result = (EditText) findViewById(R.id.tv_Display);
+//        this.f6020R = (TextView) findViewById(R.id.tv_divide);
+//        this.f6021S = (LinearLayout) findViewById(R.id.ll_delete);
+//        this.f6022T = (LinearLayout) findViewById(R.id.ll_calc);
+//        this.f6023U = (RelativeLayout) findViewById(R.id.rl_calc_layout);
     }
 
     private void mid_calculation() {
         if (this.f6026X.equals("/") && this.f6025W.equals("0")) {
             this.f6033r = Boolean.valueOf(true);
-            this.f6019Q.setText("0");
+            this.et_result.setText("0");
             this.et_main.setText("Can't divide by 0");
             this.ab = "";
             return;
@@ -410,7 +410,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
             } else {
                 obj = valueOf;
             }
-            this.f6019Q.setText(charSequence);
+            this.et_result.setText(charSequence);
             Log.e("Answer", this.aa + "");
             Double d = this.aa;
             Long valueOf3 = Long.valueOf(new Double(d.doubleValue()).longValue());
@@ -425,19 +425,19 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
             if (this.ab.length() > 16) {
                 this.ab = this.ab.substring(0, 16);
             } else {
-                this.f6019Q.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+                this.et_result.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
             }
             if (this.ab.equalsIgnoreCase("-0")) {
                 this.ab = "0";
             }
-            this.f6019Q.setText(this.ab);
+            this.et_result.setText(this.ab);
             this.et_main.setText(this.ab);
             this.f6024V = this.ab;
         } catch (Exception e2) {
             Log.e("TAG", "Toast");
             Toast.makeText(this, "Syntax Error", 0).show();
             this.et_main.setText("");
-            this.f6019Q.setText("0");
+            this.et_result.setText("0");
             this.ab = "";
             this.ac = "";
             this.prev = "";
@@ -454,13 +454,13 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.ah = Boolean.valueOf(false);
             }
             if (!this.et_main.getText().toString().equals("Can't divide by 0") && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '+' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '-' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '/' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '*' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '%') {
-                if (this.f6019Q.length() > 0) {
+                if (this.et_result.length() > 0) {
                     int i;
-                    if (this.f6019Q.getText().charAt(0) == '-') {
+                    if (this.et_result.getText().charAt(0) == '-') {
                         Log.e("TAG", "if for loop :");
                         i = 1;
-                        while (i < this.f6019Q.length()) {
-                            if (this.f6019Q.getText().charAt(i) == '+' || this.f6019Q.getText().charAt(i) == '-' || this.f6019Q.getText().charAt(i) == '*' || this.f6019Q.getText().charAt(i) == '/') {
+                        while (i < this.et_result.length()) {
+                            if (this.et_result.getText().charAt(i) == '+' || this.et_result.getText().charAt(i) == '-' || this.et_result.getText().charAt(i) == '*' || this.et_result.getText().charAt(i) == '/') {
                                 this.aC = false;
                                 break;
                             } else {
@@ -471,8 +471,8 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     } else {
                         Log.e("TAG", "else for loop :");
                         i = 0;
-                        while (i < this.f6019Q.length()) {
-                            if (this.f6019Q.getText().charAt(i) == '+' || this.f6019Q.getText().charAt(i) == '-' || this.f6019Q.getText().charAt(i) == '*' || this.f6019Q.getText().charAt(i) == '/') {
+                        while (i < this.et_result.length()) {
+                            if (this.et_result.getText().charAt(i) == '+' || this.et_result.getText().charAt(i) == '-' || this.et_result.getText().charAt(i) == '*' || this.et_result.getText().charAt(i) == '/') {
                                 this.aC = false;
                                 break;
                             } else {
@@ -482,33 +482,33 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         }
                     }
                 }
-                String obj = this.f6019Q.getText().toString();
+                String obj = this.et_result.getText().toString();
                 if (obj.length() > 16) {
                     obj.substring(0, 16);
                 } else {
-                    this.f6019Q.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+                    this.et_result.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
                 }
                 if (this.aC) {
-                    if (this.f6019Q.getText().charAt(0) != '-' || this.f6019Q.length() <= 1) {
+                    if (this.et_result.getText().charAt(0) != '-' || this.et_result.length() <= 1) {
                         Log.e("TAG", "display : " + this.ab);
                         Log.e("TAG", "display length : " + this.ab.length());
                         this.et_main.setText(this.et_main.getText().toString().substring(0, this.et_main.getText().toString().length() - this.ab.length()) + "-" + this.ab);
-                        this.f6019Q.setText("-" + this.ab);
+                        this.et_result.setText("-" + this.ab);
                         this.ar = Boolean.valueOf(false);
-                        this.ab = this.f6019Q.getText().toString();
+                        this.ab = this.et_result.getText().toString();
                     } else {
                         Log.e("TAG", "oth pos - in display");
-                        obj = this.f6019Q.getText().toString();
+                        obj = this.et_result.getText().toString();
                         Log.e("TAG", "s before : " + obj);
-                        Log.e("TAG", "s before replacing string : " + this.f6019Q.getText().toString().substring(1));
-                        CharSequence replace = obj.replace(this.f6019Q.getText().toString(), this.f6019Q.getText().toString().substring(1));
-                        this.f6019Q.setText(this.f6019Q.getText().toString().substring(1));
+                        Log.e("TAG", "s before replacing string : " + this.et_result.getText().toString().substring(1));
+                        CharSequence replace = obj.replace(this.et_result.getText().toString(), this.et_result.getText().toString().substring(1));
+                        this.et_result.setText(this.et_result.getText().toString().substring(1));
                         if (this.f6025W.equalsIgnoreCase("")) {
                             this.et_main.setText(replace);
                         } else {
                             this.et_main.setText(this.firststr + replace);
                         }
-                        this.ab = this.f6019Q.getText().toString();
+                        this.ab = this.et_result.getText().toString();
                     }
                 }
                 if (this.f6027Y.booleanValue()) {
@@ -528,10 +528,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_clear:
+            case R.id.tv_clear:
                 this.f6029n = Boolean.valueOf(false);
                 this.et_main.setText("");
-                this.f6019Q.setText("0");
+                this.et_result.setText("0");
                 this.ab = "";
                 this.f6025W = "";
                 this.f6024V = "";
@@ -545,7 +545,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6026X = "";
                 this.aC = false;
                 return;
-            case R.id.iv_divide:
+            case R.id.tv_divide:
                 if (!this.et_main.getText().toString().equals("Can't divide by 0")) {
                     if (this.et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -558,7 +558,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         if (this.ah.booleanValue()) {
                             this.et_main.setText(this.ab);
                             this.ab = this.aa + "";
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             this.ah = Boolean.valueOf(false);
                         }
                         this.am = Boolean.valueOf(true);
@@ -567,7 +567,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                             this.ac += "/";
                         }
                         if (this.et_main.length() > 0) {
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             if (this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '+' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '-' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '/' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '*' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '%') {
                                 this.f6028Z = this.et_main.getText();
                                 mid_calculation();
@@ -608,7 +608,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 return;
-            case R.id.iv_dot:
+            case R.id.tv_dot:
                 if (!this.f6033r.booleanValue()) {
                     try {
                         dot_operation();
@@ -618,7 +618,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     }
                 }
                 return;
-            case R.id.iv_eight:
+            case R.id.tv_eight:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -626,7 +626,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6032q.booleanValue()) {
                     this.et_main.setText("");
@@ -634,7 +634,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -643,7 +643,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -652,7 +652,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -671,10 +671,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "8";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.et_main.append("8");
                     this.ab += "8";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                 }
                 if (this.f6027Y.booleanValue()) {
                     this.f6025W = this.ab;
@@ -684,7 +684,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_equals:
+            case R.id.tv_equal:
 
 
                 if (MainApplication.getInstance().getPassword().equals("")) {
@@ -709,7 +709,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (!this.f6033r.booleanValue()) {
                     if (!(!this.ah.booleanValue() || this.f6026X.equals("") || this.f6025W == null || this.f6025W.equalsIgnoreCase(""))) {
                         Log.e("str2equal", this.f6025W);
-                        this.f6028Z = new SpannableStringBuilder(this.f6019Q.getText().toString() + this.f6026X + this.f6025W);
+                        this.f6028Z = new SpannableStringBuilder(this.et_result.getText().toString() + this.f6026X + this.f6025W);
                         mid_calculation();
                     }
                     if (this.et_main.getText().length() <= 0) {
@@ -732,7 +732,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     }
                 }
                 return;
-            case R.id.iv_five:
+            case R.id.tv_five:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -740,7 +740,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6032q.booleanValue()) {
                     this.et_main.setText("");
@@ -748,7 +748,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -757,7 +757,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -766,7 +766,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -785,10 +785,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "5";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.et_main.append("5");
                     this.ab += "5";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                     this.f6029n = Boolean.valueOf(false);
                 }
                 if (this.f6027Y.booleanValue()) {
@@ -799,7 +799,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_four:
+            case R.id.tv_four:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -807,7 +807,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6032q.booleanValue()) {
                     this.et_main.setText("");
@@ -815,7 +815,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -824,7 +824,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -833,7 +833,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -852,10 +852,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "4";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.et_main.append("4");
                     this.ab += "4";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                     this.f6029n = Boolean.valueOf(false);
                 }
                 if (this.f6027Y.booleanValue()) {
@@ -866,7 +866,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_minus:
+            case R.id.tv_min:
                 if (!this.et_main.getText().toString().equals("Can't divide by 0")) {
                     if (this.et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -880,7 +880,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         if (this.ah.booleanValue()) {
                             this.et_main.setText(this.ab);
                             this.ab = this.aa + "";
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             this.ah = Boolean.valueOf(false);
                         }
                         this.ak = Boolean.valueOf(true);
@@ -889,7 +889,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                             this.ac += "-";
                         }
                         if (this.et_main.length() > 0) {
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             if (this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '+' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '-' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '/' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '*' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '%') {
                                 this.f6028Z = this.et_main.getText();
                                 mid_calculation();
@@ -924,7 +924,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 return;
-            case R.id.iv_multiply:
+            case R.id.tv_mul:
                 if (!this.et_main.getText().toString().equals("Can't divide by 0")) {
                     if (this.et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -937,7 +937,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         if (this.ah.booleanValue()) {
                             this.et_main.setText(this.ab);
                             this.ab = this.aa + "";
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             this.ah = Boolean.valueOf(false);
                         }
                         this.al = Boolean.valueOf(true);
@@ -946,7 +946,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                             this.ac += "*";
                         }
                         if (this.et_main.length() > 0) {
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             if (this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '+' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '-' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '/' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '*' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '%') {
                                 this.f6028Z = this.et_main.getText();
                                 mid_calculation();
@@ -981,7 +981,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 return;
-            case R.id.iv_nine:
+            case R.id.tv_nine:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -989,7 +989,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6032q.booleanValue()) {
                     this.et_main.setText("");
@@ -997,7 +997,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -1006,7 +1006,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -1015,7 +1015,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -1034,11 +1034,11 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "9";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.f6029n = Boolean.valueOf(false);
                     this.et_main.append("9");
                     this.ab += "9";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                 }
                 if (this.f6027Y.booleanValue()) {
                     this.f6025W = this.ab;
@@ -1048,7 +1048,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_one:
+            case R.id.tv_one:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -1056,7 +1056,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6031p.booleanValue()) {
                     this.et_main.setText("");
@@ -1064,7 +1064,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.f6032q.booleanValue()) {
@@ -1073,7 +1073,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -1082,7 +1082,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -1100,10 +1100,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "1";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.et_main.append("1");
                     this.ab += "1";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                     this.f6029n = Boolean.valueOf(false);
                 }
                 if (this.f6027Y.booleanValue()) {
@@ -1114,7 +1114,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_percent:
+            case R.id.tv_percent:
                 if (!this.f6033r.booleanValue()) {
                     try {
                         if (this.et_main.length() > 0) {
@@ -1133,11 +1133,11 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                             if (format.length() > 16) {
                                 format = format.substring(0, 16);
                             } else {
-                                this.f6019Q.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+                                this.et_result.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
                             }
                             this.et_main.setText(format + "");
                             this.ab = format + "";
-                            this.f6019Q.setText(format + "");
+                            this.et_result.setText(format + "");
                             this.f6024V = format;
                             this.f6025W = "";
                             this.f6032q = Boolean.valueOf(true);
@@ -1151,7 +1151,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     }
                 }
                 return;
-            case R.id.iv_plus:
+            case R.id.tv_plus:
                 if (!this.et_main.getText().toString().equals("Can't divide by 0")) {
                     if (this.et_main.getText().length() == 0) {
                         Toast.makeText(this, "Select Number First", 0).show();
@@ -1164,7 +1164,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         if (this.ah.booleanValue()) {
                             this.et_main.setText(this.ab);
                             this.ab = this.aa + "";
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             this.ah = Boolean.valueOf(false);
                         }
                         this.aj = Boolean.valueOf(true);
@@ -1173,7 +1173,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                             this.ac += "+";
                         }
                         if (this.et_main.length() > 0) {
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             if (this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '+' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '-' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '/' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '*' && this.et_main.getText().toString().charAt(this.et_main.getText().toString().length() - 1) != '%') {
                                 this.f6028Z = this.et_main.getText();
                                 Log.e("if", "if");
@@ -1195,7 +1195,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                                     this.et_main.append("+");
                                     this.f6026X = "+";
                                     this.f6027Y = Boolean.valueOf(true);
-                                    if (this.f6019Q.getText().toString().length() == 16) {
+                                    if (this.et_result.getText().toString().length() == 16) {
                                         this.f6029n = Boolean.valueOf(true);
                                     }
                                 } else {
@@ -1212,7 +1212,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 return;
-            case R.id.iv_plus_minus:
+            case R.id.tv_sign:
                 if (!this.et_main.getText().toString().equals("0") && !this.et_main.getText().toString().equals("Invalid Input") && !this.et_main.getText().toString().equals("Can't divide by 0")) {
                     try {
                         operation();
@@ -1222,7 +1222,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     }
                 }
                 return;
-            case R.id.iv_seven:
+            case R.id.tv_seven:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -1230,7 +1230,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6032q.booleanValue()) {
                     this.et_main.setText("");
@@ -1238,7 +1238,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -1247,7 +1247,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -1256,7 +1256,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -1275,11 +1275,11 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "7";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.f6029n = Boolean.valueOf(false);
                     this.et_main.append("7");
                     this.ab += "7";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                 }
                 if (this.f6027Y.booleanValue()) {
                     this.f6025W = this.ab;
@@ -1289,7 +1289,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_six:
+            case R.id.tv_six:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -1297,7 +1297,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6032q.booleanValue()) {
                     this.et_main.setText("");
@@ -1305,7 +1305,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -1314,7 +1314,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -1323,7 +1323,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -1342,10 +1342,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "6";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.et_main.append("6");
                     this.ab += "6";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                     this.f6029n = Boolean.valueOf(false);
                 }
                 if (this.f6027Y.booleanValue()) {
@@ -1356,7 +1356,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_sqrt:
+            case R.id.tv_sqrt:
                 if (!this.f6033r.booleanValue()) {
                     if (this.et_main.length() > 0) {
                         this.f6026X = "";
@@ -1367,23 +1367,23 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 return;
-            case R.id.iv_square_root:
-                if (!this.f6033r.booleanValue()) {
-                    if (this.ae == 0) {
-                        share_calc.flag_expand = Boolean.valueOf(true);
-                        this.ae = 1;
-                        return;
-                    }
-                    share_calc.flag_expand = Boolean.valueOf(false);
-                    this.ae = 0;
-                    return;
-                }
-                return;
-            case R.id.iv_three:
+//            case R.id.iv_square_root:
+//                if (!this.f6033r.booleanValue()) {
+//                    if (this.ae == 0) {
+//                        share_calc.flag_expand = Boolean.valueOf(true);
+//                        this.ae = 1;
+//                        return;
+//                    }
+//                    share_calc.flag_expand = Boolean.valueOf(false);
+//                    this.ae = 0;
+//                    return;
+//                }
+//                return;
+            case R.id.tv_three:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
@@ -1394,7 +1394,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -1403,7 +1403,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -1412,7 +1412,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -1431,10 +1431,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "3";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.et_main.append("3");
                     this.ab += "3";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                     this.f6029n = Boolean.valueOf(false);
                 }
                 if (this.f6027Y.booleanValue()) {
@@ -1445,7 +1445,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_two:
+            case R.id.tv_two:
                 this.f6033r = Boolean.valueOf(false);
                 if (this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     this.et_main.setText("");
@@ -1453,7 +1453,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("");
+                    this.et_result.setText("");
                 }
                 if (this.f6032q.booleanValue()) {
                     this.et_main.setText("");
@@ -1461,7 +1461,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6032q = Boolean.valueOf(false);
                 }
                 if (this.f6031p.booleanValue()) {
@@ -1470,7 +1470,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.f6031p = Boolean.valueOf(false);
                 }
                 if (this.ah.booleanValue()) {
@@ -1479,7 +1479,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     this.f6025W = "";
                     this.f6024V = "";
                     this.f6026X = "";
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ah = Boolean.valueOf(false);
                 }
                 if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -1497,10 +1497,10 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 if (this.av.booleanValue()) {
                     this.ac += "2";
                 }
-                if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
                     this.et_main.append("2");
                     this.ab += "2";
-                    this.f6019Q.setText(this.ab);
+                    this.et_result.setText(this.ab);
                     this.f6029n = Boolean.valueOf(false);
                 }
                 if (this.f6027Y.booleanValue()) {
@@ -1511,7 +1511,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 this.f6024V = this.ab;
                 Log.e("str1", this.f6024V);
                 return;
-            case R.id.iv_x_exclamation:
+            /*case R.id.iv_x_exclamation:
                 if (!this.f6033r.booleanValue() && this.et_main.length() != 0) {
                     String str;
                     Boolean valueOf;
@@ -1543,21 +1543,21 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                             charSequence = str2;
                             int i2 = res - 1;
                             while (i2 >= 0) {
-                                /*String str3 = charSequence + factorial[i2];
+                                *//*String str3 = charSequence + factorial[i2];
                                 i2--;
-                                Object obj = str3;*/
+                                Object obj = str3;*//*
                             }
                         }
                         if (valueOf.booleanValue()) {
                             CharSequence d = ((Double) new ExtendedDoubleEvaluator().evaluate(this.et_main.getText().toString().replace(this.ac, charSequence))).toString();
                             this.et_main.setText(d);
-                            this.f6019Q.setText(d);
+                            this.et_result.setText(d);
                             this.ac = "";
                             this.aw = Boolean.valueOf(false);
                             return;
                         }
                         this.et_main.setText(charSequence);
-                        this.f6019Q.setText(charSequence);
+                        this.et_result.setText(charSequence);
                         return;
                     } catch (Exception e32) {
                         if (e32.toString().contains("ArrayIndexOutOfBoundsException")) {
@@ -1569,8 +1569,8 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         return;
                     }
                 }
-                return;
-            case R.id.iv_zero:
+                return;*/
+            case R.id.tv_zero:
                 if (!this.et_main.getText().toString().equalsIgnoreCase("0")) {
                     if (this.f6031p.booleanValue()) {
                         this.et_main.setText("");
@@ -1578,7 +1578,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         this.f6025W = "";
                         this.f6024V = "";
                         this.f6026X = "";
-                        this.f6019Q.setText("0");
+                        this.et_result.setText("0");
                         this.f6031p = Boolean.valueOf(false);
                     }
                     if (this.f6032q.booleanValue()) {
@@ -1587,7 +1587,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         this.f6025W = "";
                         this.f6024V = "";
                         this.f6026X = "";
-                        this.f6019Q.setText("0");
+                        this.et_result.setText("0");
                         this.f6032q = Boolean.valueOf(false);
                     }
                     this.f6033r = Boolean.valueOf(false);
@@ -1597,7 +1597,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                         this.f6024V = "";
                         this.f6026X = "";
                         this.ab = "";
-                        this.f6019Q.setText("0");
+                        this.et_result.setText("0");
                         this.ah = Boolean.valueOf(false);
                     }
                     if (this.aj.booleanValue() || this.ak.booleanValue() || this.am.booleanValue() || this.al.booleanValue() || this.an.booleanValue() || this.ao.booleanValue()) {
@@ -1615,11 +1615,11 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     if (this.av.booleanValue()) {
                         this.ac += "0";
                     }
-                    if (this.f6019Q.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
-                        if (this.f6019Q.getText().length() != 1 || !this.f6019Q.getText().toString().equalsIgnoreCase("0") || !this.et_main.getText().toString().equalsIgnoreCase("0")) {
+                    if (this.et_result.getText().toString().length() != 16 || this.f6029n.booleanValue()) {
+                        if (this.et_result.getText().length() != 1 || !this.et_result.getText().toString().equalsIgnoreCase("0") || !this.et_main.getText().toString().equalsIgnoreCase("0")) {
                             this.et_main.append("0");
                             this.ab += "0";
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             this.f6029n = Boolean.valueOf(false);
                         } else {
                             return;
@@ -1635,13 +1635,13 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }
                 return;
-            case R.id.ll_delete:
+            /*case R.id.ll_delete:
                 this.f6033r = Boolean.valueOf(false);
                 int length = this.et_main.getText().length();
                 if (this.et_main.getText().toString().equals("Can't divide by 0")) {
                     this.f6029n = Boolean.valueOf(false);
                     this.et_main.setText("");
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ab = "";
                     this.f6025W = "";
                     this.f6024V = "";
@@ -1658,7 +1658,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 } else if (this.et_main.getText().toString().equals("Invalid Input")) {
                     this.f6029n = Boolean.valueOf(false);
                     this.et_main.setText("");
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.ab = "";
                     this.f6025W = "";
                     this.f6024V = "";
@@ -1698,9 +1698,9 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                                     this.ab = this.f6025W;
                                 }
                             }
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             if (this.et_main.getText().toString().length() == 1 && !Character.isDigit(this.et_main.getText().toString().charAt(0))) {
-                                this.f6019Q.setText("0");
+                                this.et_result.setText("0");
                                 this.et_main.setText("");
                                 this.ab = "";
                             }
@@ -1709,20 +1709,20 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                             this.f6027Y = Boolean.valueOf(false);
                             this.et_main.getText().delete(length - 1, length);
                             this.ab = this.f6024V;
-                            this.f6019Q.setText(this.ab);
+                            this.et_result.setText(this.ab);
                             Log.e("idis2", this.ab);
                             this.f6025W = "";
                         }
                     }
                     if (this.et_main.getText().length() == 0) {
                         this.et_main.setText("");
-                        this.f6019Q.setText("0");
+                        this.et_result.setText("0");
                         this.ab = "";
                     }
                     if (this.et_main.getText().length() == 0) {
                         this.f6029n = Boolean.valueOf(false);
                         this.et_main.setText("");
-                        this.f6019Q.setText("0");
+                        this.et_result.setText("0");
                         this.ab = "";
                         this.f6025W = "";
                         this.f6024V = "";
@@ -1738,7 +1738,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                     }
                     this.aC = false;
                     return;
-                }
+                }*/
             default:
                 return;
         }
@@ -1784,7 +1784,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
         if (Character.isDigit(obj.toString().charAt(0))) {
             Double valueOf = Double.valueOf(Double.parseDouble(new DecimalFormat(".########################################################").format((Double) new ExtendedDoubleEvaluator().evaluate(String.valueOf(obj)))));
             Log.e("add", "" + valueOf);
-            if (this.f6019Q.length() != 0) {
+            if (this.et_result.length() != 0) {
                 this.expressions = "sqrt(" + valueOf + ")";
             }
             if (this.expressions.length() == 0) {
@@ -1799,27 +1799,27 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 instance.setGroupingUsed(false);
                 obj = instance.format(this.result);
                 if (obj.equalsIgnoreCase("nan")) {
-                    this.f6019Q.setText("0");
+                    this.et_result.setText("0");
                     this.et_main.setText("Invalid Input");
                     this.f6033r = Boolean.valueOf(true);
                 } else {
                     if (obj.length() > 16) {
                         obj = obj.substring(0, 16);
                     } else {
-                        this.f6019Q.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+                        this.et_result.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
                     }
-                    this.f6019Q.setText(obj + "");
+                    this.et_result.setText(obj + "");
                     this.et_main.setText("" + obj);
                     this.ab = obj + "";
                 }
-                this.f6024V = this.f6019Q.getText().toString();
+                this.f6024V = this.et_result.getText().toString();
                 this.f6025W = "";
                 return;
             } catch (Exception e) {
                 Log.e("TAG", "Toast invalid expression");
                 Toast.makeText(this, "Invalid Expression", 0).show();
                 this.et_main.setText("");
-                this.f6019Q.setText("0");
+                this.et_result.setText("0");
                 this.ab = "";
                 this.ac = "";
                 this.prev = "";
@@ -1830,7 +1830,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
                 return;
             }
         }
-        this.f6019Q.setText("0");
+        this.et_result.setText("0");
         this.et_main.setText("Invalid Input");
         this.f6033r = Boolean.valueOf(true);
     }
@@ -1855,7 +1855,6 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
         });
 
 
-
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
@@ -1865,6 +1864,7 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
         });
         dialog.show();
     }
+
     public void ProgressDialogSuccess() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(1);

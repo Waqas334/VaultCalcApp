@@ -47,19 +47,21 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.android.support:design:28.0.0'
-    implementation 'com.google.android.gms:play-services:8.3.0'
+//    implementation 'com.google.android.gms:play-services:8.3.0'
     implementation 'com.google.firebase:firebase-core:16.0.8'
     implementation 'com.google.firebase:firebase-analytics:16.4.0'
     implementation 'com.google.firebase:firebase-inappmessaging:17.1.1'
     implementation 'com.google.android.gms:play-services-drive:16.1.0'
     implementation 'com.google.android.gms:play-services-fitness:16.0.1'
-    //implementation 'com.google.android.gms:play-services-ads:17.2.0'
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.squareup.picasso:picasso:2.5.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'net.bohush.geometricprogressview:geometricprogressview:1.1.1'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+//  For Fragment Prefernce
+    implementation "androidx.preference:preference:1.0.0-alpha3"
+
 
 }

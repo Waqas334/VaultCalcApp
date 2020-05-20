@@ -8,13 +8,9 @@ import android.os.StrictMode.VmPolicy.Builder;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
-import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.analytics.FirebaseAnalytics.Event;
 import com.google.firebase.analytics.FirebaseAnalytics.Param;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 
 import java.text.DecimalFormat;
@@ -22,10 +18,6 @@ import java.text.DecimalFormat;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MainApplication extends Application {
-
-    public PublisherInterstitialAd mInterstitialAd;
-    public PublisherAdRequest ins_adRequest;
-
 
     private static final String CONSTANAT_SECURITY_ANSWER = "constant_answer";
     private static final String CONSTANAT_SECURITY_QUESTION = "constant_question";
@@ -54,7 +46,6 @@ public class MainApplication extends Application {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("Montserrat-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
 
-        LoadAds();
     }
 
     public void LogFirebaseEvent(String eventId, String eventName) {
@@ -156,51 +147,5 @@ public class MainApplication extends Application {
         return hrSize;
     }
 
-    public void LoadAds() {
-
-        try {
-
-            mInterstitialAd = new PublisherInterstitialAd(this);
-
-            mInterstitialAd.setAdUnitId(Constant.interstitialId);
-
-            ins_adRequest = new PublisherAdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                    .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                    .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                    .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A") //samsung
-                    .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samdung max|
-                    .build();
-
-            mInterstitialAd.loadAd(ins_adRequest);
-        } catch (Exception e) {
-        }
-    }
-
-    public boolean requestNewInterstitial() {
-
-        try {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean isLoaded() {
-
-        try {
-            if (mInterstitialAd.isLoaded() && mInterstitialAd != null) {
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
 }

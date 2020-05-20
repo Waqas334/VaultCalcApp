@@ -79,7 +79,7 @@ public class ChangePasswordActivity extends BaseActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_calculator);
+        setContentView((int) R.layout.activity_change_password);
 
         ButterKnife.bind((Activity) this);
 

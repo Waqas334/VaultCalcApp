@@ -40,26 +40,18 @@
     </ViewAnimator>
 
     <Button
-        android:layout_above="@+id/layoutViewAdd"
-        android:layout_marginBottom="@dimen/_20sdp"
         android:id="@+id/btn_hide"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/layoutViewAdd"
         android:layout_margin="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/btn_back"
+        android:layout_alignParentBottom="true"
         android:text="Hide"
         android:textColor="@color/white"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
-    <LinearLayout
-        android:id="@+id/layoutViewAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_bottom_tips"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible" />
 
 </RelativeLayout>
 

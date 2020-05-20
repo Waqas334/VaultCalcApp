@@ -16,9 +16,9 @@ import android.os.Bundle;
 import android.provider.MediaStore.Files;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -26,11 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.BaseActivity;
@@ -79,7 +74,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
     /* renamed from: t */
     private Timer f12t;
     //@BindView(R.id.toolbar)
-    CenterTitleToolbar toolbar;
+    Toolbar toolbar;
     private TextView txtCount;
     //@BindView(R.id.txt_error)
     TextView txtError;
@@ -101,7 +96,6 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
         setContentView((int) R.layout.activity_adds_image);
         ButterKnife.bind((Activity) this);
         this.dbHelper = new DBHelper(this);
-        addBanner();
         findViews();
         setHeaderInfo();
         Init();
@@ -117,77 +111,13 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
         btnHide = findViewById(R.id.btn_hide);
     }
 
-    public void addBanner() {
-
-
-        final AdView mAdView = new AdView(this);
-        mAdView.setAdSize(AdSize.BANNER);
-        final View adContainer = findViewById(R.id.layoutViewAdd);
-
-
-        mAdView.setAdUnitId(Constant.bannerId);
-
-        ((LinearLayout) adContainer).addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A")
-                .addTestDevice("3C5740EB2F36FB5F0FEFA773607D27CE") // mi white
-                .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samsung max
-                .build();
-
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-
-
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-
-                adContainer.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
-
 
     private void setHeaderInfo() {
         //this.toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(this.toolbar);
         getSupportActionBar().setTitle(getString(R.string.add_audio));
-
-        if(getSupportActionBar()!=null){
-            Drawable drawable= getResources().getDrawable(R.drawable.ic_close);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
-
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
     }
 
     private void Init() {
@@ -409,7 +339,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
                 file.delete();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), 1).show();
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

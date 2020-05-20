@@ -16,9 +16,9 @@ import android.os.Bundle;
 import android.provider.MediaStore.Files;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -27,11 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.BaseActivity;
@@ -58,9 +53,9 @@ import butterknife.OnClick;
 public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedListener {
 
 
-    DBHelper dbHelper;
-    TextView txtError;
-    CenterTitleToolbar toolbar;
+    private DBHelper dbHelper;
+    private TextView txtError;
+    private Toolbar toolbar;
     private TextView txtCount;
 
     ViewAnimator viewanimator;
@@ -102,7 +97,6 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
         dbHelper = new DBHelper(this);
 
         findViews();
-        addBanner();
         setHeaderInfo();
         Init();
     }
@@ -116,75 +110,14 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
         viewanimator = findViewById(R.id.viewanimator);
     }
 
-    public void addBanner() {
-
-        final AdView mAdView = new AdView(this);
-        mAdView.setAdSize(AdSize.BANNER);
-        final View adContainer = findViewById(R.id.layoutViewAdd);
-
-        mAdView.setAdUnitId(Constant.bannerId);
-
-        ((LinearLayout) adContainer).addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A")
-                .addTestDevice("3C5740EB2F36FB5F0FEFA773607D27CE") // mi white
-                .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samsung max
-                .build();
-
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-
-
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-
-                adContainer.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
-
 
     private void setHeaderInfo() {
-       // toolbar.setNavigationIcon((int) R.drawable.ic_close);
+        // toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.add_video));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
-        if(getSupportActionBar()!=null){
-            Drawable drawable= getResources().getDrawable(R.drawable.ic_close);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
-
-        }
     }
 
     private void Init() {

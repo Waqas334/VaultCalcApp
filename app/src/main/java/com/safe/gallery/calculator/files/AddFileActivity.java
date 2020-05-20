@@ -11,6 +11,7 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore.Files;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,11 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.BaseActivity;
@@ -56,7 +52,7 @@ import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 
-public class FileSelectionActivity extends BaseActivity {
+public class AddFileActivity extends BaseActivity {
 
     private Button btnHide;
     Button cancel;
@@ -94,17 +90,16 @@ public class FileSelectionActivity extends BaseActivity {
     Button storage;
     Boolean switcher = Boolean.valueOf(false);
     private Timer timer;
-    CenterTitleToolbar toolbar;
+    Toolbar toolbar;
     int top = 0;
     private TextView txtCount;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView((int) R.layout.activity_file_selection);
         ButterKnife.bind((Activity) this);
 
         findViews();
-        initViews();
-
         setHeaderInfo();
 
     }
@@ -119,7 +114,7 @@ public class FileSelectionActivity extends BaseActivity {
         directoryView = (ListView) findViewById(R.id.directorySelectionList);
         btnHide = (Button) findViewById(R.id.btn_hide);
         if (choiceMode != null) {
-            directoryView.setChoiceMode(1);
+            directoryView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
         ok = (Button) findViewById(R.id.ok);
         all = (Button) findViewById(R.id.all);
@@ -127,7 +122,7 @@ public class FileSelectionActivity extends BaseActivity {
         storage = (Button) findViewById(R.id.storage);
         New = (Button) findViewById(R.id.New);
         path = (TextView) findViewById(R.id.folderpath);
-        toolbar =findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         loadLists();
         New.setEnabled(false);
         directoryView.setOnItemClickListener(new C05511());
@@ -136,11 +131,6 @@ public class FileSelectionActivity extends BaseActivity {
         cancel.setOnClickListener(new C05544());
         storage.setOnClickListener(new C05555());
         all.setOnClickListener(new C05566());
-        addBanner();
-
-    }
-
-    private void initViews() {
 
     }
 
@@ -153,11 +143,11 @@ public class FileSelectionActivity extends BaseActivity {
             int i = 0;
             index = directoryView.getFirstVisiblePosition();
             View v = directoryView.getChildAt(0);
-            FileSelectionActivity fileSelectionActivity = FileSelectionActivity.this;
+            AddFileActivity addFileActivity = AddFileActivity.this;
             if (v != null) {
                 i = v.getTop();
             }
-            fileSelectionActivity.top = i;
+            addFileActivity.top = i;
             try {
                 if (position < directoryList.size()) {
                     mainPath = (File) directoryList.get(position);
@@ -295,61 +285,6 @@ public class FileSelectionActivity extends BaseActivity {
     }
 
 
-    public void addBanner() {
-
-        final AdView mAdView = new AdView(this);
-        mAdView.setAdSize(AdSize.BANNER);
-        final View adContainer = findViewById(R.id.layoutViewAdd);
-
-        mAdView.setAdUnitId(Constant.bannerId);
-
-        ((LinearLayout) adContainer).addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A")
-                .addTestDevice("3C5740EB2F36FB5F0FEFA773607D27CE") // mi white
-                .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samsung max
-                .build();
-
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-
-
-                //adContainer.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-
-                adContainer.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
-
     private void setHeaderInfo() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.select_file));
@@ -357,7 +292,7 @@ public class FileSelectionActivity extends BaseActivity {
     }
 
     public void onBackPressed() {
-            try {
+        try {
             if (mainPath.equals(Environment.getExternalStorageDirectory())) {
                 finish();
                 return;
@@ -542,7 +477,20 @@ public class FileSelectionActivity extends BaseActivity {
         int length = tempFileList.length;
         while (i < length) {
             File file2 = tempFileList[i];
-            if (file2.getAbsolutePath().endsWith(".pps") || file2.getAbsolutePath().endsWith(".ppt") || file2.getAbsolutePath().endsWith(".pptx") || file2.getAbsolutePath().endsWith(".xls") || file2.getAbsolutePath().endsWith(".xlsx") || file2.getAbsolutePath().endsWith(".pdf") || file2.getAbsolutePath().endsWith(".doc") || file2.getAbsolutePath().endsWith(".docx") || file2.getAbsolutePath().endsWith(".rtf") || file2.getAbsolutePath().endsWith(".txt")) {
+            if (file2.getAbsolutePath().endsWith(".pps") ||
+                    file2.getAbsolutePath().endsWith(".ppt") ||
+                    file2.getAbsolutePath().endsWith(".pptx") ||
+                    file2.getAbsolutePath().endsWith(".xls") ||
+                    file2.getAbsolutePath().endsWith(".xlsx") ||
+                    file2.getAbsolutePath().endsWith(".pdf") ||
+                    file2.getAbsolutePath().endsWith(".doc") ||
+                    file2.getAbsolutePath().endsWith(".docx") ||
+                    file2.getAbsolutePath().endsWith(".rtf") ||
+                    file2.getAbsolutePath().endsWith(".apk") ||
+                    file2.getAbsolutePath().endsWith(".zip") ||
+                    file2.getAbsolutePath().endsWith(".rar") ||
+                    file2.getAbsolutePath().endsWith(".rtf") ||
+                    file2.getAbsolutePath().endsWith(".txt")) {
                 fileList.add(file2);
                 fileNames.add(file2.getName());
             }

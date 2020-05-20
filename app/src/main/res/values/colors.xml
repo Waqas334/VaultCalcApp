@@ -19,4 +19,8 @@
     <color name="main_color">#1881C2</color>
     <color name="pink_color">#F75177</color>
 
+
+    <color name="newColorAccent">#643ced</color>
+    <color name="newColorAccentFaint">#66643ced</color>
+
 </resources>

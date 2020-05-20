@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.safe.gallery.calculator.utils.CenterTitleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:n2="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@color/newColorAccent"
     android:minHeight="?actionBarSize"
     android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    >
 
 
     <!--<ImageView
@@ -20,5 +19,5 @@
         android:src="@drawable/ic_close" />-->
 
 
-</com.safe.gallery.calculator.utils.CenterTitleToolbar>
+</android.support.v7.widget.Toolbar>
 

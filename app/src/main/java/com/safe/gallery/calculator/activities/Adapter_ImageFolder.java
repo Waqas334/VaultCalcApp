@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;

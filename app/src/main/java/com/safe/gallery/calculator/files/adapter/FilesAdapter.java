@@ -3,6 +3,7 @@ package com.safe.gallery.calculator.files.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class FilesAdapter extends Adapter<ViewHolder> {
 
+    private static final String TAG = "FilesAdapter";
     private ArrayList<AllFilesModel> buckets;
     private Context context;
     private boolean isLongPressed = false;
@@ -182,6 +184,7 @@ public class FilesAdapter extends Adapter<ViewHolder> {
         Iterator it = buckets.iterator();
         while (it.hasNext()) {
             ((AllFilesModel) it.next()).setSelected(false);
+            Log.i(TAG, "deSelectAllItem: item deselected");
         }
         isLongPressed = false;
         notifyDataSetChanged();

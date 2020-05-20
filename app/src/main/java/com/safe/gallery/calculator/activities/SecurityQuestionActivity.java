@@ -38,7 +38,6 @@ public class SecurityQuestionActivity extends BaseActivity {
     Button btnSubmit;
 
     EditText etAnswer;
-    LinearLayout nativeAdContainer;
 
     private int position;
     private String question;
@@ -65,7 +64,6 @@ public class SecurityQuestionActivity extends BaseActivity {
 
         btnSubmit = findViewById(R.id.btn_submit);
         etAnswer = findViewById(R.id.et_answer);
-        nativeAdContainer = findViewById(R.id.native_ad_container);
         spinQuestions = findViewById(R.id.spin_questions);
         toolbar = findViewById(R.id.toolbar);
 
@@ -125,21 +123,21 @@ public class SecurityQuestionActivity extends BaseActivity {
     @OnClick({R.id.btn_submit})
     public void onClick() {
         if (selectedQuestion == null) {
-            Toast.makeText(this, "Please select security question", 0).show();
+            Toast.makeText(this, "Please select security question", Toast.LENGTH_LONG).show();
         } else if (selectedQuestion.equals("Select Your Question")) {
-            Toast.makeText(this, "Please select security question", 0).show();
+            Toast.makeText(this, "Please select security question", Toast.LENGTH_LONG).show();
         } else if (etAnswer.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please enter security answer", 0).show();
+            Toast.makeText(this, "Please enter security answer", Toast.LENGTH_LONG).show();
         } else if (type == null || !type.equals(FORGOT_PASS)) {
             MainApplication.getInstance().setSecurityQuestion(selectedQuestion);
             MainApplication.getInstance().setSecurityAnswer(etAnswer.getText().toString());
             setBackData();
         } else if (!selectedQuestion.equalsIgnoreCase(MainApplication.getInstance().getSecurityQuestion())) {
-            Toast.makeText(this, "Security question is incorrect!", 0).show();
+            Toast.makeText(this, "Security question is incorrect!", Toast.LENGTH_LONG).show();
         } else if (etAnswer.getText().toString().equalsIgnoreCase(MainApplication.getInstance().getSecurityAnswer())) {
             showPassword();
         } else {
-            Toast.makeText(this, "Security answer is incorrect!", 0).show();
+            Toast.makeText(this, "Security answer is incorrect!", Toast.LENGTH_LONG).show();
         }
     }
 

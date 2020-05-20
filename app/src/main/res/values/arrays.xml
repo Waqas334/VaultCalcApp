@@ -10,24 +10,24 @@
         <item>Who is your boyfriend?</item>
     </string-array>
 
-    <string-array name="ld_activityScreenTitles">
+<!--    <string-array name="ld_activityScreenTitles">-->
 
-        <item>Change Password</item>
-        <item>Change Question </item>
-        <item>Share App</item>
-        <item>Rate Us</item>
-        <item>Privacy Policy</item>
-        <item>Intruder access</item>
-    </string-array>
+<!--        <item>Change Password</item>-->
+<!--        <item>Change Question </item>-->
+<!--        <item>Share App</item>-->
+<!--        <item>Rate Us</item>-->
+<!--        <item>Privacy Policy</item>-->
+<!--        <item>Intruder access</item>-->
+<!--    </string-array>-->
 
-    <array name="ld_activityScreenIcons">
+<!--    <array name="ld_activityScreenIcons">-->
 
-        <item>@drawable/password</item>
-        <item>@drawable/question</item>
-        <item>@drawable/share</item>
-        <item>@drawable/rateus</item>
-        <item>@drawable/privacy</item>
-        <item>@drawable/key</item>
-    </array>
+<!--        <item>@drawable/password</item>-->
+<!--        <item>@drawable/question</item>-->
+<!--        <item>@drawable/share</item>-->
+<!--        <item>@drawable/rateus</item>-->
+<!--        <item>@drawable/privacy</item>-->
+<!--        <item>@drawable/key</item>-->
+<!--    </array>-->
 
 </resources>

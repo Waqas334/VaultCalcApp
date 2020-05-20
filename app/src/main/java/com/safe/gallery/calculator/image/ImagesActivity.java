@@ -21,6 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,11 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.BaseActivity;
@@ -56,7 +52,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -66,8 +61,7 @@ import butterknife.OnClick;
 
 public class ImagesActivity extends BaseActivity implements OnImagesLoadedListener {
 
-    String TAG = "TAG";
-    private LinearLayout adView;
+    private static final String TAG = "ImagesActivity";
     private ImagesAdapter adapter;
     @BindView(R.id.banner_container)
     LinearLayout bannerContainer;
@@ -93,7 +87,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
     /* renamed from: t */
     private Timer f16t;
     @BindView(R.id.toolbar)
-    CenterTitleToolbar toolbar;
+    Toolbar toolbar;
     private TextView txtCount;
     @BindView(R.id.txt_error)
     TextView txtError;
@@ -108,69 +102,9 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
         this.dbHelper = new DBHelper(this);
         setHeaderInfo();
         Init();
-        addBanner();
     }
 
-    public void addBanner() {
-
-        Random rand = new Random();
-        int randomNum = 0 + rand.nextInt(5);
-
-        final AdView mAdView = new AdView(this);
-        mAdView.setAdSize(AdSize.BANNER);
-        final View adContainer = findViewById(R.id.layoutViewAdd);
-
-
-        mAdView.setAdUnitId(Constant.bannerId);
-
-        ((LinearLayout) adContainer).addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A")
-                .addTestDevice("3C5740EB2F36FB5F0FEFA773607D27CE") // mi white
-                .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samsung max
-                .build();
-
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-
-
-                // adContainer.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-
-                adContainer.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
-
-
+    //This is to show the Progressbar
     class C05982 implements Runnable {
         C05982() {
         }
@@ -182,29 +116,17 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
 
     private void setHeaderInfo() {
-       // this.toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
         setSupportActionBar(this.toolbar);
         getSupportActionBar().setTitle(getString(R.string.image));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        if(getSupportActionBar()!=null){
-            Drawable drawable= getResources().getDrawable(R.drawable.ic_arrow);
-            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
-
-        }
     }
 
     private void Init() {
-        // LoadBannerAd();
         this.recyclerview.setLayoutManager(new GridLayoutManager(this, 3));
     }
 
     private void setAdapter() {
-        MainApplication.getInstance().LogFirebaseEvent("3", "AddImage");
         this.adapter = new ImagesAdapter(this);
         this.recyclerview.setAdapter(this.adapter);
         GetHiddenImages task = new GetHiddenImages();
@@ -212,64 +134,20 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
         task.execute(new Void[0]);
     }
 
+
     @OnClick({R.id.fab_add, R.id.btn_unhide})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_unhide:
                 recoverFiles();
+                onBackPressed();
                 return;
             case R.id.fab_add:
 
-
-                Random rand = new Random();
-                int randomNum = 0 + rand.nextInt(5);
-
-                Log.e("TAG", "onClick: " + randomNum);
-
-                if (randomNum == 0) {
-
-                    if (!MainApplication.getInstance().requestNewInterstitial()) {
-
-                        startActivityForResult(new Intent(this, AddImageActivity.class), 1012);
-                        overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
-                        return;
-
-                    } else {
-
-                        MainApplication.getInstance().mInterstitialAd.setAdListener(new AdListener() {
-                            @Override
-                            public void onAdClosed() {
-                                super.onAdClosed();
-
-                                MainApplication.getInstance().mInterstitialAd.setAdListener(null);
-                                MainApplication.getInstance().mInterstitialAd = null;
-                                MainApplication.getInstance().ins_adRequest = null;
-                                MainApplication.getInstance().LoadAds();
-
-                                startActivityForResult(new Intent(ImagesActivity.this, AddImageActivity.class), 1012);
-                                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
-                                return;
-                            }
-
-                            @Override
-                            public void onAdFailedToLoad(int i) {
-                                super.onAdFailedToLoad(i);
-                            }
-
-                            @Override
-                            public void onAdLoaded() {
-                                super.onAdLoaded();
-                            }
-                        });
-                    }
-                } else {
-
-                    startActivityForResult(new Intent(this, AddImageActivity.class), 1012);
-                    overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
-                    return;
-                }
-
+                startActivityForResult(new Intent(this, AddImageActivity.class), 1012);
+                overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
                 return;
+
 
             default:
                 return;
@@ -309,19 +187,19 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                         }
                         if (ImagesActivity.this.menuItemSelect != null) {
                             ImagesActivity.this.menuItemSelect.setVisible(false);
-                            ImagesActivity.this.menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                            ImagesActivity.this.menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                         }
                         if (ImagesActivity.this.menuItemDelete != null) {
                             ImagesActivity.this.menuItemDelete.setVisible(false);
                         }
                         ImagesActivity.this.isEditable = false;
-                        if(getSupportActionBar()!=null){
-                            Drawable drawable= getResources().getDrawable(R.drawable.ic_arrow);
-                            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                        if (getSupportActionBar() != null) {
+//                            Drawable drawable = getResources().getDrawable(R.drawable.ic_arrow);
+//                            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//                            Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
+//                            newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
                             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                            getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+                            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
                         }
                         //ImagesActivity.this.toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
@@ -463,7 +341,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 16908332:
+            case android.R.id.home:
                 onBackPressed();
                 break;
             case R.id.itm_delete:
@@ -474,6 +352,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                 alertDialog.setButton(-1, (CharSequence) "Yes", new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ImagesActivity.this.deleteSelectedFiles();
+                        onBackPressed();
                         alertDialog.dismiss();
                     }
                 });
@@ -493,21 +372,21 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                 if (this.adapter != null) {
                     this.adapter.isItemEditable(true);
                 }
-                if(getSupportActionBar()!=null){
-                    Drawable drawable= getResources().getDrawable(R.drawable.ic_close);
-                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                    Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                    newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+                if (getSupportActionBar() != null) {
+//                    Drawable drawable = getResources().getDrawable(R.drawable.ic_close);
+//                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+//                    Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
+//                    newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+//                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
                 }
-               // this.toolbar.setNavigationIcon((int) R.drawable.ic_close);
+                // this.toolbar.setNavigationIcon((int) R.drawable.ic_close);
                 break;
             case R.id.itm_select:
                 if (this.menuItemSelect != null) {
                     if (!this.isSelectAll) {
-                        this.menuItemSelect.setIcon(R.drawable.ic_check_filled);
+                        this.menuItemSelect.setIcon(R.drawable.ic_check_box_white_48dp);
                         if (this.adapter != null) {
                             this.adapter.selectAllItem();
                         }
@@ -515,7 +394,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                         this.isSelectAll = true;
                         break;
                     }
-                    this.menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                    this.menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                     if (this.adapter != null) {
                         this.adapter.deSelectAllItem();
                     }
@@ -550,58 +429,18 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
     public void showSelectAllButton(boolean needToShow) {
         if (this.menuItemSelect != null) {
-            this.menuItemSelect.setIcon(needToShow ? R.drawable.ic_check_filled : R.drawable.ic_check_box_outline);
+            this.menuItemSelect.setIcon(needToShow ? R.drawable.ic_check_box_white_48dp : R.drawable.ic_check_box_outline_white_48dp);
             this.isSelectAll = needToShow;
         }
     }
 
     public void startFullScreenImageActivity(final ArrayList<AllImagesModel> buckets, final int position) {
 
-        Random rand = new Random();
-        int randomNum = 0 + rand.nextInt(5);
-
-        Log.e(TAG, "rand:--> " + randomNum);
-
-        if (randomNum == 0) {
-
-            if (!MainApplication.getInstance().requestNewInterstitial()) {
-
-                startActivity(new Intent(this, FullScreenImageActivity.class).putExtra(FullScreenImageActivity.OBJECT, buckets).putExtra(FullScreenImageActivity.POSITION, position));
-
-            } else {
-
-                MainApplication.getInstance().mInterstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-
-                        MainApplication.getInstance().mInterstitialAd.setAdListener(null);
-                        MainApplication.getInstance().mInterstitialAd = null;
-                        MainApplication.getInstance().ins_adRequest = null;
-                        MainApplication.getInstance().LoadAds();
-
-
-                        startActivity(new Intent(ImagesActivity.this, FullScreenImageActivity.class).putExtra(FullScreenImageActivity.OBJECT, buckets).putExtra(FullScreenImageActivity.POSITION, position));
-
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(int i) {
-                        super.onAdFailedToLoad(i);
-                    }
-
-                    @Override
-                    public void onAdLoaded() {
-                        super.onAdLoaded();
-                    }
-                });
-            }
-        } else {
-
-
-            startActivity(new Intent(this, FullScreenImageActivity.class).putExtra(FullScreenImageActivity.OBJECT, buckets).putExtra(FullScreenImageActivity.POSITION, position));
-        }
-
+        Intent fullScreenImageActivityIntent = new Intent(this, FullScreenImageActivity.class);
+        fullScreenImageActivityIntent.putExtra(FullScreenImageActivity.OBJECT, buckets);
+        fullScreenImageActivityIntent.putExtra(FullScreenImageActivity.POSITION, position);
+        startActivity(fullScreenImageActivityIntent);
+        finish();
 
     }
 
@@ -612,7 +451,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
             }
             if (this.menuItemSelect != null) {
                 this.menuItemSelect.setVisible(false);
-                this.menuItemSelect.setIcon(R.drawable.ic_check_box_outline);
+                this.menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
             }
             if (this.menuItemDelete != null) {
                 this.menuItemDelete.setVisible(false);
@@ -625,13 +464,9 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                 this.adapter.deSelectAllItem();
             }
             //this.toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
-            if(getSupportActionBar()!=null){
-                Drawable drawable= getResources().getDrawable(R.drawable.ic_arrow);
-                Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-                Drawable newdrawable = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 70, 70, true));
-                newdrawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+            if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeAsUpIndicator(newdrawable);
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
             }
             this.btnUnhide.setVisibility(8);
@@ -653,6 +488,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
     public void onImagesLoaded(ArrayList<AllImagesModel> allImageModels) {
         if (allImageModels == null || allImageModels.size() <= 0) {
+            Log.i(TAG, "onImagesLoaded: zero images");
             MainApplication.getInstance().saveImageCount(0);
             enableMenuItems(false);
             this.viewanimator.setDisplayedChild(2);
@@ -676,6 +512,5 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
         hideProgressDialog();
         Log.e("TAG", "onStop: ");
     }
-
 
 }

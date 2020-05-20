@@ -19,10 +19,10 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.InterstitialAd;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.BaseActivity;
 import com.safe.gallery.calculator.fullscreenimage.adapter.FullScreenImageAdapter;
+import com.safe.gallery.calculator.image.ImagesActivity;
 import com.safe.gallery.calculator.model.AllImagesModel;
 import com.safe.gallery.calculator.utils.CustomViewPager;
 
@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 
 public class FullScreenImageActivity extends BaseActivity {
 
+
     private static final String FILE_RENAMED = "file_renamed";
     public static final String OBJECT = "object";
     public static final String POSITION = "position";
@@ -45,7 +46,6 @@ public class FullScreenImageActivity extends BaseActivity {
     private boolean isFileDeleted;
     private boolean isFileRenamed;
     private boolean isImageSavedAfterEditing;
-    private InterstitialAd mInterstitialAd;
     @BindView(R.id.main_linear)
     RelativeLayout mainLinear;
     private int position;
@@ -152,6 +152,11 @@ public class FullScreenImageActivity extends BaseActivity {
                     alertDialog.dismiss();
                     FullScreenImageActivity.this.adapter.removeItem((AllImagesModel) FullScreenImageActivity.this.imageList.get(FullScreenImageActivity.this.viewPager.getCurrentItem()));
                     FullScreenImageActivity.this.isFileDeleted = true;
+                    if(FullScreenImageActivity.this.adapter.getCount()==0){
+                        startActivity(new Intent(FullScreenImageActivity.this, ImagesActivity.class));
+                        finish();
+                    }
+
                 }
             });
             alertDialog.setButton(-2, (CharSequence) "No", new OnClickListener() {
@@ -165,6 +170,8 @@ public class FullScreenImageActivity extends BaseActivity {
     }
 
     public void onBackPressed() {
+        startActivity(new Intent(this, ImagesActivity.class));
+        finish();
         super.onBackPressed();
     }
 

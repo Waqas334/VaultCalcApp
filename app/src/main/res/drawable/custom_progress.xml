@@ -9,12 +9,14 @@
                 n1:right="3.0dip"
                 n1:top="3.0dip" />
             <corners n1:radius="5.0dip" />
-            <gradient
-                n1:angle="270.0"
-                n1:centerColor="#ff555555"
-                n1:centerY="0.5"
-                n1:endColor="#ff2a2b2f"
-                n1:startColor="#ff9a9a9a" />
+            <solid n1:color="@color/white"/>
+            <stroke n1:color="@color/newColorAccent" n1:width="1dp"/>
+<!--            <gradient-->
+<!--                n1:angle="270.0"-->
+<!--                n1:centerColor="#ff555555"-->
+<!--                n1:centerY="0.5"-->
+<!--                n1:endColor="#ff2a2b2f"-->
+<!--                n1:startColor="#ff9a9a9a" />-->
         </shape>
     </item>
     <item xmlns:n2="http://schemas.android.com/apk/res/android"
@@ -22,10 +24,12 @@
         <clip>
             <shape>
                 <corners n2:radius="5.0dip" />
-                <gradient
-                    n2:angle="270.0"
-                    n2:endColor="#3B92C7"
-                    n2:startColor="#1881C2" />
+                <solid n2:color="@color/newColorAccent"/>
+
+<!--                <gradient-->
+<!--                    n2:angle="270.0"-->
+<!--                    n2:endColor="#3B92C7"-->
+<!--                    n2:startColor="#1881C2" />-->
             </shape>
         </clip>
     </item>

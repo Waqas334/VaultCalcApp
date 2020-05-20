@@ -1,187 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:orientation="vertical"
-        android:gravity="center|top" >
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_picture"
+        style="@style/card_style"
+        app:layout_constraintBottom_toTopOf="@+id/card_video"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/card_audio"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_105sdp"
-            android:layout_marginLeft="@dimen/_14sdp"
-            android:layout_marginRight="@dimen/_14sdp"
-            android:background="@drawable/picturesimg"
-            android:orientation="vertical">
+        <LinearLayout style="@style/ll_home_card_style">
 
-            <RelativeLayout
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/ic_pictures_svg"
+                style="@style/image_view_style_home" />
 
-                <ImageView
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_alignParentRight="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/pics" />
+            <TextView
+                android:text="Photos"
+                style="@style/tv_home_stye" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="Pictures"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_20sdp" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_audio"
+        style="@style/card_style"
+        app:layout_constraintBottom_toTopOf="@+id/card_files"
+        app:layout_constraintLeft_toRightOf="@+id/card_picture"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout style="@style/ll_home_card_style">
+
+            <ImageView
+                android:src="@drawable/ic_audio_svg"
+                style="@style/image_view_style_home" />
+
+            <TextView
+                android:text="Audios"
+                style="@style/tv_home_stye" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_video"
+        style="@style/card_style"
+        app:layout_constraintBottom_toTopOf="@+id/card_intruder"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/card_files"
+        app:layout_constraintTop_toBottomOf="@+id/card_picture">
+
+        <LinearLayout style="@style/ll_home_card_style">
 
 
-            </RelativeLayout>
+            <ImageView
+                android:src="@drawable/ic_videos_svg"
+                style="@style/image_view_style_home" />
+
+            <TextView
+                android:text="Videos"
+                style="@style/tv_home_stye" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_files"
+        style="@style/card_style"
+        app:layout_constraintBottom_toTopOf="@+id/card_browser"
+        app:layout_constraintLeft_toRightOf="@+id/card_video"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_audio">
+
+        <LinearLayout style="@style/ll_home_card_style">
+
+            <ImageView
+                android:src="@drawable/ic_files_svg"
+                style="@style/image_view_style_home" />
+
+            <TextView
+                android:text="Files"
+                style="@style/tv_home_stye" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+    </android.support.v7.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_intruder"
+        style="@style/card_style"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/card_browser"
+        app:layout_constraintTop_toBottomOf="@+id/card_video">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
-                    android:background="@drawable/audiosimg">
-
-                    <RelativeLayout
-                        android:id="@+id/audios"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="@dimen/_45sdp"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_alignParentRight="true"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/aud" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:text="Audios"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_20sdp" />
+        <LinearLayout style="@style/ll_home_card_style">
 
 
-                    </RelativeLayout>
+            <ImageView
+                android:src="@drawable/ic_intruder_svg"
+                style="@style/image_view_style_home" />
 
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:background="@drawable/videosimg">
-
-                    <RelativeLayout
-                        android:id="@+id/videos"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="@dimen/_45sdp"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_alignParentRight="true"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/vid" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:text="Videos"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_20sdp" />
-
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="@dimen/_130sdp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_15sdp">
-
-                <LinearLayout
-
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/filesimg">
-
-                    <RelativeLayout
-                        android:id="@+id/files"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="@dimen/_45sdp"
-                            android:layout_height="@dimen/_45sdp"
-                            android:layout_alignParentRight="true"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/fil" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_10sdp"
-                            android:text="Files"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_20sdp" />
-
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
+            <TextView
+                android:text="Intruder"
+                style="@style/tv_home_stye" />
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_browser"
+        style="@style/card_style"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/card_intruder"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_files">
+
+        <LinearLayout style="@style/ll_home_card_style">
+
+            <ImageView
+                android:src="@drawable/ic_browser_svg"
+                style="@style/image_view_style_home" />
+
+            <TextView
+                android:text="Browser"
+                style="@style/tv_home_stye" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
-    <LinearLayout
-        android:id="@+id/layoutViewAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_below="@+id/tv_bottom_tips"
-        android:orientation="vertical"
-        android:visibility="gone" />
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

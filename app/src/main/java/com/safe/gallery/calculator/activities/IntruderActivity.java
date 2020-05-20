@@ -1,10 +1,10 @@
 package com.safe.gallery.calculator.activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.DialogInterface;
 import android.net.Uri;
-import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,14 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.safe.gallery.calculator.Constant;
 import com.safe.gallery.calculator.R;
+import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.share.Share;
 
 import java.io.File;
@@ -29,51 +25,113 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static android.os.Environment.DIRECTORY_PICTURES;
-
-public class UnAuthorisedActivity extends AppCompatActivity {
+public class IntruderActivity extends AppCompatActivity {
 
     Dialog dialog;
-    ImageView ic_back;
+    private FloatingActionButton fabDelete;
+    private ImageView mIvEmpty;
+    private TextView mTvEmpty;
+
 
     public static ArrayList<File> al_my_photos = new ArrayList<>();
     private File[] allFiles;
 
-    RecyclerView recyclerView;
+    RecyclerView mRecyclerView;
     RecyclerView.LayoutManager recyclerViewLayoutManager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_un_authorised);
+        setContentView(R.layout.activity_intruder);
 
-        addBanner();
         findViews();
         initViews();
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Intruder");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+
+
+        if (new File(AppConstants.INTRUDER_PATH).listFiles() != null) {
+            if (new File(AppConstants.INTRUDER_PATH).listFiles().length == 0) {
+                noOneIntruded();
+
+
+            } else {
+                fabDelete.show();
+                mIvEmpty.setVisibility(View.GONE);
+                mTvEmpty.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
+        } else
+            noOneIntruded();
+
+
+    }
+
+    private void noOneIntruded() {
+        //No file is there or no one intruder
+        fabDelete.hide();
+        mIvEmpty.setVisibility(View.VISIBLE);
+        mTvEmpty.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
+    }
+
+    private static final String TAG = "IntruderActivity";
+    private View.OnClickListener deleteClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(IntruderActivity.this);
+            alertDialog.setTitle("Are you sure?");
+            alertDialog.setMessage("Do you want to delete all intruder photos?");
+            alertDialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteIntruders();
+                }
+            });
+            alertDialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialog.show();
+
+        }
+    };
+
+    private void deleteIntruders() {
+        File rootFile = new File(AppConstants.INTRUDER_PATH);
+        for (File child : rootFile.listFiles()) {
+            Log.i(TAG, "onClick: deleting child: " + child.getName());
+            child.delete();
+        }
     }
 
     private void findViews() {
 
-        ic_back = findViewById(R.id.ic_back);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        fabDelete = findViewById(R.id.intruder_fab_delete);
+        fabDelete.setOnClickListener(deleteClickListener);
+
+        mTvEmpty = findViewById(R.id.intruder_tv_empty);
+        mIvEmpty = findViewById(R.id.intruder_iv_empty);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerViewLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
-        recyclerView.setLayoutManager(recyclerViewLayoutManager);
+        mRecyclerView.setLayoutManager(recyclerViewLayoutManager);
 
-        ic_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                finish();
-            }
-        });
     }
 
     private void initViews() {
 
         al_my_photos.clear();
         Share.al_my_photos_photo.clear();
-        File path = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES) + "/" + ".Calculator Vault" + "/");
+        File path = new File(AppConstants.INTRUDER_PATH);
 
         if (path.exists()) {
 
@@ -100,7 +158,7 @@ public class UnAuthorisedActivity extends AppCompatActivity {
 
                         try {
 
-                            dialog = new Dialog(UnAuthorisedActivity.this);
+                            dialog = new Dialog(IntruderActivity.this);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setContentView(R.layout.dlg_exit1);
                             dialog.getWindow().setLayout((int) (DisplayMetricsHandler.getScreenWidth() - 50), Toolbar.LayoutParams.WRAP_CONTENT);
@@ -129,20 +187,13 @@ public class UnAuthorisedActivity extends AppCompatActivity {
                     }
                 });
 
-                recyclerView.setAdapter(obj_adapter);
+                mRecyclerView.setAdapter(obj_adapter);
 
             } else {
 
 
             }
         }
-
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
 
     }
 
@@ -157,59 +208,5 @@ public class UnAuthorisedActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void addBanner() {
-
-        final AdView mAdView = new AdView(this);
-        mAdView.setAdSize(AdSize.BANNER);
-        final View adContainer = findViewById(R.id.layoutViewAdd);
-
-        mAdView.setAdUnitId(Constant.bannerId);
-
-        ((LinearLayout) adContainer).addView(mAdView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("EA965DE183B804F71E5E6D353E6607DE")
-                .addTestDevice("5CE992DB43E8F2B50F7D2201A724526D")
-                .addTestDevice("6E5543AE954EAD6702405BFCCC34C9A2")
-                .addTestDevice("28373E4CC308EDBD5C5D39795CD4956A")
-                .addTestDevice("3C5740EB2F36FB5F0FEFA773607D27CE") // mi white
-                .addTestDevice("79E8DED973BDF7477739501E228D88E1") //samsung max
-                .build();
-
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-
-
-                adContainer.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-
-                adContainer.setVisibility(View.VISIBLE);
-
-            }
-        });
-    }
 
 }

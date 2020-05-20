@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -33,11 +34,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:drawableTop="@drawable/ic_lock"
+            android:drawableTop="@drawable/ic_empty"
             android:drawablePadding="10.0dip"
             android:gravity="center"
             android:text="No Item Found.\nPlease tap add button to add one."
-            android:textColor="@color/white" />
+             />
 
     </ViewAnimator>
 
@@ -52,9 +53,11 @@
         android:background="@drawable/btn_back"
         android:text="Unhide"
         android:textColor="@color/white"
+        tools:visibility="visible"
         android:visibility="gone" />
 
-    <android.support.design.widget.FloatingActionButton xmlns:n2="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.FloatingActionButton
+        xmlns:n2="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,18 +65,9 @@
         android:layout_alignParentRight="true"
         android:layout_margin="20.0dip"
         android:src="@drawable/ic_add"
-        n2:backgroundTint="@color/main_color"
-        n2:fabSize="normal" />
-
-    <LinearLayout
-        android:id="@+id/layoutViewAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_bottom_tips"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible" />
+        n2:backgroundTint="@color/newColorAccent"
+        n2:fabSize="normal" />
 
 
 </RelativeLayout>

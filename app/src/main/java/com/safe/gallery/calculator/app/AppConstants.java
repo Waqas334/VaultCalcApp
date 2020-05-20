@@ -24,4 +24,8 @@ public class AppConstants {
     public static final String VIDEO = "Video";
     public static final String VIDEO_EXPORT_PATH = (Environment.getExternalStorageDirectory() + File.separator + EXPORT_FOLDER + File.separator + VIDEO);
     public static final String VIDEO_PATH = (Environment.getExternalStorageDirectory() + File.separator + HIDDEN_FOLDER + File.separator + VIDEO);
+
+
+    public static final String INTRUDER= "Intruder";
+    public static final String INTRUDER_PATH= (Environment.getExternalStorageDirectory() + File.separator + HIDDEN_FOLDER + File.separator + INTRUDER);
 }

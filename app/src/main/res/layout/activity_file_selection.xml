@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fileSelectionContainer"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -9,11 +10,12 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <com.safe.gallery.calculator.utils.CenterTitleToolbar xmlns:n2="http://schemas.android.com/apk/res-auto"
+        <android.support.v7.widget.Toolbar
+            xmlns:n2="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/newColorAccent"
             android:minHeight="?actionBarSize"
             n2:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             n2:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -38,12 +40,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10.0dip"
                 android:layout_weight="30.0"
+                tools:visibility="visible"
                 android:text="@string/New"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/storage"
                 android:layout_width="fill_parent"
+                tools:visibility="visible"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10.0dip"
                 android:layout_weight="30.0"
@@ -58,6 +62,7 @@
             android:layout_below="@+id/banner_container"
             android:gravity="center_horizontal"
             android:text=""
+            tools:visibility="visible"
             android:textSize="15.0dip"
             android:visibility="gone" />
 
@@ -71,6 +76,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
+            tools:visibility="visible"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone"
@@ -99,26 +105,17 @@
         </LinearLayout>
 
         <Button
-            android:layout_above="@+id/layoutViewAdd"
             android:id="@+id/btn_hide"
+            android:layout_alignParentBottom="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_30sdp"
             android:background="@drawable/btn_back"
             android:text="Hide"
+            tools:visibility="visible"
             android:textColor="@color/white"
             android:visibility="gone" />
 
-
-        <LinearLayout
-            android:id="@+id/layoutViewAdd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_bottom_tips"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="visible" />
 
 
     </RelativeLayout>
