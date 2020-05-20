@@ -11,7 +11,7 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore.Files;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +31,6 @@ import com.safe.gallery.calculator.app.AppConstants;
 import com.safe.gallery.calculator.app.BaseActivity;
 import com.safe.gallery.calculator.app.MainApplication;
 import com.safe.gallery.calculator.common.MergeAdapter;
-import com.safe.gallery.calculator.utils.CenterTitleToolbar;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -107,7 +106,6 @@ public class AddFileActivity extends BaseActivity {
     private void findViews() {
 
 
-        MainApplication.getInstance().LogFirebaseEvent("9", "AddFile");
         if (getIntent().getExtras() != null) {
             choiceMode = getIntent().getStringExtra("choiceMode");
         }

@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.app.MainApplication;
 import com.safe.gallery.calculator.share.Share;
@@ -123,7 +122,6 @@ public class ConfirmCalcActivity extends AppCompatActivity implements View.OnCli
     private String expressions = "";
     private String firststr = "";
 
-    private FirebaseAnalytics mFirebaseAnalytics;
     /* renamed from: n */
     Boolean f6029n = Boolean.valueOf(false);
     /* renamed from: o */

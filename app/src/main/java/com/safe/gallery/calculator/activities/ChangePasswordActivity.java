@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.internal.view.SupportMenu;
+import androidx.core.internal.view.SupportMenu;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;

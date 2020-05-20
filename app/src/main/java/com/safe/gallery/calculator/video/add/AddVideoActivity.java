@@ -5,18 +5,13 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Files;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -34,7 +29,6 @@ import com.safe.gallery.calculator.app.MainApplication;
 import com.safe.gallery.calculator.callbacks.OnAllVideosLoadedListener;
 import com.safe.gallery.calculator.db.DBHelper;
 import com.safe.gallery.calculator.model.AllVideosModel;
-import com.safe.gallery.calculator.utils.CenterTitleToolbar;
 import com.safe.gallery.calculator.video.add.adapter.AllVideoAdapter;
 
 import java.io.File;
@@ -122,7 +116,6 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
 
     private void Init() {
 
-        MainApplication.getInstance().LogFirebaseEvent("5", "AddVideo");
         File file = new File(AppConstants.VIDEO_PATH);
         if (!file.exists()) {
             file.mkdirs();

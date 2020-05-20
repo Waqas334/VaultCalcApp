@@ -7,21 +7,16 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Files;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AlertDialog.Builder;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog.Builder;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +38,6 @@ import com.safe.gallery.calculator.db.DBHelper;
 import com.safe.gallery.calculator.fullscreenimage.FullScreenImageActivity;
 import com.safe.gallery.calculator.model.AllAudioModel;
 import com.safe.gallery.calculator.model.AllImagesModel;
-import com.safe.gallery.calculator.utils.CenterTitleToolbar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -134,7 +128,6 @@ public class AudiosActivity extends BaseActivity implements OnAudioLoadedListene
     }
 
     private void Init() {
-        MainApplication.getInstance().LogFirebaseEvent("6", AppConstants.AUDIO);
 
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
     }

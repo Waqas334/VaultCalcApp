@@ -6,11 +6,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.StrictMode.VmPolicy.Builder;
 import android.preference.PreferenceManager;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.analytics.FirebaseAnalytics.Event;
-import com.google.firebase.analytics.FirebaseAnalytics.Param;
 import com.safe.gallery.calculator.R;
 
 import java.text.DecimalFormat;
@@ -31,14 +28,12 @@ public class MainApplication extends Application {
     private static final String CONSTANT_VIDEO_COUNT = "constant_video_count";
     private static MainApplication mInstance;
     private static SharedPreferences sharedPreferences;
-    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     public void onCreate() {
         super.onCreate();
 
         mInstance = this;
-        this.mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         MultiDex.install(this);
         StrictMode.setVmPolicy(new Builder().build());
 
@@ -46,14 +41,6 @@ public class MainApplication extends Application {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("Montserrat-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
 
-    }
-
-    public void LogFirebaseEvent(String eventId, String eventName) {
-
-        Bundle bundle = new Bundle();
-        bundle.putString(Param.ITEM_ID, eventId);
-        bundle.putString(Param.ITEM_NAME, eventName);
-        this.mFirebaseAnalytics.logEvent(Event.SELECT_CONTENT, bundle);
     }
 
     public synchronized void savePassword(String pass) {

@@ -8,8 +8,8 @@ import android.os.Environment;
 import android.provider.MediaStore.Audio.Media;
 import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 
 import com.safe.gallery.calculator.callbacks.OnAllAudiosLoadedListener;

@@ -2,10 +2,9 @@ package com.safe.gallery.calculator.image.add.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.CallSuper;
-import android.support.annotation.UiThread;
-import android.support.v7.widget.RecyclerView.Adapter;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+
+import androidx.recyclerview.widget.RecyclerView.Adapter;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,9 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
-import butterknife.Unbinder;
-import butterknife.internal.Utils;
 
 public class AllImageAdapter extends Adapter<ViewHolder> {
     private ArrayList<AllImagesModel> buckets;

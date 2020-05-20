@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.media.Image;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.util.Size;
 import android.view.Surface;

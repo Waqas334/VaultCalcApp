@@ -38,7 +38,7 @@ public class CustomListSingleOnly extends ArrayAdapter<String> {
             imageView.setImageResource(R.drawable.ic_folder_with_round_bg);
         } else if (file.isFile()) {
 
-            Picasso.with(this.context).load(new File(this.ParentFolder + "/" + this.web[position])).placeholder((int) R.drawable.document_gray).resize(50, 50).into(imageView);
+            Picasso.get().load(new File(this.ParentFolder + "/" + this.web[position])).placeholder((int) R.drawable.document_gray).resize(50, 50).into(imageView);
         }
         return rowView;
     }

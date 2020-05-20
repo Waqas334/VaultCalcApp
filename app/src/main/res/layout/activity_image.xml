@@ -23,7 +23,7 @@
 
         <include layout="@layout/progress_view" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
@@ -54,7 +54,7 @@
         android:textColor="@color/white"
         android:visibility="gone" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         xmlns:n2="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"

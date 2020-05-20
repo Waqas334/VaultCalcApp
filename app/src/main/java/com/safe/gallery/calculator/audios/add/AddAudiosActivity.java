@@ -5,18 +5,13 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Files;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -34,7 +29,6 @@ import com.safe.gallery.calculator.audios.add.adapter.AllAudiosAdapter;
 import com.safe.gallery.calculator.callbacks.OnAllAudiosLoadedListener;
 import com.safe.gallery.calculator.db.DBHelper;
 import com.safe.gallery.calculator.model.AllAudioModel;
-import com.safe.gallery.calculator.utils.CenterTitleToolbar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -121,7 +115,6 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
     }
 
     private void Init() {
-        MainApplication.getInstance().LogFirebaseEvent("7", "AddAudio");
         File file = new File(AppConstants.AUDIO_PATH);
         if (!file.exists()) {
             file.mkdirs();
@@ -152,7 +145,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
                         this.adapter.selectAllItem();
                     }
                     this.isAllSelected = true;
-                    item.setIcon(R.drawable.ic_check_filled);
+                    item.setIcon(R.drawable.ic_check_box_white_48dp);
                     showHideButton(true);
                     break;
                 }
@@ -160,7 +153,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
                     this.adapter.deSelectAllItem();
                 }
                 this.isAllSelected = false;
-                item.setIcon(R.drawable.ic_check_box_outline);
+                item.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                 showHideButton(false);
                 break;
         }
@@ -176,9 +169,9 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
             return;
         }
         if (selectAll) {
-            this.itemSelectAll.setIcon(R.drawable.ic_check_filled);
+            this.itemSelectAll.setIcon(R.drawable.ic_check_box_white_48dp);
         } else {
-            this.itemSelectAll.setIcon(R.drawable.ic_check_box_outline);
+            this.itemSelectAll.setIcon(R.drawable.ic_check_box_outline_white_48dp);
         }
     }
 
