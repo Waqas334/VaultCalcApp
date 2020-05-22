@@ -25,8 +25,100 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="hint">If you forgot pin then reopen your app. and hit 11223344
-            on calculator to recover your password."
-</string>
+    <string name="hint">If you forgot password then just open the app. Enter 1122334 on calculator to recover your password."</string>
+
+    <string name="pref_key_change_question">pref_change_security_question</string>
+    <string name="pref_key_forgot_password">pref_forgot_password</string>
+    <string name="pref_key_about_us">pref_about_us</string>
+    <string name="pref_key_share_app">pref_share_app</string>
+    <string name="pref_key_rate_app">pref_rate_app</string>
+    <string name="pref_key_privacy_policy">pref_privacy_policy</string>
+    <string name="pref_key_contact_us">pref_contact_us</string>
+    <string name="pref_key_change_password">pref_change_password</string>
+
+    <string name="security">Security</string>
+    <string name="change_password">Change Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="change_security_question">Change Security Question</string>
+    <string name="mroe">More</string>
+    <string name="about_us">About us</string>
+    <string name="share_app">Share app</string>
+    <string name="rate_app">Rate app</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="select_security_question">Select Security Question</string>
+    <string name="share_app_desc">Hey there, want some privacy and hide your private photos like really? \nCheckout this new cool app:\n\n </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="later">Later</string>
+    <string name="inform_us_description">Please let us know what went wrong or if there is anything causing trouble. We would surely help you out.  Thanks</string>
+    <string name="inform_us">Inform Us!</string>
+    <string name="rate_app_desc">Hey, thanks a lot for taking time to rate our app.   Can you please tell us if you are enjoying the app or not?</string>
+
+
+    <string name="about_description"><![CDATA[    Calculator Vault is developed by <a href="https://twitter.com/waqasyounis334">AndroidBull</a>.<br><br>
+    Calculator Vault works perfectly with <a href="https://play.google.com/store/apps/details?id=com.androidbull.incognito.browser">Incognito Browser</a> as whatever you download
+    using our Incognito Browser will be automatically locked inside Calculator Vault<br><br>
+        ]]>
+    </string>
+
+
+
+
+    <string name="_ac" translatable="false">AC</string>
+    <string name="_sqrt" translatable="false">√</string>
+    <string name="_percentage" translatable="false">%</string>
+    <string name="_divide" translatable="false">/</string>
+    <string name="_0" translatable="false">0</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="_3" translatable="false">3</string>
+    <string name="_4" translatable="false">4</string>
+    <string name="_5" translatable="false">5</string>
+    <string name="_6" translatable="false">6</string>
+    <string name="_7" translatable="false">7</string>
+    <string name="_8" translatable="false">8</string>
+    <string name="_9" translatable="false">9</string>
+    <string name="_mul" translatable="false">X</string>
+    <string name="_sub" translatable="false">-</string>
+    <string name="_add" translatable="false">+</string>
+    <string name="_equal" translatable="false">=</string>
+    <string name="_dot" translatable="false">.</string>
+    <string name="_sign" translatable="false">+/-</string>
+    <string name="permission_not_granted">Sorry!!!, you can\'t use this app without granting permission</string>
+    <string name="select_num_first">Select Number First</string>
+    <string name="cant_divide_by_zero">Can\'t divide by 0</string>
+    <string name="invalid_input">Invalid Input</string>
+    <string name="invalid_expression">Invalid Expression</string>
+    <string name="password_must_be_4_digit">Password must be of 4 digits</string>
+    <string name="syntax_error">Syntax Error</string>
+    <string name="please_enter_current_password">Please Enter your current password.</string>
+    <string name="enter_new_pass">Please Enter your New Password.</string>
+    <string name="sorry">Sorry</string>
+    <string name="something_went_wrong">Something went wrong, please try again later.</string>
+    <string name="deleting">Deleting</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="ask_delete_all_intruder">Do you want to delete all intruder photos?</string>
+    <string name="intruder">Intruder</string>
+    <string name="error_password_not_matched">ERROR: Password not matched</string>
+    <string name="enter_confirm_pass">Please confirm password</string>
+    <string name="done">Done</string>
+    <string name="password_updated">Password updated</string>
+    <string name="invalid_confirm_pass">Confirm password is not matching</string>
+    <string name="pass_must_be_numeric">ERROR: Password must be numeric</string>
+    <string name="select_security_answer">Please enter security answer</string>
+    <string name="security_question_incorrect">Security question is incorrect!</string>
+    <string name="security_answer_incorrect">Security answer is incorrect!</string>
+    <string name="your_pass_is">Your password is</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="grant_permission_desc">Please grant all permissions to access additional functionality.</string>
+    <string name="dismiss">DISMISS</string>
+    <string name="select_atleat_1_image">Please select at least one image!</string>
+    <string name="moving">Moving</string>
+    <string name="of">of</string>
+    <string name="moving_audios">Moving Audio(s)</string>
+    <string name="moving_1_of">Moving 1 of</string>
+    <string name="alert">Alert</string>
+    <string name="delete_file_desc">Are you sure you want to delete selected files?</string>
 
 </resources>

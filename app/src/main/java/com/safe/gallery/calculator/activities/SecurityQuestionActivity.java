@@ -1,14 +1,11 @@
 package com.safe.gallery.calculator.activities;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import androidx.appcompat.widget.AppCompatSpinner;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -17,41 +14,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.Toolbar;
+
+import com.safe.gallery.calculator.MyBassActivity;
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.app.BaseActivity;
-import com.safe.gallery.calculator.app.MainApplication;
-import com.safe.gallery.calculator.utils.CenterTitleToolbar;
+import com.safe.gallery.calculator.MainApplication;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class SecurityQuestionActivity extends BaseActivity {
+public class SecurityQuestionActivity extends MyBassActivity {
 
     public static final String ADD = "add";
     public static final String CHANGE = "change";
     public static final String FORGOT_PASS = "forgot_pass";
     public static final String TYPE = "type";
-    private String[] array;
 
     Button btnSubmit;
 
     EditText etAnswer;
 
     private int position;
-    private String question;
     private String selectedQuestion;
 
     AppCompatSpinner spinQuestions;
-    CenterTitleToolbar toolbar;
+    Toolbar toolbar;
 
     private String type;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_security_question);
-        ButterKnife.bind((Activity) this);
+        setContentView(R.layout.activity_security_question);
+        ButterKnife.bind(this);
 
         findViews();
         initViews();
@@ -70,7 +67,8 @@ public class SecurityQuestionActivity extends BaseActivity {
     private void initViews() {
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle((CharSequence) "Security Question");
+        getSupportActionBar().setTitle(getResources().getString(R.string.change_security_question));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         if (getIntent().getExtras() != null) {
@@ -89,8 +87,8 @@ public class SecurityQuestionActivity extends BaseActivity {
 
         });
         if (type != null && type.equals(CHANGE)) {
-            array = getResources().getStringArray(R.array.questions);
-            question = MainApplication.getInstance().getSecurityQuestion();
+            String[] array = getResources().getStringArray(R.array.questions);
+            String question = MainApplication.getInstance().getSecurityQuestion();
             etAnswer.setText(MainApplication.getInstance().getSecurityAnswer());
             for (int i = 0; i < array.length; i++) {
                 position = i;
@@ -113,7 +111,7 @@ public class SecurityQuestionActivity extends BaseActivity {
 
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == 16908332) {
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -121,22 +119,20 @@ public class SecurityQuestionActivity extends BaseActivity {
 
     @OnClick({R.id.btn_submit})
     public void onClick() {
-        if (selectedQuestion == null) {
-            Toast.makeText(this, "Please select security question", Toast.LENGTH_LONG).show();
-        } else if (selectedQuestion.equals("Select Your Question")) {
-            Toast.makeText(this, "Please select security question", Toast.LENGTH_LONG).show();
+        if (selectedQuestion == null || selectedQuestion.equals("Select Your Question")) {
+            Toast.makeText(this, getString(R.string.select_security_question), Toast.LENGTH_LONG).show();
         } else if (etAnswer.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Please enter security answer", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.select_security_answer), Toast.LENGTH_LONG).show();
         } else if (type == null || !type.equals(FORGOT_PASS)) {
             MainApplication.getInstance().setSecurityQuestion(selectedQuestion);
             MainApplication.getInstance().setSecurityAnswer(etAnswer.getText().toString());
             setBackData();
         } else if (!selectedQuestion.equalsIgnoreCase(MainApplication.getInstance().getSecurityQuestion())) {
-            Toast.makeText(this, "Security question is incorrect!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.security_question_incorrect), Toast.LENGTH_LONG).show();
         } else if (etAnswer.getText().toString().equalsIgnoreCase(MainApplication.getInstance().getSecurityAnswer())) {
             showPassword();
         } else {
-            Toast.makeText(this, "Security answer is incorrect!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.security_answer_incorrect), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -149,20 +145,16 @@ public class SecurityQuestionActivity extends BaseActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        TextView btnOk = (TextView) dialog.findViewById(R.id.btn_ok);
-        ImageView imgClose = (ImageView) dialog.findViewById(R.id.img_close);
-        ((TextView) dialog.findViewById(R.id.et_file_name)).setText("Your password is \n " + MainApplication.getInstance().getPassword());
-        imgClose.setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-                dialog.dismiss();
-                finish();
-            }
+        TextView btnOk = dialog.findViewById(R.id.btn_ok);
+        ImageView imgClose = dialog.findViewById(R.id.img_close);
+        ((TextView) dialog.findViewById(R.id.et_file_name)).setText(getString(R.string.your_pass_is) + MainApplication.getInstance().getPassword());
+        imgClose.setOnClickListener(view -> {
+            dialog.dismiss();
+            finish();
         });
-        btnOk.setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-                dialog.dismiss();
-                finish();
-            }
+        btnOk.setOnClickListener(view -> {
+            dialog.dismiss();
+            finish();
         });
         dialog.show();
     }

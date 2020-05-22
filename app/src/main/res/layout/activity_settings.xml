@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".activities.SettingsActivity">
 
+    <include layout="@layout/toolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/settings_toolbar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <FrameLayout
         android:id="@+id/settings_fragment_container"
         android:layout_width="0dp"
@@ -13,6 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_toolbar"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

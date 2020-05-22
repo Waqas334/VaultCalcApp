@@ -69,4 +69,14 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="change_pass_style">
+        <item name="android:inputType">number</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
 </resources>

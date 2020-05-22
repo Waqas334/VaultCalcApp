@@ -11,20 +11,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-feature android:name="android.hardware.camera2.full" />
-
-<!--    <uses-permission android:name="android.permission.CAMERA" />-->
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <uses-feature android:name="android.hardware.camera2.full" /> <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-<!--    <permission-->
-<!--        android:name="com.safe.gallery.calculator.permission.C2D_MESSAGE"-->
-<!--        android:protectionLevel="signature" />-->
-
-<!--    <uses-permission android:name="com.safe.gallery.calculator.permission.C2D_MESSAGE" />-->
-
     <application
-        android:name=".app.MainApplication"
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/appicon"
         android:label="@string/app_name"
@@ -33,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.SettingsActivity"/>
+        <activity android:name=".activities.NewChangePasswordActivity"/>
+        <activity android:name=".activities.SettingsActivity" />
         <activity
             android:name=".activities.IntruderActivity"
             android:screenOrientation="portrait" />
@@ -41,7 +34,11 @@
             android:name=".activities.ConfirmCalcActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.CalcActivity">
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
 
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
 
         <provider
@@ -52,68 +49,60 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
-        </provider>
-
-<!--        <meta-data-->
-<!--            android:name="io.fabric.ApiKey"-->
-<!--            android:value="0ce6f17679679c8352cf0e5ef02141b9890d837c" />-->
-
+        </provider> <!-- <meta-data -->
+        <!-- android:name="io.fabric.ApiKey" -->
+        <!-- android:value="0ce6f17679679c8352cf0e5ef02141b9890d837c" /> -->
         <activity
             android:name=".activities.HomeActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
+<!--        <activity-->
+<!--            android:name=".image.ImageActivity"-->
+<!--            android:excludeFromRecents="true"-->
+<!--            android:screenOrientation="sensorPortrait" />-->
         <activity
-            android:name=".image.ImageActivity"
+            android:name=".activities.images.ImagesActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".image.ImagesActivity"
+            android:name=".activities.images.AddImageActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".image.add.AddImageActivity"
+            android:name=".activities.FullScreenImageActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".fullscreenimage.FullScreenImageActivity"
+            android:name=".activities.video.VideoActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".video.VideoActivity"
+            android:name=".activities.audio.AudiosActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".audios.AudiosActivity"
+            android:name=".activities.files.FilesActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".files.FilesActivity"
+            android:name=".activities.files.AddFileActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="sensorPortrait" />
+<!--        <activity-->
+<!--            android:name=".files.FolderSelectionsActivity"-->
+<!--            android:excludeFromRecents="true"-->
+<!--            android:screenOrientation="sensorPortrait" />-->
+        <activity
+            android:name=".activities.audio.AddAudiosActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".files.AddFileActivity"
-            android:excludeFromRecents="true"
-            android:screenOrientation="sensorPortrait" />
-        <activity
-            android:name=".files.FolderSelectionsActivity"
-            android:excludeFromRecents="true"
-            android:screenOrientation="sensorPortrait" />
-        <activity
-            android:name=".audios.add.AddAudiosActivity"
-            android:excludeFromRecents="true"
-            android:screenOrientation="sensorPortrait" />
-        <activity
-            android:name=".video.add.AddVideoActivity"
-            android:excludeFromRecents="true"
-            android:screenOrientation="sensorPortrait" />
-        <activity
-            android:name=".activities.ChangePasswordActivity"
+            android:name=".activities.video.AddVideoActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
@@ -121,7 +110,7 @@
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".privacy.PrivacyPolicyActivity"
+            android:name=".activities.PrivacyPolicyActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
 
@@ -134,20 +123,6 @@
                 android:name="android.app.device_admin"
                 android:resource="@xml/device_admin_sample" />
         </receiver>
-
-
-<!--        <receiver-->
-<!--            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"-->
-<!--            android:exported="true"-->
-<!--            android:permission="com.google.android.c2dm.permission.SEND">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
-<!--                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />-->
-
-<!--                <category android:name="com.safe.gallery.calculator" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-
     </application>
 
 </manifest>

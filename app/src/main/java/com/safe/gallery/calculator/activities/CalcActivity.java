@@ -1,7 +1,9 @@
 package com.safe.gallery.calculator.activities;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -9,6 +11,7 @@ import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -18,27 +21,43 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.icu.text.SimpleDateFormat;
 import android.media.Image;
 import android.media.ImageReader;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.safe.gallery.calculator.utils.AutoFitTextureView;
+import com.safe.gallery.calculator.utils.Utils;
+import com.safe.gallery.calculator.MyBassActivity;
+import com.safe.gallery.calculator.R;
+import com.safe.gallery.calculator.utils.AppConstants;
+import com.safe.gallery.calculator.MainApplication;
+import com.safe.gallery.calculator.utils.share.Share;
+import com.safe.gallery.calculator.utils.share.share_calc;
+import com.safe.gallery.calculator.utils.ExtendedDoubleEvaluator;
+
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,49 +65,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.SpannableStringBuilder;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.MotionEvent;
-import android.view.animation.AlphaAnimation;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.fathzer.soft.javaluator.DoubleEvaluator;
-import com.safe.gallery.calculator.CameraData.AutoFitTextureView;
-import com.safe.gallery.calculator.CameraData.Utils;
-import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.app.AppConstants;
-import com.safe.gallery.calculator.app.MainApplication;
-import com.safe.gallery.calculator.share.Share;
-import com.safe.gallery.calculator.share.share_calc;
-
-import net.objecthunter.exp4j.ExpressionBuilder;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
-
-public class CalcActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
+public class CalcActivity extends MyBassActivity implements View.OnClickListener, View.OnTouchListener {
 
     private static final String TAG = "CalcActivity";
     private static SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -100,7 +93,6 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         ORIENTATIONS.append(Surface.ROTATION_270, 0);
     }
 
-    private String cameraId;
     private CameraDevice cameraDevice;
     private CameraCaptureSession cameraCaptureSessions;
     private CaptureRequest.Builder captureRequestBuilder;
@@ -116,13 +108,10 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     private HandlerThread mBackgroundThread;
 
     private AutoFitTextureView textureView;
-    private Button button;
-
     private Semaphore mCameraOpenCloseLock = new Semaphore(1);
 
     private static final int MAX_PREVIEW_WIDTH = 1920;
     private static final int MAX_PREVIEW_HEIGHT = 1080;
-    private int mSensorOrientation;
 
     boolean mSurfaceTextureAvailable = false;
     boolean mPermissionsGranted = false;
@@ -179,7 +168,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
     String f6026X = "";
 
-    Boolean f6027Y = Boolean.valueOf(false);
+    Boolean f6027Y = false;
 
     Editable f6028Z;
 
@@ -189,41 +178,38 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     String ab = "";
     String ac = "";
     int ad = 0;
-    int ae = 0;
-    int af = 0;
-    int ag = 0;
-    Boolean ah = Boolean.valueOf(false);
-    Boolean ai = Boolean.valueOf(false);
-    Boolean aj = Boolean.valueOf(false);
-    Boolean ak = Boolean.valueOf(false);
-    Boolean al = Boolean.valueOf(false);
-    Boolean am = Boolean.valueOf(false);
-    Boolean an = Boolean.valueOf(false);
-    Boolean ao = Boolean.valueOf(false);
-    Boolean ap = Boolean.valueOf(false);
-    Boolean aq = Boolean.valueOf(false);
-    Boolean ar = Boolean.valueOf(true);
-    Boolean as = Boolean.valueOf(true);
-    Boolean at = Boolean.valueOf(true);
-    Boolean au = Boolean.valueOf(true);
-    Boolean av = Boolean.valueOf(false);
-    Boolean aw = Boolean.valueOf(false);
-    Boolean az = Boolean.valueOf(false);
-    private AlphaAnimation click_anim;
+    //    int ae = 0;
+//    int af = 0;
+//    int ag = 0;
+    Boolean ah = false;
+    Boolean ai = false;
+    Boolean aj = false;
+    Boolean ak = false;
+    Boolean al = false;
+    Boolean am = false;
+    Boolean an = false;
+    Boolean ao = false;
+    Boolean ap = false;
+    Boolean aq = false;
+    Boolean ar = true;
+    //    Boolean as = true;
+//    Boolean at = true;
+//    Boolean au = true;
+    Boolean av = false;
+    //    Boolean aw = false;
+    Boolean az = false;
     private String expressions = "";
     private String firststr = "";
 
-    Boolean f6029n = Boolean.valueOf(false);
+    Boolean f6029n = false;
 
-    Boolean f6030o = Boolean.valueOf(false);
+    Boolean f6030o = false;
 
-    Boolean f6031p = Boolean.valueOf(false);
-    private String prev = "";
+    Boolean f6031p = false;
 
-    Boolean f6032q = Boolean.valueOf(false);
+    Boolean f6032q = false;
 
-    Boolean f6033r = Boolean.valueOf(false);
-    private Double result = Double.valueOf(0.0d);
+    Boolean f6033r = false;
 
     TextView tv_clear;
 
@@ -241,6 +227,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(bundle);
         setContentView(R.layout.new_activity_calc);
 
+        //TODO CLEANING: Checkout why it is being used even
         PackageInfo info = null;
         try {
             info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
@@ -260,7 +247,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             Log.e("TAG", "KeyHash:--->" + Base64.encodeToString(md.digest(), Base64.DEFAULT));
         }
 
-        textureView = (AutoFitTextureView) findViewById(R.id.textureView);
+        textureView = findViewById(R.id.textureView);
         textureView.setSurfaceTextureListener(textureListener);
         initviews();
         initlisteners();
@@ -272,10 +259,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             //Show password set dialog
             showSetPasswordDialog();
 
-            return;
         }
 
-        click_anim = new AlphaAnimation(1.0f, 0.5f);
 
     }
 
@@ -287,26 +272,22 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
             if (ContextCompat.checkSelfPermission(CalcActivity.this, Manifest.permission.CAMERA)
                     != PackageManager.PERMISSION_GRANTED) {
+                //Camera Permission not granted
                 ActivityCompat.requestPermissions(CalcActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                 return;
-            } else {
-                mPermissionsGranted = true;
-
-                // Execute some code after 500 milliseconds have passed
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if (mSurfaceTextureAvailable && mPermissionsGranted) {
-                            openCamera(width, height);
-                        }
-                        //setupCameraIfPossible();
-                    }
-                }, 500);
-
-
             }
+            mPermissionsGranted = true;
+
+            // Execute some code after 500 milliseconds have passed
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+
+                if (mSurfaceTextureAvailable && mPermissionsGranted) {
+                    openCamera(width, height);
+                }
+                //setupCameraIfPossible();
+            }, 500);
+
 
         }
 
@@ -325,35 +306,6 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     };
-
-    private void setupCameraIfPossible() {
-        if (mSurfaceTextureAvailable && mPermissionsGranted) {
-            //openCamera();
-        }
-    }
-    /*TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
-        @Override
-        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            openCamera(width, height);
-        }
-
-        @Override
-        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            if (null != textureView || null == imageDimension) {
-                textureView.setTransform(Utils.configureTransform(width, height, imageDimension, CalcActivity.this));
-            }
-        }
-
-        @Override
-        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-            return false;
-        }
-
-        @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
-        }
-    };*/
 
     CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
@@ -387,7 +339,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
                 throw new RuntimeException("Time out waiting to lock camera opening.");
             }
-            cameraId = manager.getCameraIdList()[1];
+            String cameraId = manager.getCameraIdList()[1];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
             assert map != null;
@@ -399,7 +351,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
             int displayRotation = getWindowManager().getDefaultDisplay().getRotation();
             //noinspection ConstantConditions
-            mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+            int mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
             boolean swappedDimensions = false;
             switch (displayRotation) {
                 case Surface.ROTATION_0:
@@ -457,7 +409,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 textureView.setTransform(Utils.configureTransform(width, height, imageDimension, CalcActivity.this));
             }
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(CalcActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
                 return;
             }
@@ -557,7 +510,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 // close the app
-                Toast.makeText(CalcActivity.this, "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(CalcActivity.this, getResources().getString(R.string.permission_not_granted), Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -659,7 +612,6 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
         private void save(byte[] bytes) throws IOException {
             OutputStream output = null;
             try {
@@ -670,7 +622,6 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 String todayString = formatter.format(todayDate);
                 Log.e("TAG", "save:format -->" + todayString);
 
-                //TODO Reminder: Intruder image is being saved here
                 File f = new File(AppConstants.INTRUDER_PATH);
                 File file = new File(AppConstants.INTRUDER_PATH + "/" + todayString + ".jpg");
 
@@ -706,7 +657,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            if (calcActivity.tv_Display.getText().toString().equalsIgnoreCase("") || calcActivity.tv_Display.getText().toString().equalsIgnoreCase("0")) {
+            if (calcActivity.tv_Display.getText().toString().equalsIgnoreCase("")
+                    || calcActivity.tv_Display.getText().toString().equalsIgnoreCase("0")) {
                 calcActivity.tv_Display.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
             }
         }
@@ -746,23 +698,23 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     private void check_tablet() {
 //        f6017O = (ImageView) findViewById(R.id.iv_square_root);
 //        f6017O.setOnClickListener(this);
-        if (share_calc.flag_expand.booleanValue()) {
+        if (share_calc.flag_expand) {
             Log.e("flag_expand", "" + share_calc.flag_expand);
-            share_calc.flag_expand = Boolean.valueOf(false);
+            share_calc.flag_expand = false;
         }
     }
 
     private void dot_operation() {
         if (et_main.getText().length() > 0) {
             ad = 0;
-            if (ai.booleanValue()) {
-                ah = Boolean.valueOf(false);
+            if (ai) {
+                ah = false;
             }
-            if (ah.booleanValue()) {
+            if (ah) {
                 et_main.setText("");
                 ab = "";
                 tv_Display.setText("0");
-                ah = Boolean.valueOf(false);
+                ah = false;
             }
             char[] toCharArray = ab.toCharArray();
             for (int length = toCharArray.length - 1; length >= 0; length--) {
@@ -773,7 +725,13 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 }
             }
-            if (ad == 0 && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '.' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
+            if (ad == 0 && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                    != '.' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                    != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                    != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                    != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                    != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                    != '%') {
                 char charAt = et_main.getText().toString().charAt(et_main.getText().toString().length() - 1);
                 tv_Display.setText(ab);
                 Log.e("dot", "" + charAt);
@@ -784,7 +742,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     tv_Display.setText(ab);
                     return;
                 }
-                if (av.booleanValue()) {
+                if (av) {
                     ac += ".";
                 }
                 Log.e("dot", "if" + charAt);
@@ -854,7 +812,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         tv_seven = findViewById(R.id.tv_seven);
         tv_four = findViewById(R.id.tv_four);
         tv_one = findViewById(R.id.tv_one);
-        tv_zero =findViewById(R.id.tv_zero);
+        tv_zero = findViewById(R.id.tv_zero);
         tv_percent = findViewById(R.id.tv_percent);
         tv_eight = findViewById(R.id.tv_eight);
         tv_five = findViewById(R.id.tv_five);
@@ -865,13 +823,13 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         tv_six = findViewById(R.id.tv_six);
         tv_three = findViewById(R.id.tv_three);
         tv_sign = findViewById(R.id.tv_sign);
-        tv_mul =  findViewById(R.id.tv_mul);
+        tv_mul = findViewById(R.id.tv_mul);
         tv_min = findViewById(R.id.tv_min);
         tv_plus = findViewById(R.id.tv_plus);
         tv_equal = findViewById(R.id.tv_equal);
         tv_sqrt = findViewById(R.id.tv_sqrt);
-        et_main = (EditText) findViewById(R.id.et_main);
-        tv_Display = (EditText) findViewById(R.id.tv_Display);
+        et_main = findViewById(R.id.et_main);
+        tv_Display = findViewById(R.id.tv_Display);
 //        tv_divide = (TextView) findViewById(R.id.tv_divide);
 //        ll_delete = (LinearLayout) findViewById(R.id.ll_delete);
 //        ll_calc = (LinearLayout) findViewById(R.id.ll_calc);
@@ -882,9 +840,9 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     private void mid_calculation() {
 
         if (f6026X.equals("/") && f6025W.equals("0")) {
-            f6033r = Boolean.valueOf(true);
+            f6033r = true;
             tv_Display.setText("0");
-            et_main.setText("Can't divide by 0");
+            et_main.setText(getResources().getString(R.string.cant_divide_by_zero));
             ab = "";
             return;
         }
@@ -907,7 +865,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             CharSequence charSequence = null;
             ExtendedDoubleEvaluator extendedDoubleEvaluator = new ExtendedDoubleEvaluator();
             Object obj;
-            if (az.booleanValue()) {
+            if (az) {
                 int i;
                 int i2 = 0;
                 int i3 = 0;
@@ -929,14 +887,14 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     i4++;
                     obj = charSequence + ")";
                 }
-                az = Boolean.valueOf(false);
+                az = false;
             } else {
                 obj = valueOf;
             }
             tv_Display.setText(charSequence);
             Log.e("Answer", aa + "");
             Double d = aa;
-            Long valueOf3 = Long.valueOf(new Double(d.doubleValue()).longValue());
+            Long valueOf3 = d.longValue();
             Log.e("Double", d + "");
             Log.e("long", valueOf3 + "");
             Locale locale = Locale.US;
@@ -958,12 +916,11 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             f6024V = ab;
         } catch (Exception e2) {
             Log.e("TAG", "Toast");
-            Toast.makeText(this, "Syntax Error", 0).show();
+            Toast.makeText(this, getString(R.string.syntax_error), Toast.LENGTH_SHORT).show();
             et_main.setText("");
             tv_Display.setText("0");
             ab = "";
             ac = "";
-            prev = "";
             firststr = "";
             aC = false;
             e2.printStackTrace();
@@ -973,17 +930,25 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
     private void operation() {
         if (et_main.getText().toString().length() != 0) {
-            if (ah.booleanValue()) {
-                ah = Boolean.valueOf(false);
+            if (ah) {
+                ah = false;
             }
-            if (!et_main.getText().toString().equals("Can't divide by 0") && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
+            if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))
+                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+'
+                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-'
+                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/'
+                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*'
+                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
                 if (tv_Display.length() > 0) {
                     int i;
                     if (tv_Display.getText().charAt(0) == '-') {
                         Log.e("TAG", "if for loop :");
                         i = 1;
                         while (i < tv_Display.length()) {
-                            if (tv_Display.getText().charAt(i) == '+' || tv_Display.getText().charAt(i) == '-' || tv_Display.getText().charAt(i) == '*' || tv_Display.getText().charAt(i) == '/') {
+                            if (tv_Display.getText().charAt(i) == '+'
+                                    || tv_Display.getText().charAt(i) == '-'
+                                    || tv_Display.getText().charAt(i) == '*'
+                                    || tv_Display.getText().charAt(i) == '/') {
                                 aC = false;
                                 break;
                             } else {
@@ -995,7 +960,9 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e("TAG", "else for loop :");
                         i = 0;
                         while (i < tv_Display.length()) {
-                            if (tv_Display.getText().charAt(i) == '+' || tv_Display.getText().charAt(i) == '-' || tv_Display.getText().charAt(i) == '*' || tv_Display.getText().charAt(i) == '/') {
+                            if (tv_Display.getText().charAt(i) == '+' || tv_Display.getText().charAt(i) == '-'
+                                    || tv_Display.getText().charAt(i) == '*'
+                                    || tv_Display.getText().charAt(i) == '/') {
                                 aC = false;
                                 break;
                             } else {
@@ -1017,7 +984,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e("TAG", "display length : " + ab.length());
                         et_main.setText(et_main.getText().toString().substring(0, et_main.getText().toString().length() - ab.length()) + "-" + ab);
                         tv_Display.setText("-" + ab);
-                        ar = Boolean.valueOf(false);
+                        ar = false;
                         ab = tv_Display.getText().toString();
                     } else {
                         Log.e("TAG", "oth pos - in display");
@@ -1034,7 +1001,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         ab = tv_Display.getText().toString();
                     }
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1048,87 +1015,93 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_clear:
-                f6029n = Boolean.valueOf(false);
+                f6029n = false;
                 et_main.setText("");
                 tv_Display.setText("0");
                 ab = "";
                 f6025W = "";
                 f6024V = "";
                 f6026X = "";
-                f6033r = Boolean.valueOf(false);
-                f6031p = Boolean.valueOf(false);
-                f6032q = Boolean.valueOf(false);
+                f6033r = false;
+                f6031p = false;
+                f6032q = false;
                 ac = "";
-                prev = "";
                 firststr = "";
                 f6026X = "";
                 aC = false;
                 return;
             case R.id.tv_divide:
-                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                     if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Log.e("divide", et_main.getText().toString());
-                    if (!f6033r.booleanValue()) {
-                        f6031p = Boolean.valueOf(false);
-                        f6032q = Boolean.valueOf(false);
-                        if (ah.booleanValue()) {
+                    if (!f6033r) {
+                        f6031p = false;
+                        f6032q = false;
+                        if (ah) {
                             et_main.setText(ab);
                             ab = aa + "";
                             tv_Display.setText(ab);
-                            ah = Boolean.valueOf(false);
+                            ah = false;
                         }
-                        am = Boolean.valueOf(true);
-                        f6030o = Boolean.valueOf(false);
-                        if (av.booleanValue()) {
+                        am = true;
+                        f6030o = false;
+                        if (av) {
                             ac += "/";
                         }
                         if (et_main.length() > 0) {
                             tv_Display.setText(ab);
-                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
+                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '%') {
                                 f6028Z = et_main.getText();
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("/");
-                                    f6029n = Boolean.valueOf(true);
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6029n = true;
+                                    f6027Y = true;
                                     f6026X = "/";
-                                    if (ap.booleanValue()) {
+                                    if (ap) {
                                         ab += "/";
                                     }
                                 } else {
                                     return;
                                 }
-                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
+                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
                                 et_main.setText(et_main.getText().toString().substring(0, et_main.getText().length() - 1));
                                 f6028Z = et_main.getText();
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("/");
-                                    f6029n = Boolean.valueOf(true);
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6029n = true;
+                                    f6027Y = true;
                                     f6026X = "/";
-                                    if (ap.booleanValue()) {
+                                    if (ap) {
                                         ab += "/";
                                     }
                                 } else {
                                     return;
                                 }
                             }
-                            prev = et_main.getText().toString();
                             firststr = et_main.getText().toString();
                             return;
                         }
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     return;
                 }
                 return;
             case R.id.tv_dot:
-                if (!f6033r.booleanValue()) {
+                if (!f6033r) {
                     try {
                         dot_operation();
                         return;
@@ -1138,7 +1111,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 return;
             case R.id.tv_eight:
-                f6033r = Boolean.valueOf(false);
+                f6033r = false;
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
                     ab = "";
@@ -1147,55 +1120,55 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
-                    aq = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
+                    aq = false;
                 }
-                if (av.booleanValue()) {
+                if (av) {
                     ac += "8";
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
                     et_main.append("8");
                     ab += "8";
                     tv_Display.setText(ab);
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1217,7 +1190,6 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         Log.i(TAG, "onClick: Correct Password Entered");
 
                         String secretQuestion = MainApplication.getInstance().getSecurityQuestion();
-                        String email = MainApplication.getInstance().getEmail();
                         if (TextUtils.isEmpty(secretQuestion)) {
                             //Security question is not set.
                             //Start add security question activity
@@ -1226,7 +1198,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                             finish();
                             return;
                         }
-                        //Passowr is correct and securiy question is already added so now start home activity
+                        //Password is correct and security question is already added so now start home activity
                         startActivity(new Intent(CalcActivity.this, HomeActivity.class));
                         finish();
                         return;
@@ -1236,7 +1208,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         //Start the security question activity
                         startActivity(new Intent(this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.FORGOT_PASS));
 
-                    } else if (!f6033r.booleanValue()) {
+                    } else if (!f6033r) {
                         Log.i(TAG, "onClick: Boolean value is false");
 
 
@@ -1246,7 +1218,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                             takePicture();
                         }
 
-                        if (!(!ah.booleanValue()
+                        if (!(!ah
                                 || f6026X.equals("")
                                 || f6025W == null
                                 || f6025W.equalsIgnoreCase(""))) {
@@ -1256,19 +1228,24 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         if (et_main.getText().length() <= 0) {
 
-                            Toast.makeText(this, "Select Number First", 0).show();
+                            Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                             return;
 
-                        } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
+                        } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                != '%') {
 
-                            aj = Boolean.valueOf(false);
-                            ak = Boolean.valueOf(false);
-                            am = Boolean.valueOf(false);
-                            al = Boolean.valueOf(false);
-                            an = Boolean.valueOf(false);
-                            ao = Boolean.valueOf(false);
+                            aj = false;
+                            ak = false;
+                            am = false;
+                            al = false;
+                            an = false;
+                            ao = false;
                             f6028Z = et_main.getText();
-                            ah = Boolean.valueOf(true);
+                            ah = true;
                             mid_calculation();
                             ac = "";
                             return;
@@ -1284,7 +1261,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (et_main.getText().length() != 4) {
                         //Password was less or more than 4 digits
-                        Toast.makeText(this, "Password must be of 4 digits", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.password_must_be_4_digit), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -1301,7 +1278,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
                 return;
             case R.id.tv_five:
-                f6033r = Boolean.valueOf(false);
+                f6033r = false;
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
                     ab = "";
@@ -1310,56 +1287,56 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
-                    aq = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
+                    aq = false;
                 }
-                if (av.booleanValue()) {
+                if (av) {
                     ac += "5";
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
                     et_main.append("5");
                     ab += "5";
                     tv_Display.setText(ab);
-                    f6029n = Boolean.valueOf(false);
+                    f6029n = false;
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1368,7 +1345,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("str1", f6024V);
                 return;
             case R.id.tv_four:
-                f6033r = Boolean.valueOf(false);
+                f6033r = false;
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
                     ab = "";
@@ -1377,56 +1354,56 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
-                    aq = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
+                    aq = false;
                 }
-                if (av.booleanValue()) {
+                if (av) {
                     ac += "4";
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
                     et_main.append("4");
                     ab += "4";
                     tv_Display.setText(ab);
-                    f6029n = Boolean.valueOf(false);
+                    f6029n = false;
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1435,122 +1412,140 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("str1", f6024V);
                 return;
             case R.id.tv_min:
-                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                     if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Log.e("minus", et_main.getText().toString());
-                    if (!f6033r.booleanValue()) {
-                        f6027Y = Boolean.valueOf(true);
-                        f6031p = Boolean.valueOf(false);
-                        f6032q = Boolean.valueOf(false);
-                        if (ah.booleanValue()) {
+                    if (!f6033r) {
+                        f6027Y = true;
+                        f6031p = false;
+                        f6032q = false;
+                        if (ah) {
                             et_main.setText(ab);
                             ab = aa + "";
                             tv_Display.setText(ab);
-                            ah = Boolean.valueOf(false);
+                            ah = false;
                         }
-                        ak = Boolean.valueOf(true);
-                        f6030o = Boolean.valueOf(false);
-                        if (av.booleanValue()) {
+                        ak = true;
+                        f6030o = false;
+                        if (av) {
                             ac += "-";
                         }
                         if (et_main.length() > 0) {
                             tv_Display.setText(ab);
-                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
+                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '+'
+                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '-'
+                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '/'
+                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '*'
+                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '%') {
                                 f6028Z = et_main.getText();
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("-");
                                     f6026X = "-";
-                                    f6029n = Boolean.valueOf(true);
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6029n = true;
+                                    f6027Y = true;
                                 } else {
                                     return;
                                 }
-                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
+                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
                                 et_main.setText(et_main.getText().toString().substring(0, et_main.getText().length() - 1));
                                 f6028Z = et_main.getText();
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("-");
                                     f6026X = "-";
-                                    f6029n = Boolean.valueOf(true);
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6029n = true;
+                                    f6027Y = true;
                                 } else {
                                     return;
                                 }
                             }
-                            prev = et_main.getText().toString();
                             firststr = et_main.getText().toString();
                             return;
                         }
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     return;
                 }
                 return;
             case R.id.tv_mul:
-                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                     if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getResources().getString(R.string.select_num_first),Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Log.e("multiply", et_main.getText().toString());
-                    if (!f6033r.booleanValue()) {
-                        f6031p = Boolean.valueOf(false);
-                        f6032q = Boolean.valueOf(false);
-                        if (ah.booleanValue()) {
+                    if (!f6033r) {
+                        f6031p = false;
+                        f6032q = false;
+                        if (ah) {
                             et_main.setText(ab);
                             ab = aa + "";
                             tv_Display.setText(ab);
-                            ah = Boolean.valueOf(false);
+                            ah = false;
                         }
-                        al = Boolean.valueOf(true);
-                        f6030o = Boolean.valueOf(false);
-                        if (av.booleanValue()) {
+                        al = true;
+                        f6030o = false;
+                        if (av) {
                             ac += "*";
                         }
                         if (et_main.length() > 0) {
                             tv_Display.setText(ab);
-                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
+                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+                                    != '%') {
                                 f6028Z = et_main.getText();
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("*");
                                     f6026X = "*";
-                                    f6029n = Boolean.valueOf(true);
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6029n = true;
+                                    f6027Y = true;
                                 } else {
                                     return;
                                 }
-                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
+                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*'
+                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
                                 et_main.setText(et_main.getText().toString().substring(0, et_main.getText().length() - 1));
                                 f6028Z = et_main.getText();
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("*");
                                     f6026X = "*";
-                                    f6029n = Boolean.valueOf(true);
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6029n = true;
+                                    f6027Y = true;
                                 } else {
                                     return;
                                 }
                             }
-                            prev = et_main.getText().toString();
                             firststr = et_main.getText().toString();
                             return;
                         }
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     return;
                 }
                 return;
             case R.id.tv_nine:
-                f6033r = Boolean.valueOf(false);
+                f6033r = false;
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
                     ab = "";
@@ -1559,56 +1554,56 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
-                    aq = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
+                    aq = false;
                 }
-                if (av.booleanValue()) {
+                if (av) {
                     ac += "9";
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
-                    f6029n = Boolean.valueOf(false);
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
+                    f6029n = false;
                     et_main.append("9");
                     ab += "9";
                     tv_Display.setText(ab);
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1617,7 +1612,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("str1", f6024V);
                 return;
             case R.id.tv_one:
-                f6033r = Boolean.valueOf(false);
+                f6033r = false;
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
                     ab = "";
@@ -1626,55 +1621,55 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    f6031p = false;
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    f6032q = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
                 }
-                if (av.booleanValue()) {
+                if (av) {
                     ac += "1";
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
                     et_main.append("1");
                     ab += "1";
                     tv_Display.setText(ab);
-                    f6029n = Boolean.valueOf(false);
+                    f6029n = false;
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1683,14 +1678,15 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("str1", f6024V);
                 return;
             case R.id.tv_percent:
-                if (!f6033r.booleanValue()) {
+                if (!f6033r) {
                     try {
                         if (et_main.length() > 0) {
-                            az = Boolean.valueOf(true);
+                            az = true;
                             try {
-                                aa = Double.valueOf(new ExpressionBuilder(et_main.getText().toString() + "/100").build().evaluate());
+                                aa = new ExpressionBuilder(et_main.getText().toString() + "/100").build().evaluate();
                                 Log.e("result", "" + aa);
                             } catch (ArithmeticException e2) {
+                                e2.printStackTrace();
                             }
                             f6026X = "";
                             NumberFormat instance = NumberFormat.getInstance();
@@ -1703,15 +1699,15 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                             } else {
                                 tv_Display.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
                             }
-                            et_main.setText(format + "");
+                            et_main.setText(format);
                             ab = format + "";
-                            tv_Display.setText(format + "");
+                            tv_Display.setText(format);
                             f6024V = format;
                             f6025W = "";
-                            f6032q = Boolean.valueOf(true);
+                            f6032q = true;
                             return;
                         }
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     } catch (Exception e3) {
                         Log.e("TAG", "Invalid for percentage" + e3.getMessage());
@@ -1720,24 +1716,24 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 return;
             case R.id.tv_plus:
-                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                     if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getResources().getString(R.string.cant_divide_by_zero), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Log.e("plus", et_main.getText().toString());
-                    if (!f6033r.booleanValue()) {
-                        f6031p = Boolean.valueOf(false);
-                        f6032q = Boolean.valueOf(false);
-                        if (ah.booleanValue()) {
+                    if (!f6033r) {
+                        f6031p = false;
+                        f6032q = false;
+                        if (ah) {
                             et_main.setText(ab);
                             ab = aa + "";
                             tv_Display.setText(ab);
-                            ah = Boolean.valueOf(false);
+                            ah = false;
                         }
-                        aj = Boolean.valueOf(true);
-                        f6030o = Boolean.valueOf(false);
-                        if (av.booleanValue()) {
+                        aj = true;
+                        f6030o = false;
+                        if (av) {
                             ac += "+";
                         }
                         if (et_main.length() > 0) {
@@ -1746,11 +1742,11 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                                 f6028Z = et_main.getText();
                                 Log.e("if", "if");
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("+");
                                     f6026X = "+";
-                                    f6029n = Boolean.valueOf(true);
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6029n = true;
+                                    f6027Y = true;
                                 } else {
                                     return;
                                 }
@@ -1759,22 +1755,21 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                                 f6028Z = et_main.getText();
                                 Log.e("else", "else");
                                 mid_calculation();
-                                if (!et_main.getText().toString().equals("Can't divide by 0")) {
+                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
                                     et_main.append("+");
                                     f6026X = "+";
-                                    f6027Y = Boolean.valueOf(true);
+                                    f6027Y = true;
                                     if (tv_Display.getText().toString().length() == 16) {
-                                        f6029n = Boolean.valueOf(true);
+                                        f6029n = true;
                                     }
                                 } else {
                                     return;
                                 }
                             }
-                            prev = et_main.getText().toString();
                             firststr = et_main.getText().toString();
                             return;
                         }
-                        Toast.makeText(this, "Select Number First", 0).show();
+                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     return;
@@ -1782,8 +1777,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             case R.id.tv_sign:
                 if (!et_main.getText().toString().equals("0")
-                        && !et_main.getText().toString().equals("Invalid Input")
-                        && !et_main.getText().toString().equals("Can't divide by 0")) {
+                        && !et_main.getText().toString().equals(getString(R.string.invalid_input))
+                        && !et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
                     try {
                         operation();
                         return;
@@ -1793,7 +1788,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 return;
             case R.id.tv_seven:
-                f6033r = Boolean.valueOf(false);
+                f6033r = false;
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
                     ab = "";
@@ -1802,56 +1797,56 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                     tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
-                    aq = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
+                    aq = false;
                 }
-                if (av.booleanValue()) {
+                if (av) {
                     ac += "7";
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
-                    f6029n = Boolean.valueOf(false);
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
+                    f6029n = false;
                     et_main.append("7");
                     ab += "7";
                     tv_Display.setText(ab);
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1860,7 +1855,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("str1", f6024V);
                 return;
             case R.id.tv_six:
-                f6033r = Boolean.valueOf(false);
+                f6033r = false;
                 if (et_main.getText().toString().equalsIgnoreCase("0")) {
                     et_main.setText("");
                     ab = "";
@@ -1869,56 +1864,56 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
-                    aq = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
+                    aq = false;
                 }
-                if (av.booleanValue()) {
-                    ac += "6";
+                if (av) {
+                    ac += getString(R.string._6);
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
-                    et_main.append("6");
-                    ab += "6";
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
+                    et_main.append(getString(R.string._6));
+                    ab += getString(R.string._6);
                     tv_Display.setText(ab);
-                    f6029n = Boolean.valueOf(false);
+                    f6029n = false;
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -1927,13 +1922,13 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("str1", f6024V);
                 return;
             case R.id.tv_sqrt:
-                if (!f6033r.booleanValue()) {
+                if (!f6033r) {
                     if (et_main.length() > 0) {
                         f6026X = "";
                         sqrlEquals();
                         return;
                     }
-                    Toast.makeText(this, "Select Number First", 0).show();
+                    Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 return;
@@ -1950,64 +1945,64 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 return;*/
             case R.id.tv_three:
-                f6033r = Boolean.valueOf(false);
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
+                f6033r = false;
+                if (et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
                     et_main.setText("");
                     tv_Display.setText("");
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
-                    aq = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
+                    aq = false;
                 }
-                if (av.booleanValue()) {
-                    ac += "3";
+                if (av) {
+                    ac += getString(R.string._3);
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
-                    et_main.append("3");
-                    ab += "3";
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
+                    et_main.append(getString(R.string._3));
+                    ab += getString(R.string._3);
                     tv_Display.setText(ab);
-                    f6029n = Boolean.valueOf(false);
+                    f6029n = false;
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -2016,8 +2011,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("str1", f6024V);
                 return;
             case R.id.tv_two:
-                f6033r = Boolean.valueOf(false);
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
+                f6033r = false;
+                if (et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
@@ -2025,55 +2020,55 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                     f6026X = "";
                     tv_Display.setText("");
                 }
-                if (f6032q.booleanValue()) {
+                if (f6032q) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    f6032q = false;
                 }
-                if (f6031p.booleanValue()) {
+                if (f6031p) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    f6031p = false;
                 }
-                if (ah.booleanValue()) {
+                if (ah) {
                     et_main.setText("");
                     ab = "";
                     f6025W = "";
                     f6024V = "";
                     f6026X = "";
-                    tv_Display.setText("0");
-                    ah = Boolean.valueOf(false);
+                    tv_Display.setText(getString(R.string._0));
+                    ah = false;
                 }
-                if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                    if (!f6030o.booleanValue()) {
+                if (aj || ak || am || al || an || ao) {
+                    if (!f6030o) {
                         ab = "";
-                        f6030o = Boolean.valueOf(false);
+                        f6030o = false;
                     }
-                    aj = Boolean.valueOf(false);
-                    ak = Boolean.valueOf(false);
-                    am = Boolean.valueOf(false);
-                    al = Boolean.valueOf(false);
-                    an = Boolean.valueOf(false);
-                    ao = Boolean.valueOf(false);
+                    aj = false;
+                    ak = false;
+                    am = false;
+                    al = false;
+                    an = false;
+                    ao = false;
                 }
-                if (av.booleanValue()) {
-                    ac += "2";
+                if (av) {
+                    ac += getString(R.string._2);
                 }
-                if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
-                    et_main.append("2");
-                    ab += "2";
+                if (tv_Display.getText().toString().length() != 16 || f6029n) {
+                    et_main.append(getString(R.string._2));
+                    ab += getString(R.string._2);
                     tv_Display.setText(ab);
-                    f6029n = Boolean.valueOf(false);
+                    f6029n = false;
                 }
-                if (f6027Y.booleanValue()) {
+                if (f6027Y) {
                     f6025W = ab;
                     Log.e("str2", f6025W);
                     return;
@@ -2144,61 +2139,61 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 return;*/
             case R.id.tv_zero:
-                if (!et_main.getText().toString().equalsIgnoreCase("0")) {
-                    if (f6031p.booleanValue()) {
+                if (!et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
+                    if (f6031p) {
                         et_main.setText("");
                         ab = "";
                         f6025W = "";
                         f6024V = "";
                         f6026X = "";
-                        tv_Display.setText("0");
-                        f6031p = Boolean.valueOf(false);
+                        tv_Display.setText(getString(R.string._0));
+                        f6031p = false;
                     }
-                    if (f6032q.booleanValue()) {
+                    if (f6032q) {
                         et_main.setText("");
                         ab = "";
                         f6025W = "";
                         f6024V = "";
                         f6026X = "";
-                        tv_Display.setText("0");
-                        f6032q = Boolean.valueOf(false);
+                        tv_Display.setText(getString(R.string._0));
+                        f6032q = false;
                     }
-                    f6033r = Boolean.valueOf(false);
-                    if (ah.booleanValue()) {
+                    f6033r = false;
+                    if (ah) {
                         et_main.setText("");
                         f6025W = "";
                         f6024V = "";
                         f6026X = "";
                         ab = "";
-                        tv_Display.setText("0");
-                        ah = Boolean.valueOf(false);
+                        tv_Display.setText(getString(R.string._0));
+                        ah = false;
                     }
-                    if (aj.booleanValue() || ak.booleanValue() || am.booleanValue() || al.booleanValue() || an.booleanValue() || ao.booleanValue()) {
-                        if (!f6030o.booleanValue()) {
+                    if (aj || ak || am || al || an || ao) {
+                        if (!f6030o) {
                             ab = "";
-                            f6030o = Boolean.valueOf(false);
+                            f6030o = false;
                         }
-                        aj = Boolean.valueOf(false);
-                        ak = Boolean.valueOf(false);
-                        am = Boolean.valueOf(false);
-                        al = Boolean.valueOf(false);
-                        an = Boolean.valueOf(false);
-                        ao = Boolean.valueOf(false);
+                        aj = false;
+                        ak = false;
+                        am = false;
+                        al = false;
+                        an = false;
+                        ao = false;
                     }
-                    if (av.booleanValue()) {
-                        ac += "0";
+                    if (av) {
+                        ac += getString(R.string._0);
                     }
-                    if (tv_Display.getText().toString().length() != 16 || f6029n.booleanValue()) {
-                        if (tv_Display.getText().length() != 1 || !tv_Display.getText().toString().equalsIgnoreCase("0") || !et_main.getText().toString().equalsIgnoreCase("0")) {
-                            et_main.append("0");
-                            ab += "0";
+                    if (tv_Display.getText().toString().length() != 16 || f6029n) {
+                        if (tv_Display.getText().length() != 1 || !tv_Display.getText().toString().equalsIgnoreCase(getString(R.string._0)) || !et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
+                            et_main.append(getString(R.string._0));
+                            ab += getString(R.string._0);
                             tv_Display.setText(ab);
-                            f6029n = Boolean.valueOf(false);
+                            f6029n = false;
                         } else {
                             return;
                         }
                     }
-                    if (f6027Y.booleanValue()) {
+                    if (f6027Y) {
                         f6025W = ab;
                         Log.e("str2", f6025W);
                         return;
@@ -2348,11 +2343,11 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (motionEvent.getAction()) {
-            case 0:
+            case MotionEvent.ACTION_DOWN:
                 view.setAlpha(0.2f);
                 view.callOnClick();
                 break;
-            case 1:
+            case MotionEvent.ACTION_UP:
                 view.setAlpha(1.0f);
                 break;
         }
@@ -2361,7 +2356,7 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
 
     public void sqrlEquals() {
 
-        f6031p = Boolean.valueOf(true);
+        f6031p = true;
         String obj = et_main.getText().toString();
         if (!Character.isDigit(obj.charAt(obj.length() - 1))) {
             obj = obj.substring(0, obj.length() - 1);
@@ -2375,12 +2370,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             if (tv_Display.length() != 0) {
                 expressions = "sqrt(" + valueOf + ")";
             }
-            if (expressions.length() == 0) {
-                //expressions = IdManager.DEFAULT_VERSION_NAME;
-            }
-            DoubleEvaluator doubleEvaluator = new DoubleEvaluator();
             try {
-                result = (Double) new ExtendedDoubleEvaluator().evaluate(expressions);
+                Double result = new ExtendedDoubleEvaluator().evaluate(expressions);
                 NumberFormat instance = NumberFormat.getInstance();
                 instance.setMaximumIntegerDigits(50);
                 instance.setMaximumFractionDigits(50);
@@ -2388,16 +2379,16 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 obj = instance.format(result);
                 if (obj.equalsIgnoreCase("nan")) {
                     tv_Display.setText("0");
-                    et_main.setText("Invalid Input");
-                    f6033r = Boolean.valueOf(true);
+                    et_main.setText(getString(R.string.invalid_input));
+                    f6033r = true;
                 } else {
                     if (obj.length() > 16) {
                         obj = obj.substring(0, 16);
                     } else {
                         tv_Display.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
                     }
-                    tv_Display.setText(obj + "");
-                    et_main.setText("" + obj);
+                    tv_Display.setText(obj);
+                    et_main.setText(obj);
                     ab = obj + "";
                 }
                 f6024V = tv_Display.getText().toString();
@@ -2406,12 +2397,11 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             } catch (Exception e) {
 
                 Log.e("TAG", "Toast invalid expression");
-                Toast.makeText(this, "Invalid Expression", 0).show();
+                Toast.makeText(this, getString(R.string.invalid_expression), Toast.LENGTH_SHORT).show();
                 et_main.setText("");
-                tv_Display.setText("0");
+                tv_Display.setText(getString(R.string._0));
                 ab = "";
                 ac = "";
-                prev = "";
                 firststr = "";
                 aC = false;
                 expressions = "";
@@ -2419,9 +2409,9 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
         }
-        tv_Display.setText("0");
-        et_main.setText("Invalid Input");
-        f6033r = Boolean.valueOf(true);
+        tv_Display.setText(getString(R.string._0));
+        et_main.setText(getString(R.string.invalid_input));
+        f6033r = true;
     }
 
     private void showSetPasswordDialog() {
@@ -2434,23 +2424,11 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        TextView btnCancel = (TextView) dialog.findViewById(R.id.btn_cancel);
-        TextView btnOk = (TextView) dialog.findViewById(R.id.btn_ok);
-        ((ImageView) dialog.findViewById(R.id.img_close)).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        TextView btnOk = dialog.findViewById(R.id.btn_ok);
+        dialog.findViewById(R.id.img_close).setOnClickListener(view -> dialog.dismiss());
+        btnCancel.setOnClickListener(view -> dialog.dismiss());
+        btnOk.setOnClickListener(view -> dialog.dismiss());
         dialog.show();
     }
 

@@ -7,13 +7,12 @@
     android:background="@color/newColorAccent">
 
 
-    <com.safe.gallery.calculator.CameraData.AutoFitTextureView
+    <com.safe.gallery.calculator.utils.AutoFitTextureView
         android:id="@+id/textureView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -24,13 +23,14 @@
 
     <RelativeLayout
         android:layout_width="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/et_main"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="0dp"
         android:background="@color/newColorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="0dp"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
+    <!--    TODO LEARN:  What is labelFor in EditText-->
     <EditText
         android:id="@+id/tv_Display"
         android:layout_width="0dp"
@@ -41,11 +41,12 @@
         android:ellipsize="start"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:gravity="bottom|center|right"
-        android:hint=""
+        android:gravity="bottom|center|end"
+        android:importantForAutofill="no"
+        android:inputType="number"
         android:paddingBottom="@dimen/half"
         android:scrollbars="vertical"
-        android:text=" 0 "
+        android:text="@string/_0"
         android:textAppearance="?android:textAppearanceLarge"
         android:textColorHint="@android:color/black"
         android:textSize="@dimen/_27ssp"
@@ -64,8 +65,9 @@
         android:cursorVisible="true"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:gravity="bottom|center|right"
-        android:hint=""
+        android:gravity="bottom|center|end"
+        android:importantForAutofill="no"
+        android:inputType="number"
         android:scrollbars="vertical"
         android:textAppearance="?android:textAppearanceLarge"
         android:textColorHint="@android:color/black"
@@ -77,8 +79,8 @@
 
     <TextView
         android:id="@+id/tv_clear"
-        android:text="AC"
         style="@style/calculatorButtonsStyle"
+        android:text="@string/_ac"
         app:layout_constraintBottom_toTopOf="@+id/tv_seven"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_sqrt"
@@ -87,18 +89,17 @@
 
     <TextView
         android:id="@+id/tv_sqrt"
-        android:text="√"
         style="@style/calculatorButtonsStyle"
+        android:text="@string/_sqrt"
         app:layout_constraintBottom_toTopOf="@+id/tv_eight"
         app:layout_constraintLeft_toRightOf="@+id/tv_clear"
         app:layout_constraintRight_toLeftOf="@+id/tv_percent"
-        app:layout_constraintTop_toBottomOf="@+id/et_main"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
     <TextView
         android:id="@+id/tv_percent"
         style="@style/calculatorButtonsStyle"
-        android:text="%"
+        android:text="@string/_percentage"
         app:layout_constraintBottom_toTopOf="@+id/tv_nine"
         app:layout_constraintLeft_toRightOf="@+id/tv_sqrt"
         app:layout_constraintRight_toLeftOf="@+id/tv_divide"
@@ -107,18 +108,17 @@
     <TextView
         android:id="@+id/tv_divide"
         style="@style/calculatorButtonsStyle"
-        android:text="/"
+        android:text="@string/_divide"
         app:layout_constraintBottom_toTopOf="@+id/tv_mul"
         app:layout_constraintLeft_toRightOf="@+id/tv_percent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_main"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
 
     <TextView
         android:id="@+id/tv_seven"
         style="@style/calculatorButtonsStyle"
-        android:text="7"
+        android:text="@string/_7"
         app:layout_constraintBottom_toTopOf="@+id/tv_four"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_eight"
@@ -127,7 +127,7 @@
     <TextView
         android:id="@+id/tv_four"
         style="@style/calculatorButtonsStyle"
-        android:text="4"
+        android:text="@string/_4"
         app:layout_constraintBottom_toTopOf="@+id/tv_one"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_five"
@@ -136,7 +136,7 @@
     <TextView
         android:id="@+id/tv_one"
         style="@style/calculatorButtonsStyle"
-        android:text="1"
+        android:text="@string/_1"
         app:layout_constraintBottom_toTopOf="@+id/tv_zero"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_two"
@@ -145,7 +145,7 @@
     <TextView
         android:id="@+id/tv_zero"
         style="@style/calculatorButtonsStyle"
-        android:text="0"
+        android:text="@string/_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_dot"
@@ -154,7 +154,7 @@
     <TextView
         android:id="@+id/tv_eight"
         style="@style/calculatorButtonsStyle"
-        android:text="8"
+        android:text="@string/_8"
         app:layout_constraintBottom_toTopOf="@+id/tv_five"
         app:layout_constraintLeft_toRightOf="@+id/tv_seven"
         app:layout_constraintRight_toLeftOf="@+id/tv_nine"
@@ -164,7 +164,7 @@
     <TextView
         android:id="@+id/tv_nine"
         style="@style/calculatorButtonsStyle"
-        android:text="9"
+        android:text="@string/_9"
         app:layout_constraintBottom_toTopOf="@+id/tv_six"
         app:layout_constraintLeft_toRightOf="@+id/tv_eight"
         app:layout_constraintRight_toLeftOf="@+id/tv_mul"
@@ -173,7 +173,7 @@
     <TextView
         android:id="@+id/tv_mul"
         style="@style/calculatorButtonsStyle"
-        android:text="X"
+        android:text="@string/_mul"
         app:layout_constraintBottom_toTopOf="@+id/tv_min"
         app:layout_constraintLeft_toRightOf="@+id/tv_nine"
         app:layout_constraintRight_toRightOf="parent"
@@ -183,7 +183,7 @@
     <TextView
         android:id="@+id/tv_five"
         style="@style/calculatorButtonsStyle"
-        android:text="5"
+        android:text="@string/_5"
         app:layout_constraintBottom_toTopOf="@id/tv_two"
         app:layout_constraintLeft_toRightOf="@+id/tv_four"
         app:layout_constraintRight_toLeftOf="@+id/tv_six"
@@ -192,7 +192,7 @@
     <TextView
         android:id="@+id/tv_six"
         style="@style/calculatorButtonsStyle"
-        android:text="6"
+        android:text="@string/_6"
         app:layout_constraintBottom_toTopOf="@+id/tv_three"
         app:layout_constraintLeft_toRightOf="@+id/tv_five"
         app:layout_constraintRight_toLeftOf="@+id/tv_min"
@@ -201,7 +201,7 @@
     <TextView
         android:id="@+id/tv_min"
         style="@style/calculatorButtonsStyle"
-        android:text="-"
+        android:text="@string/_sub"
         app:layout_constraintBottom_toTopOf="@id/tv_plus"
         app:layout_constraintLeft_toRightOf="@+id/tv_six"
         app:layout_constraintRight_toRightOf="parent"
@@ -211,7 +211,7 @@
     <TextView
         android:id="@+id/tv_plus"
         style="@style/calculatorButtonsStyle"
-        android:text="+"
+        android:text="@string/_add"
         app:layout_constraintBottom_toTopOf="@+id/tv_equal"
         app:layout_constraintLeft_toRightOf="@+id/tv_three"
         app:layout_constraintRight_toRightOf="parent"
@@ -220,7 +220,7 @@
     <TextView
         android:id="@+id/tv_equal"
         style="@style/calculatorButtonsStyle"
-        android:text="="
+        android:text="@string/_equal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_sign"
         app:layout_constraintRight_toRightOf="parent"
@@ -229,7 +229,7 @@
     <TextView
         android:id="@+id/tv_two"
         style="@style/calculatorButtonsStyle"
-        android:text="2"
+        android:text="@string/_2"
         app:layout_constraintBottom_toTopOf="@+id/tv_dot"
         app:layout_constraintLeft_toRightOf="@+id/tv_four"
         app:layout_constraintRight_toLeftOf="@+id/tv_three"
@@ -238,7 +238,7 @@
     <TextView
         android:id="@+id/tv_three"
         style="@style/calculatorButtonsStyle"
-        android:text="3"
+        android:text="@string/_3"
         app:layout_constraintBottom_toTopOf="@+id/tv_sign"
         app:layout_constraintLeft_toRightOf="@+id/tv_two"
         app:layout_constraintRight_toLeftOf="@+id/tv_min"
@@ -247,7 +247,7 @@
     <TextView
         android:id="@+id/tv_dot"
         style="@style/calculatorButtonsStyle"
-        android:text="."
+        android:text="@string/_dot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_zero"
         app:layout_constraintRight_toLeftOf="@+id/tv_sign"
@@ -256,7 +256,7 @@
     <TextView
         android:id="@+id/tv_sign"
         style="@style/calculatorButtonsStyle"
-        android:text="+/-"
+        android:text="@string/_sign"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_dot"
         app:layout_constraintRight_toLeftOf="@+id/tv_equal"

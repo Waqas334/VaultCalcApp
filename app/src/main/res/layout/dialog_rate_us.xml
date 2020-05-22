@@ -81,7 +81,7 @@
             android:paddingBottom="15.0dip"
             android:text="Please support us by rating 5 stars on playstore."
             android:textColor="@color/gray_55"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <View
             android:layout_marginTop="@dimen/_15sdp"
