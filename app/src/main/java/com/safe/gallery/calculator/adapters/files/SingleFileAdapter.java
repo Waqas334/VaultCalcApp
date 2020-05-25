@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.safe.gallery.calculator.R;
@@ -20,7 +18,6 @@ public class SingleFileAdapter extends ArrayAdapter<String> {
     private static final String TAG = "SingleFileAdapter";
     String ParentFolder;
     private final Activity context;
-    int selectedPosition = -1;
     private final String[] web;
 
     public SingleFileAdapter(Activity context, String[] web, String path) {
@@ -32,16 +29,14 @@ public class SingleFileAdapter extends ArrayAdapter<String> {
 
     public View getView(final int position, View view, ViewGroup parent) {
         View rowView = this.context.getLayoutInflater().inflate(R.layout.list_single, null, true);
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
-        TextView txtFileType = (TextView) rowView.findViewById(R.id.tv_file_type);
-        final CheckBox chk = (CheckBox) rowView.findViewById(R.id.myCheckBox);
-        chk.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (chk.isChecked()) {
-                    ((AddFileActivity) SingleFileAdapter.this.context).setFiles(true, SingleFileAdapter.this.web[position]);
-                } else {
-                    ((AddFileActivity) SingleFileAdapter.this.context).setFiles(false, SingleFileAdapter.this.web[position]);
-                }
+        TextView txtTitle = rowView.findViewById(R.id.txt);
+        TextView txtFileType = rowView.findViewById(R.id.tv_file_type);
+        final CheckBox chk = rowView.findViewById(R.id.myCheckBox);
+        chk.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (chk.isChecked()) {
+                ((AddFileActivity) SingleFileAdapter.this.context).setFiles(true, SingleFileAdapter.this.web[position]);
+            } else {
+                ((AddFileActivity) SingleFileAdapter.this.context).setFiles(false, SingleFileAdapter.this.web[position]);
             }
         });
         txtTitle.setText(this.web[position]);
@@ -58,12 +53,4 @@ public class SingleFileAdapter extends ArrayAdapter<String> {
         return rowView;
     }
 
-    private void makeOtherUnChecked(int position, CheckBox chk) {
-        for (int i = 0; i < this.web.length; i++) {
-            if (i != position) {
-                chk.setChecked(false);
-            }
-        }
-        notifyDataSetChanged();
-    }
 }

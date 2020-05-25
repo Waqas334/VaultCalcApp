@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/file_hide_layout_item"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2.0dip"

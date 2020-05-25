@@ -5,15 +5,15 @@
         n1:id="@+id/itm_select"
         n1:icon="@drawable/ic_check_box_outline_white_48dp"
         n1:orderInCategory="300"
-        n1:title="Select All"
+        n1:title="@string/select_all"
         n1:visible="false"
-        n2:showAsAction="always" />
+        n2:showAsAction="ifRoom" />
     <item xmlns:n3="http://schemas.android.com/apk/res/android"
         xmlns:n4="http://schemas.android.com/apk/res-auto"
         n3:id="@+id/itm_edit"
         n3:icon="@drawable/ic_edit_white_48dp"
         n3:orderInCategory="300"
-        n3:title="Edit"
+        n3:title="@string/edit"
         n3:visible="false"
         n4:showAsAction="always" />
     <item xmlns:n5="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
         n5:id="@+id/itm_delete"
         n5:icon="@drawable/ic_delete_white"
         n5:orderInCategory="100"
-        n5:title="Delete"
+        n5:title="@string/delete"
         n5:visible="false"
         n6:showAsAction="always" />
 </menu>

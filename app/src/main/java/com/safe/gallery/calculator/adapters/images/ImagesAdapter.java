@@ -25,7 +25,6 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
 
     private ArrayList<AllImagesModel> bucketsArraylist;
     private Context context;
-    private boolean isLongPressed = false;
 
     class ImageViewHolder extends ViewHolder {
 
@@ -37,8 +36,8 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            img = (ImageView) itemView.findViewById(R.id.img);
-            imgSelection = (ImageView) itemView.findViewById(R.id.img_selection);
+            img = itemView.findViewById(R.id.img);
+            imgSelection = itemView.findViewById(R.id.img_selection);
 
             //ButterKnife.bind((Object) this, itemView);
             this.mView = itemView;
@@ -56,7 +55,7 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
     }
 
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final AllImagesModel bucket = (AllImagesModel) this.bucketsArraylist.get(position);
+        final AllImagesModel bucket = this.bucketsArraylist.get(position);
         if (holder instanceof ImageViewHolder) {
             if (!bucket.getImagePath().isEmpty()) {
                 Glide.with(this.context).load(Uri.fromFile(new File(bucket.getImagePath()))).into(((ImageViewHolder) holder).img);
@@ -67,21 +66,19 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
                 ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
 
             }
-            ((ImageViewHolder) holder).mView.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) {
-                    if (bucket.isEditable()) {
-                        bucket.setSelected(!bucket.isSelected());
-                        if (bucket.isSelected()) {
-                            ((ImageViewHolder) holder).imgSelection.setVisibility(View.VISIBLE);
-                        } else {
-                            ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
+            ((ImageViewHolder) holder).mView.setOnClickListener(view -> {
+                if (bucket.isEditable()) {
+                    bucket.setSelected(!bucket.isSelected());
+                    if (bucket.isSelected()) {
+                        ((ImageViewHolder) holder).imgSelection.setVisibility(View.VISIBLE);
+                    } else {
+                        ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
 
-                        }
-                        checkIfAllFilesDeselected();
-                        return;
                     }
-                    ((ImagesActivity) context).startFullScreenImageActivity(bucketsArraylist, holder.getAdapterPosition());
+                    checkIfAllFilesDeselected();
+                    return;
                 }
+                ((ImagesActivity) context).startFullScreenImageActivity(bucketsArraylist, holder.getAdapterPosition());
             });
         }
     }
@@ -138,7 +135,6 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
         while (it.hasNext()) {
             ((AllImagesModel) it.next()).setSelected(true);
         }
-        this.isLongPressed = true;
         notifyDataSetChanged();
     }
 
@@ -148,7 +144,6 @@ public class ImagesAdapter extends Adapter<ViewHolder> {
         while (it.hasNext()) {
             ((AllImagesModel) it.next()).setSelected(false);
         }
-        this.isLongPressed = false;
         notifyDataSetChanged();
     }
 

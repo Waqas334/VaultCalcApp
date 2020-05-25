@@ -28,7 +28,7 @@ public class FolderAdapter extends ArrayAdapter<String> {
 
     public View getView(int position, View view, ViewGroup parent) {
         View rowView = this.context.getLayoutInflater().inflate(R.layout.list_single_only, null, true);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
+        ImageView imageView = rowView.findViewById(R.id.img);
         ((TextView) rowView.findViewById(R.id.txt)).setText(this.web[position]);
         File file = new File(this.ParentFolder + "/" + this.web[position]);
         Log.i(TAG, "getView: name: " + file.getName());

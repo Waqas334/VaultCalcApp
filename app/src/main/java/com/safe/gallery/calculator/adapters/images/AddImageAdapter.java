@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,9 +48,9 @@ public class AddImageAdapter extends Adapter<ViewHolder> {
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            img = (ImageView) itemView.findViewById(R.id.img);
-            imgSelection = (ImageView) itemView.findViewById(R.id.img_selection);
-           // ButterKnife.bind((Object) this, itemView);
+            img = itemView.findViewById(R.id.img);
+            imgSelection = itemView.findViewById(R.id.img_selection);
+            // ButterKnife.bind((Object) this, itemView);
             this.mView = itemView;
         }
     }
@@ -65,33 +66,21 @@ public class AddImageAdapter extends Adapter<ViewHolder> {
 
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final AllImagesModel bucket = (AllImagesModel) this.buckets.get(position);
+        final AllImagesModel bucket = this.buckets.get(position);
         if (holder instanceof ImageViewHolder) {
             if (!bucket.getImagePath().isEmpty()) {
                 Glide.with(this.context).load(Uri.fromFile(new File(bucket.getImagePath()))).into(((ImageViewHolder) holder).img);
             }
-            if (bucket.isSelected()) {
-                ((ImageViewHolder) holder).imgSelection.setVisibility(View.VISIBLE);
-//                ((ImageViewHolder) holder).imgSelection.setBackgroundColor(context.getResources().getColor(R.color.newColorAccent));
-            } else {
-//                ((ImageViewHolder) holder).imgSelection.setImageResource(0);
-                ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
-            }
-            ((ImageViewHolder) holder).mView.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) {
+            ((ImageViewHolder) holder).imgSelection.setVisibility(bucket.isSelected() ? View.VISIBLE : View.INVISIBLE);
+            ((ImageViewHolder) holder).mView.setOnClickListener(view -> {
+                bucket.setSelected(!bucket.isSelected());
+                if (bucket.isSelected()) {
+                    ((ImageViewHolder) holder).imgSelection.setVisibility(View.VISIBLE);
 
-                    bucket.setSelected(!bucket.isSelected());
-                    if (bucket.isSelected()) {
-//                        ((ImageViewHolder) holder).imgSelection.setImageResource(R.drawable.ic_check_white_new_24dp);
-//                        ((ImageViewHolder) holder).imgSelection.setBackgroundColor(context.getResources().getColor(R.color.newColorAccent));
-                        ((ImageViewHolder) holder).imgSelection.setVisibility(View.VISIBLE);
-
-                    } else {
-                        ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
-//                        ((ImageViewHolder) holder).imgSelection.setImageResource(0);
-                    }
-                    AddImageAdapter.this.checkIfAllFilesDeselected();
+                } else {
+                    ((ImageViewHolder) holder).imgSelection.setVisibility(View.INVISIBLE);
                 }
+                AddImageAdapter.this.checkIfAllFilesDeselected();
             });
         }
     }

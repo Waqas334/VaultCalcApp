@@ -225,7 +225,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.new_activity_calc);
+        setContentView(R.layout.activity_calc);
 
         //TODO CLEANING: Checkout why it is being used even
         PackageInfo info = null;
@@ -446,7 +446,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
 
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    Toast.makeText(CalcActivity.this, "Configuration change", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalcActivity.this, getString(R.string.config_change), Toast.LENGTH_SHORT).show();
                 }
             }, null);
         } catch (CameraAccessException e) {

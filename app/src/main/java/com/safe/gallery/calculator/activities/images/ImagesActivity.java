@@ -1,22 +1,12 @@
 package com.safe.gallery.calculator.activities.images;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Files;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AlertDialog.Builder;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,15 +18,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
-import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.utils.AppConstants;
-import com.safe.gallery.calculator.activities.BaseActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog.Builder;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.safe.gallery.calculator.MainApplication;
-import com.safe.gallery.calculator.callbacks.OnImagesLoadedListener;
-import com.safe.gallery.calculator.db.DBHelper;
+import com.safe.gallery.calculator.R;
+import com.safe.gallery.calculator.activities.BaseActivity;
 import com.safe.gallery.calculator.activities.FullScreenImageActivity;
 import com.safe.gallery.calculator.adapters.images.ImagesAdapter;
+import com.safe.gallery.calculator.callbacks.OnImagesLoadedListener;
+import com.safe.gallery.calculator.db.DBHelper;
 import com.safe.gallery.calculator.model.AllImagesModel;
+import com.safe.gallery.calculator.utils.AppConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,9 +68,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
     private MenuItem menuItemDelete;
     private MenuItem menuItemEdit;
     private MenuItem menuItemSelect;
-    private LinearLayout nativeAdContainer;
     private int progress;
-    private ProgressDialog progressDialog;
     private ProgressBar progressbar;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -90,8 +85,8 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_image);
-        ButterKnife.bind((Activity) this);
+        setContentView(R.layout.activity_image);
+        ButterKnife.bind(this);
         this.dbHelper = new DBHelper(this);
         setHeaderInfo();
         Init();
@@ -152,7 +147,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
         if (this.adapter != null) {
             final List<String> selectedFiles = this.adapter.getSelectedImages();
             if (selectedFiles == null || selectedFiles.size() <= 0) {
-                Toast.makeText(this, "Please select at least one image!", 0).show();
+                Toast.makeText(this, getString(R.string.select_atleat_1_image), Toast.LENGTH_SHORT).show();
                 return;
             }
             showProgressDialog(selectedFiles);
@@ -174,7 +169,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
                     public void run() {
                         ImagesActivity.this.hideProgressDialog();
-                        ImagesActivity.this.btnUnhide.setVisibility(8);
+                        ImagesActivity.this.btnUnhide.setVisibility(View.GONE);
                         if (ImagesActivity.this.menuItemEdit != null) {
                             ImagesActivity.this.menuItemEdit.setVisible(true);
                         }
@@ -208,7 +203,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                     } else if (ImagesActivity.this.isFileCopied) {
                         ImagesActivity.this.runOnUiThread(new C05951());
                         ImagesActivity.this.isFileCopied = false;
-                        File src = new File((String) selectedFiles.get(ImagesActivity.this.count));
+                        File src = new File(selectedFiles.get(ImagesActivity.this.count));
                         File file = new File(AppConstants.IMAGE_EXPORT_PATH);
                         if (!file.exists()) {
                             file.mkdirs();
@@ -229,11 +224,10 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
             this.dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             this.dialog.getWindow().setLayout(-1, -2);
         }
-        this.progressbar = (ProgressBar) this.dialog.findViewById(R.id.progress_bar);
-        this.txtCount = (TextView) this.dialog.findViewById(R.id.txt_count);
-        this.nativeAdContainer = (LinearLayout) this.dialog.findViewById(R.id.native_ad_container);
-        ((TextView) this.dialog.findViewById(R.id.txt_title)).setText("Moving Image(s)");
-        this.txtCount.setText("Moving 1 of " + files.size());
+        this.progressbar = this.dialog.findViewById(R.id.progress_bar);
+        this.txtCount = this.dialog.findViewById(R.id.txt_count);
+        ((TextView) this.dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_images));
+        this.txtCount.setText(getString(R.string.moving_1_of) + " " + files.size());
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -250,7 +244,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
     private void publishProgress(int size) {
         if (this.dialog != null && this.dialog.isShowing()) {
-            this.txtCount.setText("Moving " + (this.count + 1) + " of " + size);
+            this.txtCount.setText(getString(R.string.moving) + " " + (this.count + 1) + " " + getString(R.string.of) + " " + size);
         }
     }
 
@@ -270,17 +264,9 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                     } else {
                         out.close();
                         this.isFileCopied = true;
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                ImagesActivity.this.sendBroadcast(new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE", Uri.fromFile(dst)));
-                            }
-                        });
+                        runOnUiThread(() -> ImagesActivity.this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(dst))));
                         in.close();
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                ImagesActivity.this.deleteFilePath(src);
-                            }
-                        });
+                        runOnUiThread(() -> ImagesActivity.this.deleteFilePath(src));
                         this.isFileCopied = true;
                         return;
                     }
@@ -301,7 +287,6 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
     private void deleteFilePath(File file) {
         try {
-            String where = "_data=?";
             String[] selectionArgs = new String[]{file.getAbsolutePath()};
             ContentResolver contentResolver = getContentResolver();
             Uri filesUri = Files.getContentUri("external");
@@ -311,7 +296,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                 file.delete();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), 1).show();
+            e.printStackTrace();
         }
     }
 
@@ -339,21 +324,15 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                 break;
             case R.id.itm_delete:
                 final AlertDialog alertDialog = new Builder(this).create();
-                alertDialog.setTitle("Alert");
-                alertDialog.setMessage("Are you sure to delete selected files?");
+                alertDialog.setTitle(getString(R.string.alert));
+                alertDialog.setMessage(getString(R.string.delete_file_desc));
                 alertDialog.setCancelable(false);
-                alertDialog.setButton(-1, (CharSequence) "Yes", new OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        ImagesActivity.this.deleteSelectedFiles();
-                        onBackPressed();
-                        alertDialog.dismiss();
-                    }
+                alertDialog.setButton(-1, getString(R.string.yes), (dialog, which) -> {
+                    ImagesActivity.this.deleteSelectedFiles();
+                    onBackPressed();
+                    alertDialog.dismiss();
                 });
-                alertDialog.setButton(-2, (CharSequence) "No", new OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialog.dismiss();
-                    }
-                });
+                alertDialog.setButton(-2, getString(R.string.no), (dialog, which) -> alertDialog.dismiss());
                 alertDialog.show();
                 break;
             case R.id.itm_edit:
@@ -417,7 +396,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
         if (this.menuItemDelete != null) {
             this.menuItemDelete.setVisible(needToshow);
         }
-        this.btnUnhide.setVisibility(needToshow ? 0 : 8);
+        this.btnUnhide.setVisibility(needToshow ? View.VISIBLE : View.GONE);
     }
 
     public void showSelectAllButton(boolean needToShow) {
@@ -462,7 +441,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
             }
-            this.btnUnhide.setVisibility(8);
+            this.btnUnhide.setVisibility(View.GONE);
             return;
         }
         setBackData();

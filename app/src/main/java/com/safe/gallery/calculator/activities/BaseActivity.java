@@ -99,7 +99,16 @@ public class BaseActivity extends MyBassActivity {
                             if (imagePath.isDirectory()) {
                                 imageList = imagePath.listFiles();
                             }
-                            if (imagePath.getName().contains(".jpg") || imagePath.getName().contains(".JPG") || imagePath.getName().contains(".jpeg") || imagePath.getName().contains(".JPEG") || imagePath.getName().contains(".png") || imagePath.getName().contains(".PNG") || imagePath.getName().contains(".gif") || imagePath.getName().contains(".GIF") || imagePath.getName().contains(".bmp") || imagePath.getName().contains(".BMP")) {
+                            if (imagePath.getName().contains(".jpg")
+                                    || imagePath.getName().contains(".JPG")
+                                    || imagePath.getName().contains(".jpeg")
+                                    || imagePath.getName().contains(".JPEG")
+                                    || imagePath.getName().contains(".png")
+                                    || imagePath.getName().contains(".PNG")
+                                    || imagePath.getName().contains(".gif")
+                                    || imagePath.getName().contains(".GIF")
+                                    || imagePath.getName().contains(".bmp")
+                                    || imagePath.getName().contains(".BMP")) {
                                 String path = imagePath.getAbsolutePath();
                                 long lastModified = imagePath.lastModified();
                                 if (path.contains(Environment.getExternalStorageDirectory().getAbsolutePath())) {

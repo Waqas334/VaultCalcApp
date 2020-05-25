@@ -1,18 +1,18 @@
 package com.safe.gallery.calculator.adapters;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.safe.gallery.calculator.R;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import com.safe.gallery.calculator.MainApplication;
+import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.activities.audio.AddAudiosActivity;
 import com.safe.gallery.calculator.model.AllAudioModel;
 
@@ -53,10 +53,10 @@ public class AddAudiosAdapter extends Adapter<ViewHolder> {
             super(itemView);
 //            ButterKnife.bind((Object) this, itemView);
 
-            checkbox = (CheckBox) itemView.findViewById(R.id.checkbox);
-            img = (ImageView) itemView.findViewById(R.id.img);
-            txtSize = (TextView) itemView.findViewById(R.id.txt_size);
-            txtTitle = (TextView) itemView.findViewById(R.id.txt_title);
+            checkbox = itemView.findViewById(R.id.checkbox);
+            img = itemView.findViewById(R.id.img);
+            txtSize = itemView.findViewById(R.id.txt_size);
+            txtTitle = itemView.findViewById(R.id.txt_title);
 
             this.mView = itemView;
         }
@@ -72,7 +72,7 @@ public class AddAudiosAdapter extends Adapter<ViewHolder> {
     }
 
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final AllAudioModel bucket = (AllAudioModel) bucketsArraylist.get(position);
+        final AllAudioModel bucket = bucketsArraylist.get(position);
         if (holder instanceof ImageViewHolder) {
             ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener(null);
             if (!bucket.getOldPath().isEmpty()) {
@@ -85,15 +85,13 @@ public class AddAudiosAdapter extends Adapter<ViewHolder> {
             } else {
                 ((ImageViewHolder) holder).checkbox.setChecked(false);
             }
-            ((ImageViewHolder) holder).checkbox.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) {
-                    if (((ImageViewHolder) holder).checkbox.isChecked()) {
-                        bucket.setSelected(true);
-                    } else {
-                        bucket.setSelected(false);
-                    }
-                    checkIfAllFilesDeselected();
+            ((ImageViewHolder) holder).checkbox.setOnClickListener(view -> {
+                if (((ImageViewHolder) holder).checkbox.isChecked()) {
+                    bucket.setSelected(true);
+                } else {
+                    bucket.setSelected(false);
                 }
+                checkIfAllFilesDeselected();
             });
         }
     }

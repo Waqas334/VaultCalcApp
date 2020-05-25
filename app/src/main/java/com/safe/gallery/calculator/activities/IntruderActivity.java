@@ -173,7 +173,8 @@ public class IntruderActivity extends MyBassActivity {
 
         if (path.exists()) {
 
-            File[] allFiles = path.listFiles((dir, name) -> (name.endsWith(".jpg") || name.endsWith(".jpeg") || name.endsWith(".png")));
+            File[] allFiles = path.listFiles((dir, name) -> (name.endsWith(".jpg")
+                    || name.endsWith(".jpeg") || name.endsWith(".png")));
 
             if (allFiles.length > 0) {
 
@@ -200,7 +201,7 @@ public class IntruderActivity extends MyBassActivity {
 
             dialog = new Dialog(IntruderActivity.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.dlg_exit1);
+            dialog.setContentView(R.layout.intruder_full_screen);
             int widthInPixel = Resources.getSystem().getDisplayMetrics().widthPixels;
             dialog.getWindow().setLayout(widthInPixel- 50, Toolbar.LayoutParams.WRAP_CONTENT);
             dialog.setCancelable(true);
@@ -212,7 +213,6 @@ public class IntruderActivity extends MyBassActivity {
             img = dialog.findViewById(R.id.img);
             close = dialog.findViewById(R.id.close);
             img.setImageURI(Uri.fromFile(Share.al_my_photos_photo.get(position)));
-
             close.setOnClickListener(v -> dialog.dismiss());
 
         } catch (Exception e) {

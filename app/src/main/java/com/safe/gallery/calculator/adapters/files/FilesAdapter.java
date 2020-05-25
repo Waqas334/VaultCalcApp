@@ -1,8 +1,10 @@
 package com.safe.gallery.calculator.adapters.files;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,10 +48,10 @@ public class FilesAdapter extends Adapter<ViewHolder> {
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            checkbox = (CheckBox) itemView.findViewById(R.id.checkbox);
-            img = (ImageView) itemView.findViewById(R.id.img);
-            txtSize = (TextView) itemView.findViewById(R.id.txt_size);
-            txtTitle = (TextView) itemView.findViewById(R.id.txt_title);
+            checkbox = itemView.findViewById(R.id.checkbox);
+            img = itemView.findViewById(R.id.img);
+            txtSize = itemView.findViewById(R.id.txt_size);
+            txtTitle = itemView.findViewById(R.id.txt_title);
 
             mView = itemView;
         }
@@ -70,16 +72,13 @@ public class FilesAdapter extends Adapter<ViewHolder> {
 
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final AllFilesModel bucket = (AllFilesModel) buckets.get(position);
+        final AllFilesModel bucket = buckets.get(position);
 
         if (holder instanceof ImageViewHolder) {
 
             ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener(null);
-            if (bucket.isEditable()) {
-                ((ImageViewHolder) holder).checkbox.setVisibility(0);
-            } else {
-                ((ImageViewHolder) holder).checkbox.setVisibility(8);
-            }
+
+            ((ImageViewHolder) holder).checkbox.setVisibility(bucket.isEditable() ? View.VISIBLE : View.GONE);
             if (bucket.isSelected()) {
                 ((ImageViewHolder) holder).checkbox.setChecked(true);
             } else {
@@ -95,31 +94,27 @@ public class FilesAdapter extends Adapter<ViewHolder> {
                 ((ImageViewHolder) holder).txtTitle.setText(fFile.getName());
                 ((ImageViewHolder) holder).txtSize.setText(MainApplication.getInstance().getFileSize(fFile.length()));
             }
-            ((ImageViewHolder) holder).mView.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) {
-                    if (bucket.isEditable()) {
-                        bucket.setSelected(!bucket.isSelected());
-                        if (bucket.isSelected()) {
-                            ((ImageViewHolder) holder).checkbox.setChecked(true);
-                        } else {
-                            ((ImageViewHolder) holder).checkbox.setChecked(false);
-                        }
-                        checkIfAllFilesDeselected();
-                        return;
+            ((ImageViewHolder) holder).mView.setOnClickListener(view -> {
+                if (bucket.isEditable()) {
+                    bucket.setSelected(!bucket.isSelected());
+                    if (bucket.isSelected()) {
+                        ((ImageViewHolder) holder).checkbox.setChecked(true);
+                    } else {
+                        ((ImageViewHolder) holder).checkbox.setChecked(false);
                     }
-                    ((FilesActivity) context).openFile(bucket.getOldPath());
+                    checkIfAllFilesDeselected();
+                    return;
                 }
+                ((FilesActivity) context).openFile(bucket.getOldPath());
             });
-            ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (bucket.isEditable()) {
-                        if (isChecked) {
-                            bucket.setSelected(true);
-                        } else {
-                            bucket.setSelected(false);
-                        }
-                        checkIfAllFilesDeselected();
+            ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+                if (bucket.isEditable()) {
+                    if (isChecked) {
+                        bucket.setSelected(true);
+                    } else {
+                        bucket.setSelected(false);
                     }
+                    checkIfAllFilesDeselected();
                 }
             });
         }

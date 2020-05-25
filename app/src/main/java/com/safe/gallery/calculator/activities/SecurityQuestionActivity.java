@@ -119,7 +119,7 @@ public class SecurityQuestionActivity extends MyBassActivity {
 
     @OnClick({R.id.btn_submit})
     public void onClick() {
-        if (selectedQuestion == null || selectedQuestion.equals("Select Your Question")) {
+        if (selectedQuestion == null || selectedQuestion.equals(getString(R.string.select_your_question))) {
             Toast.makeText(this, getString(R.string.select_security_question), Toast.LENGTH_LONG).show();
         } else if (etAnswer.getText().toString().isEmpty()) {
             Toast.makeText(this, getString(R.string.select_security_answer), Toast.LENGTH_LONG).show();
@@ -147,7 +147,7 @@ public class SecurityQuestionActivity extends MyBassActivity {
         }
         TextView btnOk = dialog.findViewById(R.id.btn_ok);
         ImageView imgClose = dialog.findViewById(R.id.img_close);
-        ((TextView) dialog.findViewById(R.id.et_file_name)).setText(getString(R.string.your_pass_is) + MainApplication.getInstance().getPassword());
+        ((TextView) dialog.findViewById(R.id.et_file_name)).setText(getString(R.string.your_pass_is) + " " + MainApplication.getInstance().getPassword());
         imgClose.setOnClickListener(view -> {
             dialog.dismiss();
             finish();

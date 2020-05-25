@@ -1,34 +1,31 @@
 package com.safe.gallery.calculator.activities.video;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Files;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.utils.AppConstants;
 import com.safe.gallery.calculator.activities.BaseActivity;
-import com.safe.gallery.calculator.callbacks.OnAllVideosLoadedListener;
-import com.safe.gallery.calculator.db.DBHelper;
-import com.safe.gallery.calculator.model.AllVideosModel;
 import com.safe.gallery.calculator.adapters.video.AddVideoAdapter;
+import com.safe.gallery.calculator.callbacks.OnAllVideosLoadedListener;
+import com.safe.gallery.calculator.model.AllVideosModel;
+import com.safe.gallery.calculator.utils.AppConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,8 +43,6 @@ import butterknife.OnClick;
 public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedListener {
 
 
-    private DBHelper dbHelper;
-    private TextView txtError;
     private Toolbar toolbar;
     private TextView txtCount;
 
@@ -63,11 +58,8 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
     private boolean isAllSelected;
 
     private boolean isImageAddedToNewAlbum;
-    private boolean isTransfering = true;
     private MenuItem itemSelectAll;
-    private ViewGroup nativeAdContainer;
     private int progress = 0;
-    private ProgressDialog progressDialog;
     private ProgressBar progressbar;
 
     private Timer timer;
@@ -85,9 +77,8 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_adds_image);
-        ButterKnife.bind((Activity) this);
-        dbHelper = new DBHelper(this);
+        setContentView(R.layout.activity_adds_image);
+        ButterKnife.bind(this);
 
         findViews();
         setHeaderInfo();
@@ -99,7 +90,6 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
         btnHide = findViewById(R.id.btn_hide);
         recyclerview = findViewById(R.id.recyclerview);
         toolbar = findViewById(R.id.toolbar);
-        txtError = findViewById(R.id.txt_error);
         viewanimator = findViewById(R.id.viewanimator);
     }
 
@@ -138,7 +128,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 16908332:
+            case android.R.id.home:
                 onBackPressed();
                 break;
             case R.id.action_select_all:
@@ -147,7 +137,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
                         adapter.selectAllItem();
                     }
                     isAllSelected = true;
-                    item.setIcon(R.drawable.ic_check_filled);
+                    item.setIcon(R.drawable.ic_check_box_white_48dp);
                     showHideButton(true);
                     break;
                 }
@@ -155,7 +145,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
                     adapter.deSelectAllItem();
                 }
                 isAllSelected = false;
-                item.setIcon(R.drawable.ic_check_box_outline);
+                item.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                 showHideButton(false);
                 break;
         }
@@ -163,7 +153,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
     }
 
     public void showHideButton(boolean value) {
-        btnHide.setVisibility(value ? 0 : 8);
+        btnHide.setVisibility(value ? View.VISIBLE : View.GONE);
     }
 
     public void setSelectAll(boolean selectAll) {
@@ -171,9 +161,9 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
             return;
         }
         if (selectAll) {
-            itemSelectAll.setIcon(R.drawable.ic_check_filled);
+            itemSelectAll.setIcon(R.drawable.ic_check_box_white_48dp);
         } else {
-            itemSelectAll.setIcon(R.drawable.ic_check_box_outline);
+            itemSelectAll.setIcon(R.drawable.ic_check_box_outline_white_48dp);
         }
     }
 
@@ -191,7 +181,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
         if (adapter != null) {
             final List<String> selectedFiles = adapter.getSelectedImages();
             if (selectedFiles == null || selectedFiles.size() <= 0) {
-                Toast.makeText(this, "Please select at least one image!", 0).show();
+                Toast.makeText(this, getString(R.string.select_1_video), Toast.LENGTH_SHORT).show();
                 return;
             }
             count = 0;
@@ -226,7 +216,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
                     } else if (isFileCopied) {
                         runOnUiThread(new C06481());
                         isFileCopied = false;
-                        File src = new File((String) selectedFiles.get(count));
+                        File src = new File(selectedFiles.get(count));
                         moveFile(src, new File(destPath, src.getName()));
                         count = count + 1;
                         isImageAddedToNewAlbum = true;
@@ -263,12 +253,11 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        progressbar = (ProgressBar) dialog.findViewById(R.id.progress_bar);
-        txtCount = (TextView) dialog.findViewById(R.id.txt_count);
-        TextView txtTitle = (TextView) dialog.findViewById(R.id.txt_title);
-        nativeAdContainer = (LinearLayout) dialog.findViewById(R.id.native_ad_container);
-        txtTitle.setText("Moving Video(s)");
-        txtCount.setText("Moving 1 of " + files.size());
+        progressbar = dialog.findViewById(R.id.progress_bar);
+        txtCount = dialog.findViewById(R.id.txt_count);
+        TextView txtTitle = dialog.findViewById(R.id.txt_title);
+        txtTitle.setText(getString(R.string.moving_videos));
+        txtCount.setText(getString(R.string.moving_1_of)+" " + files.size());
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -285,7 +274,8 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
 
     private void publishProgress(int size) {
         if (dialog != null && dialog.isShowing()) {
-            txtCount.setText("Moving " + (count + 1) + " of " + size);
+            txtCount.setText(getString(R.string.moving) + " " + (count + 1) + " " + getString(R.string.of) + " " + size);
+
         }
     }
 
@@ -305,17 +295,9 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
                     } else {
                         out.close();
                         isFileCopied = true;
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                sendBroadcast(new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE", Uri.fromFile(dst)));
-                            }
-                        });
+                        runOnUiThread(() -> sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(dst))));
                         in.close();
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                deleteFilePath(src);
-                            }
-                        });
+                        runOnUiThread(() -> deleteFilePath(src));
                         isFileCopied = true;
                         return;
                     }
@@ -346,7 +328,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
                 file.delete();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), 1).show();
+            e.printStackTrace();
         }
     }
 

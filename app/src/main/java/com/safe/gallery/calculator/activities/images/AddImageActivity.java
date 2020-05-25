@@ -1,20 +1,16 @@
 package com.safe.gallery.calculator.activities.images;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Files;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,13 +18,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.utils.AppConstants;
 import com.safe.gallery.calculator.activities.BaseActivity;
+import com.safe.gallery.calculator.adapters.images.AddImageAdapter;
 import com.safe.gallery.calculator.callbacks.OnAllImagesLoadedListener;
 import com.safe.gallery.calculator.db.DBHelper;
-import com.safe.gallery.calculator.adapters.images.AddImageAdapter;
 import com.safe.gallery.calculator.model.AllImagesModel;
+import com.safe.gallery.calculator.utils.AppConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +47,6 @@ import butterknife.OnClick;
 public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedListener {
 
     private static final String TAG = "AddImageActivity";
-    private LinearLayout adView;
     AddImageAdapter adapter;
     @BindView(R.id.banner_container)
     LinearLayout bannerContainer;
@@ -61,9 +60,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
     private boolean isFileCopied = true;
     private boolean isImageAddedToNewAlbum;
     private MenuItem itemSelectAll;
-    private LinearLayout nativeAdContainer;
     private int progress;
-    private ProgressDialog progressDialog;
     private ProgressBar progressbar;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
@@ -89,8 +86,8 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_adds_image);
-        ButterKnife.bind((Activity) this);
+        setContentView(R.layout.activity_adds_image);
+        ButterKnife.bind(this);
         this.dbHelper = new DBHelper(this);
         setHeaderInfo();
         Init();
@@ -129,7 +126,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 16908332:
+            case android.R.id.home:
                 onBackPressed();
                 break;
             case R.id.action_select_all:
@@ -138,7 +135,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
                         this.adapter.selectAllItem();
                     }
                     this.isAllSelected = true;
-                    item.setIcon(R.drawable.ic_check_filled);
+                    item.setIcon(R.drawable.ic_check_box_white_48dp);
                     showHideButton(true);
                     break;
                 }
@@ -146,7 +143,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
                     this.adapter.deSelectAllItem();
                 }
                 this.isAllSelected = false;
-                item.setIcon(R.drawable.ic_check_box_outline);
+                item.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                 showHideButton(false);
                 break;
         }
@@ -154,7 +151,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
     }
 
     public void showHideButton(boolean value) {
-        this.btnHide.setVisibility(value ? 0 : 8);
+        this.btnHide.setVisibility(value ? View.VISIBLE: View.GONE);
     }
 
     public void setSelectAll(boolean selectAll) {
@@ -162,9 +159,9 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
             return;
         }
         if (selectAll) {
-            this.itemSelectAll.setIcon(R.drawable.ic_check_filled);
+            this.itemSelectAll.setIcon(R.drawable.ic_check_box_white_48dp);
         } else {
-            this.itemSelectAll.setIcon(R.drawable.ic_check_box_outline);
+            this.itemSelectAll.setIcon(R.drawable.ic_check_box_outline_white_48dp);
         }
     }
 
@@ -182,7 +179,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
         if (this.adapter != null) {
             final List<String> selectedFiles = this.adapter.getSelectedImages();
             if (selectedFiles == null || selectedFiles.size() <= 0) {
-                Toast.makeText(this, "Please select at least one image!", 0).show();
+                Toast.makeText(this, getString(R.string.select_atleat_1_image), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (!isFinishing()) {
@@ -254,11 +251,10 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
             this.dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             this.dialog.getWindow().setLayout(-1, -2);
         }
-        this.progressbar = (ProgressBar) this.dialog.findViewById(R.id.progress_bar);
-        this.txtCount = (TextView) this.dialog.findViewById(R.id.txt_count);
-        this.nativeAdContainer = (LinearLayout) this.dialog.findViewById(R.id.native_ad_container);
-        ((TextView) this.dialog.findViewById(R.id.txt_title)).setText("Moving Image(s)");
-        this.txtCount.setText("Moving 1 of " + files.size());
+        this.progressbar = this.dialog.findViewById(R.id.progress_bar);
+        this.txtCount = this.dialog.findViewById(R.id.txt_count);
+        ((TextView) this.dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_images));
+        this.txtCount.setText(getString(R.string.moving_1_of) + " " + files.size());
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -275,7 +271,8 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
 
     private void publishProgress(int size) {
         if (this.dialog != null && this.dialog.isShowing()) {
-            this.txtCount.setText("Moving " + (this.count + 1) + " of " + size);
+            txtCount.setText(getString(R.string.moving) + " " + (count + 1) + " " + getString(R.string.of) + " " + size);
+
         }
     }
 
@@ -295,17 +292,9 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
                     } else {
                         out.close();
                         this.isFileCopied = true;
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                AddImageActivity.this.sendBroadcast(new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE", Uri.fromFile(dst)));
-                            }
-                        });
+                        runOnUiThread(() -> AddImageActivity.this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(dst))));
                         in.close();
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                AddImageActivity.this.deleteFilePath(src);
-                            }
-                        });
+                        runOnUiThread(() -> AddImageActivity.this.deleteFilePath(src));
                         this.isFileCopied = true;
                         return;
                     }
@@ -326,7 +315,6 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
 
     private void deleteFilePath(File file) {
         try {
-            String where = "_data=?";
             String[] selectionArgs = new String[]{file.getAbsolutePath()};
             ContentResolver contentResolver = getContentResolver();
             Uri filesUri = Files.getContentUri("external");
@@ -336,7 +324,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
                 file.delete();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), 1).show();
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -56,7 +56,6 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
     String TAG = "TAG";
 
-    private LinearLayout adView;
     private VideoAdapter adapter;
 
     Button btnUnhide;
@@ -70,9 +69,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
     private MenuItem menuItemDelete;
     private MenuItem menuItemEdit;
     private MenuItem menuItemSelect;
-    private LinearLayout nativeAdContainer;
     private int progress;
-    private ProgressDialog progressDialog;
     private ProgressBar progressbar;
     RecyclerView recyclerview;
 
@@ -94,8 +91,8 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_video);
-        ButterKnife.bind((Activity) this);
+        setContentView(R.layout.activity_video);
+        ButterKnife.bind(this);
         dbHelper = new DBHelper(this);
 
         findViews();
@@ -157,7 +154,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
         if (adapter != null) {
             final List<String> selectedFiles = adapter.getSelectedImages();
             if (selectedFiles == null || selectedFiles.size() <= 0) {
-                Toast.makeText(this, "Please select at least one image!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.select_1_video), Toast.LENGTH_LONG).show();
                 return;
             }
             showProgressDialog(selectedFiles);
@@ -179,7 +176,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
                     public void run() {
                         hideProgressDialog();
-                        btnUnhide.setVisibility(8);
+                        btnUnhide.setVisibility(View.GONE);
                         if (menuItemEdit != null) {
                             menuItemEdit.setVisible(true);
                         }
@@ -213,7 +210,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
                     } else if (isFileCopied) {
                         runOnUiThread(new C06361());
                         isFileCopied = false;
-                        File src = new File((String) selectedFiles.get(count));
+                        File src = new File(selectedFiles.get(count));
                         File file = new File(AppConstants.VIDEO_EXPORT_PATH);
                         if (!file.exists()) {
                             file.mkdirs();
@@ -235,11 +232,10 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        progressbar = (ProgressBar) dialog.findViewById(R.id.progress_bar);
-        txtCount = (TextView) dialog.findViewById(R.id.txt_count);
-        nativeAdContainer = (LinearLayout) dialog.findViewById(R.id.native_ad_container);
-        ((TextView) dialog.findViewById(R.id.txt_title)).setText("Moving Video(s)");
-        txtCount.setText("Moving 1 of " + files.size());
+        progressbar = dialog.findViewById(R.id.progress_bar);
+        txtCount = dialog.findViewById(R.id.txt_count);
+        ((TextView) dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_videos));
+        txtCount.setText(getString(R.string.moving_1_of)+" " + files.size());
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -256,7 +252,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
     private void publishProgress(int size) {
         if (dialog != null && dialog.isShowing()) {
-            txtCount.setText("Moving " + (count + 1) + " of " + size);
+            txtCount.setText(getString(R.string.moving) + " " + (count + 1) + " " + getString(R.string.of) + " " + size);
         }
     }
 
@@ -276,17 +272,9 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
                     } else {
                         out.close();
                         isFileCopied = true;
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                sendBroadcast(new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE", Uri.fromFile(dst)));
-                            }
-                        });
+                        runOnUiThread(() -> sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(dst))));
                         in.close();
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                deleteFilePath(src);
-                            }
-                        });
+                        runOnUiThread(() -> deleteFilePath(src));
                         isFileCopied = true;
                         return;
                     }
@@ -340,26 +328,20 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 16908332:
+            case android.R.id.home:
                 onBackPressed();
                 break;
             case R.id.itm_delete:
                 final AlertDialog alertDialog = new Builder(this).create();
-                alertDialog.setTitle("Alert");
-                alertDialog.setMessage("Are you sure to delete selected files?");
+                alertDialog.setTitle(getString(R.string.alert));
+                alertDialog.setMessage(getString(R.string.delete_file_desc));
                 alertDialog.setCancelable(false);
-                alertDialog.setButton(-1, (CharSequence) "Yes", new OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        deleteSelectedFiles();
-                        onBackPressed();
-                        alertDialog.dismiss();
-                    }
+                alertDialog.setButton(-1, getString(R.string.yes), (dialog, which) -> {
+                    deleteSelectedFiles();
+                    onBackPressed();
+                    alertDialog.dismiss();
                 });
-                alertDialog.setButton(-2, (CharSequence) "No", new OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialog.dismiss();
-                    }
-                });
+                alertDialog.setButton(-2, getString(R.string.no), (dialog, which) -> alertDialog.dismiss());
                 alertDialog.show();
                 break;
             case R.id.itm_edit:
@@ -423,7 +405,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
         if (menuItemDelete != null) {
             menuItemDelete.setVisible(needToshow);
         }
-        btnUnhide.setVisibility(needToshow ? 0 : 8);
+        btnUnhide.setVisibility(needToshow ? View.INVISIBLE : View.GONE);
     }
 
     public void showSelectAllButton(boolean needToShow) {
@@ -431,10 +413,6 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
             menuItemSelect.setIcon(needToShow ? R.drawable.ic_check_box_white_48dp : R.drawable.ic_check_box_outline_white_48dp);
             isSelectAll = needToShow;
         }
-    }
-
-    public void startFullScreenImageActivity(ArrayList<AllImagesModel> buckets, int position) {
-        startActivity(new Intent(this, FullScreenImageActivity.class).putExtra(FullScreenImageActivity.OBJECT, buckets).putExtra(FullScreenImageActivity.POSITION, position));
     }
 
     public void onBackPressed() {
@@ -500,7 +478,8 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
 
 
         try {
-            Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(videoPath));
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPath));
             intent.setDataAndType(Uri.parse(videoPath), "video/*");
             startActivity(intent);
         } catch (Exception e) {

@@ -83,18 +83,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(getResources().getString(R.string.rate_app));
         builder.setMessage(getResources().getString(R.string.rate_app_desc));
-        builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                gotoPlayStore();
-            }
-        });
-        builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                letUsKnow();
-            }
-        });
+        builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> gotoPlayStore());
+        builder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> letUsKnow());
         builder.show();
     }
 

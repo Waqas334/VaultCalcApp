@@ -1,37 +1,32 @@
 package com.safe.gallery.calculator.activities.files;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore.Files;
-import androidx.appcompat.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.adapters.files.SingleFileAdapter;
-import com.safe.gallery.calculator.adapters.files.FolderAdapter;
-import com.safe.gallery.calculator.utils.AppConstants;
 import com.safe.gallery.calculator.activities.BaseActivity;
+import com.safe.gallery.calculator.adapters.files.FolderAdapter;
+import com.safe.gallery.calculator.adapters.files.SingleFileAdapter;
 import com.safe.gallery.calculator.common.MergeAdapter;
+import com.safe.gallery.calculator.utils.AppConstants;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -41,14 +36,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 
@@ -71,24 +61,20 @@ public class AddFileActivity extends BaseActivity {
     TextView path;
     String primary_sd;
     private int progress;
-    private static final Pattern DIR_SEPORATOR = Pattern.compile("/");
-    public static final String FILES_TO_UPLOAD = "upload";
-    private static final String TAG = "FileSelection";
     Button New;
-    Boolean Switch = Boolean.valueOf(false);
+    Boolean Switch = false;
 
     Button all;
 
     private boolean isFileCopied = true;
     private boolean isImageAddedToNewAlbum;
     File mainPath = new File(Environment.getExternalStorageDirectory() + "");
-    private LinearLayout nativeAdContainer;
 
     private ProgressBar progressbar;
     String secondary_sd;
     private ArrayList<File> selectedFiles = new ArrayList();
     Button storage;
-    Boolean switcher = Boolean.valueOf(false);
+    Boolean switcher = false;
     private Timer timer;
     Toolbar toolbar;
     int top = 0;
@@ -96,8 +82,8 @@ public class AddFileActivity extends BaseActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_file_selection);
-        ButterKnife.bind((Activity) this);
+        setContentView(R.layout.activity_file_selection);
+        ButterKnife.bind(this);
 
         findViews();
         setHeaderInfo();
@@ -110,17 +96,17 @@ public class AddFileActivity extends BaseActivity {
         if (getIntent().getExtras() != null) {
             choiceMode = getIntent().getStringExtra("choiceMode");
         }
-        directoryView = (ListView) findViewById(R.id.directorySelectionList);
-        btnHide = (Button) findViewById(R.id.btn_hide);
+        directoryView = findViewById(R.id.directorySelectionList);
+        btnHide = findViewById(R.id.btn_hide);
         if (choiceMode != null) {
             directoryView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
-        ok = (Button) findViewById(R.id.ok);
-        all = (Button) findViewById(R.id.all);
-        cancel = (Button) findViewById(R.id.cancel);
-        storage = (Button) findViewById(R.id.storage);
-        New = (Button) findViewById(R.id.New);
-        path = (TextView) findViewById(R.id.folderpath);
+        ok = findViewById(R.id.ok);
+        all = findViewById(R.id.all);
+        cancel = findViewById(R.id.cancel);
+        storage = findViewById(R.id.storage);
+        New = findViewById(R.id.New);
+        path = findViewById(R.id.folderpath);
         toolbar = findViewById(R.id.toolbar);
         loadLists();
         New.setEnabled(false);
@@ -149,11 +135,10 @@ public class AddFileActivity extends BaseActivity {
             addFileActivity.top = i;
             try {
                 if (position < directoryList.size()) {
-                    mainPath = (File) directoryList.get(position);
+                    mainPath = directoryList.get(position);
                     loadLists();
                 }
             } catch (Throwable th) {
-                mainPath = mainPath;
                 loadLists();
             }
         }
@@ -192,16 +177,16 @@ public class AddFileActivity extends BaseActivity {
 
         public void onClick(View v) {
             try {
-                if (switcher.booleanValue()) {
+                if (switcher) {
                     mainPath = new File(primary_sd);
                     loadLists();
-                    switcher = Boolean.valueOf(false);
+                    switcher = false;
                     storage.setText(getString(R.string.ext));
                     return;
                 }
                 mainPath = new File(secondary_sd);
                 loadLists();
-                switcher = Boolean.valueOf(true);
+                switcher = true;
                 storage.setText(getString(R.string.Int));
             } catch (Throwable th) {
             }
@@ -214,22 +199,22 @@ public class AddFileActivity extends BaseActivity {
 
         public void onClick(View v) {
             int i;
-            if (!Switch.booleanValue()) {
+            if (!Switch) {
                 for (i = directoryList.size(); i < directoryView.getCount(); i++) {
                     directoryView.setItemChecked(i, true);
                 }
 
                 all.setText(getString(R.string.none));
-                Switch = Boolean.valueOf(true);
+                Switch = true;
 
-            } else if (Switch.booleanValue()) {
+            } else if (Switch) {
 
                 for (i = directoryList.size(); i < directoryView.getCount(); i++) {
                     directoryView.setItemChecked(i, false);
 
                 }
                 all.setText(getString(R.string.all));
-                Switch = Boolean.valueOf(false);
+                Switch = false;
             }
         }
     }
@@ -299,7 +284,7 @@ public class AddFileActivity extends BaseActivity {
             mainPath = mainPath.getParentFile();
             loadLists();
             directoryView.setSelectionFromTop(index, top);
-            btnHide.setVisibility(8);
+            btnHide.setVisibility(View.GONE);
         } catch (Throwable th) {
         }
     }
@@ -311,7 +296,7 @@ public class AddFileActivity extends BaseActivity {
         }
         destPath = file.getAbsolutePath();
         if (selectedFiles == null || selectedFiles.size() <= 0) {
-            Toast.makeText(this, "Please select at least one file!", 0).show();
+            Toast.makeText(this, getString(R.string.select_1_file), Toast.LENGTH_SHORT).show();
             return;
         }
         showProgressDialog(selectedFiles);
@@ -341,11 +326,10 @@ public class AddFileActivity extends BaseActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        progressbar = (ProgressBar) dialog.findViewById(R.id.progress_bar);
-        txtCount = (TextView) dialog.findViewById(R.id.txt_count);
-        nativeAdContainer = (LinearLayout) dialog.findViewById(R.id.native_ad_container);
-        ((TextView) dialog.findViewById(R.id.txt_title)).setText("Moving File(s)");
-        txtCount.setText("Moving 1 of " + files.size());
+        progressbar = dialog.findViewById(R.id.progress_bar);
+        txtCount = dialog.findViewById(R.id.txt_count);
+        ((TextView) dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_files));
+        txtCount.setText(getString(R.string.moving_1_of) + " " + files.size());
         int totalFileSize = 0;
         Iterator it = files.iterator();
         while (it.hasNext()) {
@@ -363,7 +347,7 @@ public class AddFileActivity extends BaseActivity {
 
     private void publishProgress(int size) {
         if (dialog != null && dialog.isShowing()) {
-            txtCount.setText("Moving " + (count + 1) + " of " + size);
+            txtCount.setText(getString(R.string.moving) + " " + (count + 1) + " " + getString(R.string.of) + " " + size);
         }
     }
 
@@ -383,17 +367,10 @@ public class AddFileActivity extends BaseActivity {
                     } else {
                         out.close();
                         isFileCopied = true;
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                sendBroadcast(new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE", Uri.fromFile(dst)));
-                            }
-                        });
+
+                        runOnUiThread(() -> sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(dst))));
                         in.close();
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                deleteFilePath(src);
-                            }
-                        });
+                        runOnUiThread(() -> deleteFilePath(src));
                         isFileCopied = true;
                         return;
                     }
@@ -424,7 +401,7 @@ public class AddFileActivity extends BaseActivity {
                 file.delete();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "" + e.getMessage(), 1).show();
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -437,24 +414,11 @@ public class AddFileActivity extends BaseActivity {
     }
 
     private void loadLists() {
-        File file;
         int i = 0;
-        FileFilter fileFilter = new FileFilter() {
-            public boolean accept(File file) {
-                return file.isFile();
-            }
-        };
-        File[] tempDirectoryList = mainPath.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        });
+        FileFilter fileFilter = file -> file.isFile();
+        File[] tempDirectoryList = mainPath.listFiles(file -> file.isDirectory());
         if (tempDirectoryList != null && tempDirectoryList.length > 1) {
-            Arrays.sort(tempDirectoryList, new Comparator<File>() {
-                public int compare(File object1, File object2) {
-                    return object1.getName().compareTo(object2.getName());
-                }
-            });
+            Arrays.sort(tempDirectoryList, (object1, object2) -> object1.getName().compareTo(object2.getName()));
         }
         directoryList = new ArrayList();
         directoryNames = new ArrayList();
@@ -462,14 +426,9 @@ public class AddFileActivity extends BaseActivity {
             directoryList.add(file2);
             directoryNames.add(file2.getName());
         }
-        ArrayAdapter<String> directoryAdapter = new ArrayAdapter(this, 17367043, directoryNames);
         File[] tempFileList = mainPath.listFiles(fileFilter);
         if (tempFileList != null && tempFileList.length > 1) {
-            Arrays.sort(tempFileList, new Comparator<File>() {
-                public int compare(File object1, File object2) {
-                    return object1.getName().compareTo(object2.getName());
-                }
-            });
+            Arrays.sort(tempFileList, (object1, object2) -> object1.getName().compareTo(object2.getName()));
         }
         fileList = new ArrayList();
         fileNames = new ArrayList();
@@ -506,105 +465,32 @@ public class AddFileActivity extends BaseActivity {
     }
 
     public void iconload() {
-        String[] filenames = (String[]) fileNames.toArray(new String[fileNames.size()]);
-        FolderAdapter adapter1 = new FolderAdapter(this, (String[]) directoryNames.toArray((String[]) directoryNames.toArray(new String[directoryNames.size()])), mainPath.getPath());
-        SingleFileAdapter adapter2 = new SingleFileAdapter(this, (String[]) fileNames.toArray(filenames), mainPath.getPath());
+        String[] filenames = fileNames.toArray(new String[fileNames.size()]);
+        FolderAdapter adapter1 = new FolderAdapter(this, directoryNames.toArray(directoryNames.toArray(new String[directoryNames.size()])), mainPath.getPath());
+        SingleFileAdapter adapter2 = new SingleFileAdapter(this, fileNames.toArray(filenames), mainPath.getPath());
         MergeAdapter adap = new MergeAdapter();
         adap.addAdapter(adapter1);
         adap.addAdapter(adapter2);
         directoryView.setAdapter(adap);
     }
-
-    public boolean hasStorage() {
-        String state = Environment.getExternalStorageState();
-        Log.v(TAG, "storage state is " + state);
-        if ("mounted".equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
-    public void ExtStorageSearch() {
-        primary_sd = System.getenv("EXTERNAL_STORAGE");
-        if (primary_sd == null) {
-            primary_sd = Environment.getExternalStorageDirectory() + "";
-        }
-        if (Boolean.valueOf(Environment.getExternalStorageState().equals("mounted")).booleanValue()) {
-            for (String string : getStorageDirectories(this)) {
-                if (new File(string).exists() && new File(string).isDirectory() && !string.equals(primary_sd)) {
-                    secondary_sd = string;
-                    return;
-                }
-            }
-            return;
-        }
-        secondary_sd = null;
-    }
-
-    public static String[] getStorageDirectories(Context context) {
-
-        Set<String> rv = new HashSet();
-        String rawExternalStorage = System.getenv("EXTERNAL_STORAGE");
-        String rawSecondaryStoragesStr = System.getenv("SECONDARY_STORAGE");
-        String rawEmulatedStorageTarget = System.getenv("EMULATED_STORAGE_TARGET");
-        if (!TextUtils.isEmpty(rawEmulatedStorageTarget)) {
-            String rawUserId;
-            if (VERSION.SDK_INT < 17) {
-                rawUserId = "";
-            } else {
-                String[] folders = DIR_SEPORATOR.split(Environment.getExternalStorageDirectory().getAbsolutePath());
-                String lastFolder = folders[folders.length - 1];
-                boolean isDigit = false;
-                try {
-                    Integer.valueOf(lastFolder);
-                    isDigit = true;
-                } catch (NumberFormatException e) {
-                }
-                rawUserId = isDigit ? lastFolder : "";
-            }
-            if (TextUtils.isEmpty(rawUserId)) {
-                rv.add(rawEmulatedStorageTarget);
-            } else {
-                rv.add(rawEmulatedStorageTarget + File.separator + rawUserId);
-            }
-        } else if (VERSION.SDK_INT >= 23) {
-            for (File file : context.getExternalFilesDirs(null)) {
-                String applicationSpecificAbsolutePath = file.getAbsolutePath();
-                rv.add(applicationSpecificAbsolutePath.substring(0, applicationSpecificAbsolutePath.indexOf("Android/data")));
-            }
-        } else if (TextUtils.isEmpty(rawExternalStorage)) {
-            rv.addAll(Arrays.asList(getPhysicalPaths()));
-        } else {
-            rv.add(rawExternalStorage);
-        }
-        if (!TextUtils.isEmpty(rawSecondaryStoragesStr)) {
-            Collections.addAll(rv, rawSecondaryStoragesStr.split(File.pathSeparator));
-        }
-        return (String[]) rv.toArray(new String[rv.size()]);
-    }
-
-    private static String[] getPhysicalPaths() {
-        return new String[]{"/storage/sdcard0", "/storage/sdcard1", "/storage/extsdcard", "/storage/sdcard0/external_sdcard", "/mnt/extsdcard", "/mnt/sdcard/external_sd", "/mnt/external_sd", "/mnt/media_rw/sdcard1", "/removable/microsd", "/mnt/emmc", "/storage/external_SD", "/storage/ext_sd", "/storage/removable/sdcard1", "/data/sdext", "/data/sdext2", "/data/sdext3", "/data/sdext4", "/sdcard1", "/sdcard2", "/storage/microsd"};
-    }
-
     public void setFiles(boolean isSelected, String fileName) {
         int i;
         if (isSelected) {
             for (i = 0; i < fileList.size(); i++) {
-                if (((File) fileList.get(i)).getName().equals(fileName)) {
+                if (fileList.get(i).getName().equals(fileName)) {
                     selectedFiles.add(fileList.get(i));
                     Log.e("FILE SELECTED ", fileName);
                 }
             }
         } else {
             for (i = 0; i < fileList.size(); i++) {
-                if (((File) fileList.get(i)).getName().equals(fileName)) {
+                if (fileList.get(i).getName().equals(fileName)) {
                     selectedFiles.remove(fileList.get(i));
                     Log.e("FILE REMOVED ", fileName);
                 }
             }
         }
-        btnHide.setVisibility(selectedFiles.size() > 0 ? 0 : 8);
+        btnHide.setVisibility(selectedFiles.size() > 0 ? View.VISIBLE : View.GONE);
     }
 
 }

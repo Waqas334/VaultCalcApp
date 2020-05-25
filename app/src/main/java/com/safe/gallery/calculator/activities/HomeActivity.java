@@ -2,11 +2,10 @@ package com.safe.gallery.calculator.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.widget.Toolbar;
-
 import android.widget.ImageView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.safe.gallery.calculator.MyBassActivity;
 import com.safe.gallery.calculator.R;
@@ -30,7 +29,7 @@ public class HomeActivity extends MyBassActivity {
 
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add((int) R.id.frame, new HomeFragment());
+        ft.add(R.id.frame, new HomeFragment());
         ft.commit();
     }
 

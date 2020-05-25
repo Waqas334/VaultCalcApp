@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FullScreenImageAdapter extends PagerAdapter {
-    private final GestureDetector detector;
     private Context mContext;
     private List<AllImagesModel> models = new ArrayList();
 
@@ -58,16 +57,16 @@ public class FullScreenImageAdapter extends PagerAdapter {
     }
 
     public FullScreenImageAdapter(Context context) {
-        this.detector = new GestureDetector(context, new GestureTap());
+        GestureDetector detector = new GestureDetector(context, new GestureTap());
         this.mContext = context;
     }
 
     public Object instantiateItem(ViewGroup collection, int position) {
         ViewGroup layout = (ViewGroup) LayoutInflater.from(this.mContext).inflate(R.layout.raw_fullscreen, collection, false);
-        PhotoView image = (PhotoView) layout.findViewById(R.id.image);
+        PhotoView image = layout.findViewById(R.id.image);
         image.setOnClickListener(new C05891());
-        File fFile = new File(((AllImagesModel) this.models.get(position)).getImagePath());
-        if (!((AllImagesModel) this.models.get(position)).getImagePath().isEmpty()) {
+        File fFile = new File(this.models.get(position).getImagePath());
+        if (!this.models.get(position).getImagePath().isEmpty()) {
             Glide.with(this.mContext).load(Uri.fromFile(fFile)).into(image);
         }
         collection.addView(layout);
@@ -75,8 +74,8 @@ public class FullScreenImageAdapter extends PagerAdapter {
     }
 
     public int getItemPosition(Object object) {
-        if (this.models.contains((View) object)) {
-            return this.models.indexOf((View) object);
+        if (this.models.contains(object)) {
+            return this.models.indexOf(object);
         }
         return -2;
     }

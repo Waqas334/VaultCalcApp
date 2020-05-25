@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.activities.BaseActivity;
 
 public class PrivacyPolicyActivity extends BaseActivity {
 
@@ -18,7 +17,7 @@ public class PrivacyPolicyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.privacy_policy);
+        setContentView(R.layout.activity_privacy_policy);
 
         setupToolBar();
         loadContent();

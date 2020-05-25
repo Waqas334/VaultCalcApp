@@ -1,10 +1,9 @@
 package com.safe.gallery.calculator.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.safe.gallery.calculator.MyBassActivity;
 import com.safe.gallery.calculator.R;
@@ -19,7 +18,7 @@ public class SettingsActivity extends MyBassActivity {
 
         Toolbar toolbar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setTitle(getString(R.string.settings));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SettingsFragment settingsFragment = new SettingsFragment();

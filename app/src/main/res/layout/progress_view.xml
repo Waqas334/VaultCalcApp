@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <net.bohush.geometricprogressview.GeometricProgressView
-        android:id="@+id/progressView15"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
         android:layout_centerInParent="true"

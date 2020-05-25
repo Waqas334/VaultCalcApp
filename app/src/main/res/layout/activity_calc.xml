@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/newColorAccent">
@@ -30,7 +29,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
-    <!--    TODO LEARN:  What is labelFor in EditText-->
     <EditText
         android:id="@+id/tv_Display"
         android:layout_width="0dp"
@@ -104,6 +102,8 @@
         app:layout_constraintLeft_toRightOf="@+id/tv_sqrt"
         app:layout_constraintRight_toLeftOf="@+id/tv_divide"
         app:layout_constraintTop_toBottomOf="@+id/et_main" />
+
+
 
     <TextView
         android:id="@+id/tv_divide"

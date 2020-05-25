@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 public class HomeFragment extends Fragment {
 
     private int PERMISSION_REQUEST_CODE = 100;
-    private DBHelper dbHelper;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_laoyut, container, false);
@@ -74,14 +73,6 @@ public class HomeFragment extends Fragment {
         DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getActivity().getSystemService(Context.DEVICE_POLICY_SERVICE);
 //        DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getActivity().getSystemService("device_policy");
         ComponentName demoDeviceAdmin = new ComponentName(getActivity(), PolicyManager.class);
-        if (devicePolicyManager == null || !devicePolicyManager.isAdminActive(demoDeviceAdmin)) {
-
-            this.dbHelper = new DBHelper(getActivity());
-
-        } else {
-            this.dbHelper = new DBHelper(getActivity());
-
-        }
         if (VERSION.SDK_INT < 23) {
             return;
         }

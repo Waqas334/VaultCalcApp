@@ -1,10 +1,12 @@
 package com.safe.gallery.calculator.adapters;
 
 import android.content.Context;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.UiThread;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,7 +34,6 @@ public class AudiosAdapter extends Adapter<ViewHolder> {
 
     private ArrayList<AllAudioModel> bucketArraylist;
     private Context context;
-    private boolean isLongPressed = false;
 
     class ImageViewHolder extends ViewHolder {
         CheckBox checkbox;
@@ -47,38 +48,12 @@ public class AudiosAdapter extends Adapter<ViewHolder> {
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            checkbox = (CheckBox)itemView.findViewById(R.id.checkbox);
-            img = (ImageView) itemView.findViewById(R.id.img);
-            txtSize = (TextView)itemView.findViewById(R.id.txt_size);
-            txtTitle = (TextView)itemView.findViewById(R.id.txt_title);
+            checkbox = itemView.findViewById(R.id.checkbox);
+            img = itemView.findViewById(R.id.img);
+            txtSize = itemView.findViewById(R.id.txt_size);
+            txtTitle = itemView.findViewById(R.id.txt_title);
 
             this.mView = itemView;
-        }
-    }
-
-    public class ImageViewHolder_ViewBinding implements Unbinder {
-        private ImageViewHolder target;
-
-        @UiThread
-        public ImageViewHolder_ViewBinding(ImageViewHolder target, View source) {
-            this.target = target;
-            target.img = (ImageView) Utils.findRequiredViewAsType(source, R.id.img, "field 'img'", ImageView.class);
-            target.txtTitle = (TextView) Utils.findRequiredViewAsType(source, R.id.txt_title, "field 'txtTitle'", TextView.class);
-            target.txtSize = (TextView) Utils.findRequiredViewAsType(source, R.id.txt_size, "field 'txtSize'", TextView.class);
-            target.checkbox = (CheckBox) Utils.findRequiredViewAsType(source, R.id.checkbox, "field 'checkbox'", CheckBox.class);
-        }
-
-        @CallSuper
-        public void unbind() {
-            ImageViewHolder target = this.target;
-            if (target == null) {
-                throw new IllegalStateException("Bindings already cleared.");
-            }
-            this.target = null;
-            target.img = null;
-            target.txtTitle = null;
-            target.txtSize = null;
-            target.checkbox = null;
         }
     }
 
@@ -92,14 +67,10 @@ public class AudiosAdapter extends Adapter<ViewHolder> {
     }
 
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final AllAudioModel bucket = (AllAudioModel) this.bucketArraylist.get(position);
+        final AllAudioModel bucket = this.bucketArraylist.get(position);
         if (holder instanceof ImageViewHolder) {
             ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener(null);
-            if (bucket.isEditable()) {
-                ((ImageViewHolder) holder).checkbox.setVisibility(0);
-            } else {
-                ((ImageViewHolder) holder).checkbox.setVisibility(8);
-            }
+            ((ImageViewHolder) holder).checkbox.setVisibility(bucket.isEditable() ? View.VISIBLE : View.GONE);
             if (bucket.isSelected()) {
                 ((ImageViewHolder) holder).checkbox.setChecked(true);
             } else {
@@ -115,31 +86,27 @@ public class AudiosAdapter extends Adapter<ViewHolder> {
                 ((ImageViewHolder) holder).txtTitle.setText(fFile.getName());
                 ((ImageViewHolder) holder).txtSize.setText(MainApplication.getInstance().getFileSize(fFile.length()));
             }
-            ((ImageViewHolder) holder).mView.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) {
-                    if (bucket.isEditable()) {
-                        bucket.setSelected(!bucket.isSelected());
-                        if (bucket.isSelected()) {
-                            ((ImageViewHolder) holder).checkbox.setChecked(true);
-                        } else {
-                            ((ImageViewHolder) holder).checkbox.setChecked(false);
-                        }
-                        AudiosAdapter.this.checkIfAllFilesDeselected();
-                        return;
+            ((ImageViewHolder) holder).mView.setOnClickListener(view -> {
+                if (bucket.isEditable()) {
+                    bucket.setSelected(!bucket.isSelected());
+                    if (bucket.isSelected()) {
+                        ((ImageViewHolder) holder).checkbox.setChecked(true);
+                    } else {
+                        ((ImageViewHolder) holder).checkbox.setChecked(false);
                     }
-                    ((AudiosActivity) AudiosAdapter.this.context).openAudio(bucket.getOldPath());
+                    AudiosAdapter.this.checkIfAllFilesDeselected();
+                    return;
                 }
+                ((AudiosActivity) AudiosAdapter.this.context).openAudio(bucket.getOldPath());
             });
-            ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (bucket.isEditable()) {
-                        if (isChecked) {
-                            bucket.setSelected(true);
-                        } else {
-                            bucket.setSelected(false);
-                        }
-                        AudiosAdapter.this.checkIfAllFilesDeselected();
+            ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+                if (bucket.isEditable()) {
+                    if (isChecked) {
+                        bucket.setSelected(true);
+                    } else {
+                        bucket.setSelected(false);
                     }
+                    AudiosAdapter.this.checkIfAllFilesDeselected();
                 }
             });
         }
@@ -195,7 +162,6 @@ public class AudiosAdapter extends Adapter<ViewHolder> {
         while (it.hasNext()) {
             ((AllAudioModel) it.next()).setSelected(true);
         }
-        this.isLongPressed = true;
         notifyDataSetChanged();
     }
 
@@ -204,20 +170,6 @@ public class AudiosAdapter extends Adapter<ViewHolder> {
         while (it.hasNext()) {
             ((AllAudioModel) it.next()).setSelected(false);
         }
-        this.isLongPressed = false;
-        notifyDataSetChanged();
-    }
-
-    public void removeSelectedFiles() {
-        List<AllAudioModel> selectedFiles = new ArrayList();
-        Iterator it = this.bucketArraylist.iterator();
-        while (it.hasNext()) {
-            AllAudioModel bucket = (AllAudioModel) it.next();
-            if (bucket.isSelected()) {
-                selectedFiles.add(new AllAudioModel(bucket.getOldPath(), bucket.getLastModified()));
-            }
-        }
-        this.bucketArraylist.removeAll(selectedFiles);
         notifyDataSetChanged();
     }
 

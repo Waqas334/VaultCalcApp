@@ -59,39 +59,13 @@ public class AddVideoAdapter extends Adapter<ViewHolder> {
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            checkbox = (CheckBox) itemView.findViewById(R.id.checkbox);
-            img = (ImageView) itemView.findViewById(R.id.img);
-            txtSize = (TextView) itemView.findViewById(R.id.txt_size);
-            txtTitle = (TextView) itemView.findViewById(R.id.txt_title);
+            checkbox = itemView.findViewById(R.id.checkbox);
+            img = itemView.findViewById(R.id.img);
+            txtSize = itemView.findViewById(R.id.txt_size);
+            txtTitle = itemView.findViewById(R.id.txt_title);
 
             //ButterKnife.bind((Object) this, itemView);
             this.mView = itemView;
-        }
-    }
-
-    public class ImageViewHolder_ViewBinding implements Unbinder {
-        private ImageViewHolder target;
-
-        @UiThread
-        public ImageViewHolder_ViewBinding(ImageViewHolder target, View source) {
-            this.target = target;
-            target.img = (ImageView) Utils.findRequiredViewAsType(source, R.id.img, "field 'img'", ImageView.class);
-            target.txtTitle = (TextView) Utils.findRequiredViewAsType(source, R.id.txt_title, "field 'txtTitle'", TextView.class);
-            target.txtSize = (TextView) Utils.findRequiredViewAsType(source, R.id.txt_size, "field 'txtSize'", TextView.class);
-            target.checkbox = (CheckBox) Utils.findRequiredViewAsType(source, R.id.checkbox, "field 'checkbox'", CheckBox.class);
-        }
-
-        @CallSuper
-        public void unbind() {
-            ImageViewHolder target = this.target;
-            if (target == null) {
-                throw new IllegalStateException("Bindings already cleared.");
-            }
-            this.target = null;
-            target.img = null;
-            target.txtTitle = null;
-            target.txtSize = null;
-            target.checkbox = null;
         }
     }
 
@@ -104,7 +78,7 @@ public class AddVideoAdapter extends Adapter<ViewHolder> {
     }
 
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final AllVideosModel bucket = (AllVideosModel) bucketsArraylist.get(position);
+        final AllVideosModel bucket = bucketsArraylist.get(position);
         if (holder instanceof ImageViewHolder) {
             ((ImageViewHolder) holder).checkbox.setOnCheckedChangeListener(null);
             if (!bucket.getOldPath().isEmpty()) {
@@ -120,15 +94,13 @@ public class AddVideoAdapter extends Adapter<ViewHolder> {
             } else {
                 ((ImageViewHolder) holder).checkbox.setChecked(false);
             }
-            ((ImageViewHolder) holder).checkbox.setOnClickListener(new OnClickListener() {
-                public void onClick(View view) {
-                    if (((ImageViewHolder) holder).checkbox.isChecked()) {
-                        bucket.setSelected(true);
-                    } else {
-                        bucket.setSelected(false);
-                    }
-                    AddVideoAdapter.this.checkIfAllFilesDeselected();
+            ((ImageViewHolder) holder).checkbox.setOnClickListener(view -> {
+                if (((ImageViewHolder) holder).checkbox.isChecked()) {
+                    bucket.setSelected(true);
+                } else {
+                    bucket.setSelected(false);
                 }
+                AddVideoAdapter.this.checkIfAllFilesDeselected();
             });
         }
     }

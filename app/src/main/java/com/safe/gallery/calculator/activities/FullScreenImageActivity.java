@@ -1,16 +1,8 @@
 package com.safe.gallery.calculator.activities;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AlertDialog.Builder;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,9 +11,14 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog.Builder;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
+
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.adapters.FullScreenImageAdapter;
 import com.safe.gallery.calculator.activities.images.ImagesActivity;
+import com.safe.gallery.calculator.adapters.FullScreenImageAdapter;
 import com.safe.gallery.calculator.model.AllImagesModel;
 import com.safe.gallery.calculator.utils.CustomViewPager;
 
@@ -35,16 +32,12 @@ import butterknife.ButterKnife;
 public class FullScreenImageActivity extends BaseActivity {
 
 
-    private static final String FILE_RENAMED = "file_renamed";
     public static final String OBJECT = "object";
     public static final String POSITION = "position";
     int High;
     int Low = 1;
     FullScreenImageAdapter adapter;
     ArrayList<AllImagesModel> imageList;
-    private boolean isFileDeleted;
-    private boolean isFileRenamed;
-    private boolean isImageSavedAfterEditing;
     @BindView(R.id.main_linear)
     RelativeLayout mainLinear;
     private int position;
@@ -62,7 +55,7 @@ public class FullScreenImageActivity extends BaseActivity {
 
         public void onPageSelected(int position) {
             if (FullScreenImageActivity.this.imageList != null && FullScreenImageActivity.this.imageList.size() > 0) {
-                FullScreenImageActivity.this.getSupportActionBar().setTitle(new File(((AllImagesModel) FullScreenImageActivity.this.imageList.get(position)).getImagePath()).getName());
+                FullScreenImageActivity.this.getSupportActionBar().setTitle(new File(FullScreenImageActivity.this.imageList.get(position).getImagePath()).getName());
                 if (FullScreenImageActivity.this.High != 0) {
                     int result = new Random().nextInt(FullScreenImageActivity.this.High - FullScreenImageActivity.this.Low) + FullScreenImageActivity.this.Low;
                     Log.e("random number", "" + result);
@@ -80,8 +73,8 @@ public class FullScreenImageActivity extends BaseActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView((int) R.layout.activity_full_screen_image);
-        ButterKnife.bind((Activity) this);
+        setContentView(R.layout.activity_full_screen_image);
+        ButterKnife.bind(this);
         //AddMobe();
         if (getIntent().getExtras() != null) {
             this.imageList = getIntent().getParcelableArrayListExtra(OBJECT);
@@ -101,7 +94,7 @@ public class FullScreenImageActivity extends BaseActivity {
     private void setHeaderInfo() {
         setSupportActionBar(this.toolbar);
         if (this.imageList != null) {
-            getSupportActionBar().setTitle(new File(((AllImagesModel) this.imageList.get(this.viewPager.getCurrentItem())).getImagePath()).getName());
+            getSupportActionBar().setTitle(new File(this.imageList.get(this.viewPager.getCurrentItem()).getImagePath()).getName());
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().hide();
@@ -122,47 +115,40 @@ public class FullScreenImageActivity extends BaseActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @SuppressLint("WrongConstant")
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == 16908332) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         } else if (item.getItemId() == R.id.itm_share) {
             if (this.imageList != null && this.imageList.size() > 0) {
 
-                AllImagesModel image = (AllImagesModel) this.imageList.get(this.viewPager.getCurrentItem());
+                AllImagesModel image = this.imageList.get(this.viewPager.getCurrentItem());
                 Intent sendIntent = new Intent();
-                sendIntent.setAction("android.intent.action.SEND");
-                sendIntent.putExtra("android.intent.extra.STREAM", Uri.fromFile(new File(image.getImagePath())));
+                sendIntent.setAction(Intent.ACTION_SEND);
+
+                sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(image.getImagePath())));
                 sendIntent.setType("image/*");
                 try {
                     startActivity(sendIntent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(this, "No Application found to perform this action.", 0).show();
+                    Toast.makeText(this,getString(R.string.no_app_found), Toast.LENGTH_SHORT).show();
                 }
             }
         } else if (item.getItemId() == R.id.itm_delete && this.imageList != null && this.imageList.size() > 0) {
             final AlertDialog alertDialog = new Builder(this).create();
-            alertDialog.setTitle("Alert");
-            alertDialog.setMessage("Are you sure to delete this files?");
+            alertDialog.setTitle(getString(R.string.alert));
+            alertDialog.setMessage(getString(R.string.delete_file_desc));
             alertDialog.setCancelable(false);
-            alertDialog.setButton(-1, (CharSequence) "Yes", new OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    alertDialog.dismiss();
-                    FullScreenImageActivity.this.adapter.removeItem((AllImagesModel) FullScreenImageActivity.this.imageList.get(FullScreenImageActivity.this.viewPager.getCurrentItem()));
-                    FullScreenImageActivity.this.isFileDeleted = true;
-                    if(FullScreenImageActivity.this.adapter.getCount()==0){
-                        startActivity(new Intent(FullScreenImageActivity.this, ImagesActivity.class));
-                        finish();
-                    }
+            alertDialog.setButton(-1, getString(R.string.yes), (dialog, which) -> {
+                alertDialog.dismiss();
+                FullScreenImageActivity.this.adapter.removeItem(FullScreenImageActivity.this.imageList.get(FullScreenImageActivity.this.viewPager.getCurrentItem()));
+                if(FullScreenImageActivity.this.adapter.getCount()==0){
+                    startActivity(new Intent(FullScreenImageActivity.this, ImagesActivity.class));
+                    finish();
+                }
 
-                }
             });
-            alertDialog.setButton(-2, (CharSequence) "No", new OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    alertDialog.dismiss();
-                }
-            });
+            alertDialog.setButton(-2, getString(R.string.no), (dialog, which) -> alertDialog.dismiss());
             alertDialog.show();
         }
         return super.onOptionsItemSelected(item);
