@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.safe.gallery.calculator.R;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -37,8 +37,11 @@ public class FolderAdapter extends ArrayAdapter<String> {
         if (file.isDirectory()) {
             imageView.setImageResource(R.drawable.ic_folder_with_round_bg);
         } else if (file.isFile()) {
+            Glide.with(getContext()).load(new File(this.ParentFolder + "/" + this.web[position]))
+                    .placeholder(R.drawable.document_gray)
+                    .into(imageView);
 
-            Picasso.get().load(new File(this.ParentFolder + "/" + this.web[position])).placeholder((int) R.drawable.document_gray).resize(50, 50).into(imageView);
+//            Picasso.get().load().placeholder((int) R.drawable.document_gray).resize(50, 50).into(imageView);
         }
         return rowView;
     }

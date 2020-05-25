@@ -2,7 +2,6 @@ package com.safe.gallery.calculator.adapters;
 
 import android.content.Context;
 import android.net.Uri;
-import androidx.viewpager.widget.PagerAdapter;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -11,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.safe.gallery.calculator.R;

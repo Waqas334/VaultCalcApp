@@ -9,7 +9,7 @@ import androidx.multidex.MultiDex;
 
 import java.text.DecimalFormat;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+//import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MainApplication extends Application {
 
@@ -36,7 +36,7 @@ public class MainApplication extends Application {
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("Montserrat-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
+//        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("Montserrat-Regular.ttf").setFontAttrId(R.attr.fontPath).build());
 
     }
 

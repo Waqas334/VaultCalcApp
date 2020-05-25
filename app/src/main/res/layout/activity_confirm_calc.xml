@@ -29,7 +29,7 @@
         android:text="@string/_0"
         android:textAppearance="?android:textAppearanceLarge"
         android:textColorHint="@android:color/black"
-        android:textSize="@dimen/_27ssp"
+        android:textSize="27sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/guideline1"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -252,7 +252,7 @@
         android:textColor="@color/black"
         android:gravity="center"
         android:text="@string/confirm_password"
-        android:textSize="@dimen/_22sdp" />
+        android:textSize="22sp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

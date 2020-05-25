@@ -108,7 +108,7 @@
             android:layout_alignParentBottom="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_30sdp"
+            android:layout_margin="30dp"
             android:background="@drawable/btn_back"
             android:text="@string/hide"
             tools:visibility="visible"

@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/close"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginRight="5.0dip"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5.0dip"
         android:background="?selectableItemBackground"
         android:padding="5.0dip"
         android:src="@drawable/ic_close_white"

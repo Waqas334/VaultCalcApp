@@ -12,10 +12,10 @@
 <!--        android:layout_alignParentLeft="true" />-->
 
     <TextView
-        android:layout_width="@dimen/_40sdp"
+        android:layout_width="40dp"
         android:gravity="center"
         android:id="@+id/tv_file_type"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="40dp"
         android:background="@drawable/circle_bg"
         android:textStyle="bold"
         android:text="PDF"

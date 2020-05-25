@@ -166,7 +166,9 @@ public class SecurityQuestionActivity extends MyBassActivity {
             finish();
         } else if (type != null && type.equals(ADD)) {
             finish();
-            startActivity(new Intent(this, HomeActivity.class));
+            Intent homeIntent = new Intent(this,HomeActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
         }
     }
 }

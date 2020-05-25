@@ -2,23 +2,21 @@ package com.safe.gallery.calculator.adapters.video;
 
 import android.content.Context;
 import android.net.Uri;
-import androidx.annotation.CallSuper;
-import androidx.annotation.UiThread;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView.Adapter;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+
 import com.bumptech.glide.Glide;
-import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.MainApplication;
-import com.safe.gallery.calculator.model.AllVideosModel;
+import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.activities.video.AddVideoActivity;
+import com.safe.gallery.calculator.model.AllVideosModel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,9 +24,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
-import butterknife.Unbinder;
-import butterknife.internal.Utils;
 
 public class AddVideoAdapter extends Adapter<ViewHolder> {
 
