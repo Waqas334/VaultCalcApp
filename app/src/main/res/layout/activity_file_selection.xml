@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_30sdp"
             android:background="@drawable/btn_back"
-            android:text="Hide"
+            android:text="@string/hide"
             tools:visibility="visible"
             android:textColor="@color/white"
             android:visibility="gone" />

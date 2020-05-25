@@ -1483,7 +1483,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
             case R.id.tv_mul:
                 if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
                     if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, getResources().getString(R.string.select_num_first),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Log.e("multiply", et_main.getText().toString());
@@ -2415,11 +2415,10 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
     }
 
     private void showSetPasswordDialog() {
-
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(1);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_set_password_hint);
+        dialog.setContentView(R.layout.dialog_templete);
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);

@@ -140,19 +140,19 @@ public class SecurityQuestionActivity extends MyBassActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(1);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_security_question);
+        dialog.setContentView(R.layout.dialog_templete);
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        TextView btnOk = dialog.findViewById(R.id.btn_ok);
-        ImageView imgClose = dialog.findViewById(R.id.img_close);
-        ((TextView) dialog.findViewById(R.id.et_file_name)).setText(getString(R.string.your_pass_is) + " " + MainApplication.getInstance().getPassword());
-        imgClose.setOnClickListener(view -> {
+        ((TextView)dialog.findViewById(R.id.dialog_title)).setText(getString(R.string.done));
+        ((ImageView)dialog.findViewById(R.id.dialog_iv_header)).setImageResource(R.drawable.ic_check_white_new_24dp);
+        ((TextView) dialog.findViewById(R.id.dialog_tv_message)).setText(getString(R.string.your_pass_is) + " " + MainApplication.getInstance().getPassword());
+        dialog.findViewById(R.id.img_close).setOnClickListener(view -> {
             dialog.dismiss();
             finish();
         });
-        btnOk.setOnClickListener(view -> {
+        dialog.findViewById(R.id.btn_ok).setOnClickListener(view -> {
             dialog.dismiss();
             finish();
         });

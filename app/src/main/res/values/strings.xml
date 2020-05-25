@@ -15,7 +15,7 @@
     <string name="file">File</string>
     <string name="image">Image</string>
     <string name="no_app_found">No application found to perform this action!</string>
-    <string name="no_item_found">There is nothing here.</string>
+    <string name="no_item_found">No Item Found.\nPlease tap add button to add one.</string>
     <string name="none">None</string>
     <string name="ok">Select</string>
     <string name="select_file">Select File</string>
@@ -127,5 +127,18 @@
     <string name="share">Share</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="hide">Hide</string>
+    <string name="unhide">Unhide</string>
+    <string name="no_one_intruded">No one intruded!</string>
+    <string name="enter_current_pass">Please enter current password</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_pass_desc">Please confirm your password by entering it again</string>
+    <string name="set_password">Set Password</string>
+    <string name="set_pass_desc">Type your password (4 digit) into Calculator and hit \'=\'.</string>
+    <string name="error">Error</string>
+    <string name="confirm_pass_error_desc">Your \"Confirm Password\" not match with previous password.</string>
+    <string name="pass_set_desc">Password has been set successfully</string>
 
 </resources>

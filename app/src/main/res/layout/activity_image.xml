@@ -36,7 +36,7 @@
             android:drawableTop="@drawable/ic_empty"
             android:drawablePadding="10.0dip"
             android:gravity="center"
-            android:text="No Item Found.\nPlease tap add button to add one."
+            android:text="@string/no_item_found"
             />
 
     </ViewAnimator>
@@ -50,7 +50,7 @@
         android:layout_marginRight="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_80sdp"
         android:background="@drawable/btn_back"
-        android:text="Unhide"
+        android:text="@string/unhide"
         android:textColor="@color/white"
         android:visibility="gone" />
 

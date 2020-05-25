@@ -48,7 +48,7 @@
         android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/btn_back"
         android:layout_alignParentBottom="true"
-        android:text="Hide"
+        android:text="@string/hide"
         android:textColor="@color/white"
         android:visibility="invisible" />
 

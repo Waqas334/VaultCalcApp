@@ -2,6 +2,7 @@ package com.safe.gallery.calculator.activities;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,15 +15,18 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.safe.gallery.calculator.MainApplication;
 import com.safe.gallery.calculator.MyBassActivity;
 import com.safe.gallery.calculator.R;
-import com.safe.gallery.calculator.MainApplication;
+import com.safe.gallery.calculator.utils.ExtendedDoubleEvaluator;
 import com.safe.gallery.calculator.utils.share.Share;
 import com.safe.gallery.calculator.utils.share.share_calc;
-import com.safe.gallery.calculator.utils.ExtendedDoubleEvaluator;
 
 import net.objecthunter.exp4j.ExpressionBuilder;
 
@@ -1818,16 +1822,20 @@ public class ConfirmCalcActivity extends MyBassActivity implements View.OnClickL
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(1);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_confirm_set_password);
+        dialog.setContentView(R.layout.dialog_templete);
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        TextView btnOk = dialog.findViewById(R.id.btn_ok);
+        ((TextView)dialog.findViewById(R.id.dialog_title)).setText(getString(R.string.confirm_password));
+        ((TextView)dialog.findViewById(R.id.dialog_tv_message)).setText(getString(R.string.confirm_pass_desc));
+        ((ImageView)dialog.findViewById(R.id.dialog_iv_header)).setImageResource(R.drawable.ic_lock_white_new);
+        dialog.findViewById(R.id.btn_cancel).setVisibility(View.GONE);
+        dialog.findViewById(R.id.dialog_vertical_seperator).setVisibility(View.GONE);
         dialog.findViewById(R.id.img_close).setOnClickListener(view -> dialog.dismiss());
 
 
-        btnOk.setOnClickListener(view -> dialog.dismiss());
+        dialog.findViewById(R.id.btn_ok).setOnClickListener(view -> dialog.dismiss());
         dialog.show();
     }
 
@@ -1835,15 +1843,18 @@ public class ConfirmCalcActivity extends MyBassActivity implements View.OnClickL
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(1);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_successfully_set_password);
+        dialog.setContentView(R.layout.dialog_templete);
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        ((TextView)dialog.findViewById(R.id.dialog_title)).setText(getString(R.string.done));
+        ((TextView)dialog.findViewById(R.id.dialog_tv_message)).setText(getString(R.string.pass_set_desc));
+        ((ImageView)dialog.findViewById(R.id.dialog_iv_header)).setImageResource(R.drawable.ic_done_white);
+        dialog.findViewById(R.id.btn_cancel).setVisibility(View.GONE);
+        dialog.findViewById(R.id.dialog_vertical_seperator).setVisibility(View.GONE);
         TextView btnOk = dialog.findViewById(R.id.btn_ok);
         dialog.findViewById(R.id.img_close).setOnClickListener(view -> dialog.dismiss());
-        btnCancel.setOnClickListener(view -> dialog.dismiss());
         btnOk.setOnClickListener(view -> {
             dialog.dismiss();
 
@@ -1864,15 +1875,18 @@ public class ConfirmCalcActivity extends MyBassActivity implements View.OnClickL
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(1);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_set_password_failed);
+        dialog.setContentView(R.layout.dialog_templete);
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        TextView btnCancel = dialog.findViewById(R.id.btn_cancel);
+        ((TextView)dialog.findViewById(R.id.dialog_title)).setText(getString(R.string.error));
+        ((ImageView)dialog.findViewById(R.id.dialog_iv_header)).setImageResource(R.drawable.ic_close_white_48dp);
+        ((TextView) dialog.findViewById(R.id.dialog_tv_message)).setText(getString(R.string.confirm_pass_error_desc));
+        (dialog.findViewById(R.id.btn_cancel)).setVisibility(View.GONE);
+        (dialog.findViewById(R.id.dialog_vertical_seperator)).setVisibility(View.GONE);
         TextView btnOk = dialog.findViewById(R.id.btn_ok);
         dialog.findViewById(R.id.img_close).setOnClickListener(view -> dialog.dismiss());
-        btnCancel.setOnClickListener(view -> dialog.dismiss());
         btnOk.setOnClickListener(view -> dialog.dismiss());
         dialog.show();
     }
