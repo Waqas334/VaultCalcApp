@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.safe.gallery.calculator.utils.CustomViewPager
+    <com.androidbull.calculator.photo.vault.utils.CustomViewPager
         android:id="@+id/viewPager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

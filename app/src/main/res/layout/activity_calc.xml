@@ -6,7 +6,7 @@
     android:background="@color/newColorAccent">
 
 
-    <com.safe.gallery.calculator.utils.AutoFitTextureView
+    <com.androidbull.calculator.photo.vault.utils.AutoFitTextureView
         android:id="@+id/textureView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

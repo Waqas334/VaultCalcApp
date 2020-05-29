@@ -34,4 +34,8 @@
     <string name="_dot" translatable="false">.</string>
     <string name="_sign" translatable="false">+/-</string>
 
+    <string name="facebook_app_id" translatable="false">1142389666122236</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1142389666122236</string>
+
+
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.safe.gallery.calculator">
+    package="com.androidbull.calculator.photo">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -15,8 +15,10 @@
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+
+
     <application
-        android:name=".MainApplication"
+        android:name="com.androidbull.calculator.photo.vault.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/appicon"
         android:label="@string/app_name"
@@ -25,15 +27,35 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.NewChangePasswordActivity"/>
-        <activity android:name=".activities.SettingsActivity" />
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
         <activity
-            android:name=".activities.IntruderActivity"
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name=".vault.activities.NewChangePasswordActivity"/>
+        <activity android:name=".vault.activities.SettingsActivity" />
+        <activity
+            android:name=".vault.activities.IntruderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ConfirmCalcActivity"
+            android:name=".vault.activities.ConfirmCalcActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.CalcActivity">
+        <activity android:name=".vault.activities.CalcActivity">
 <!--                        <intent-filter>-->
 <!--                            <action android:name="android.intent.action.MAIN" />-->
 
@@ -43,7 +65,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.safe.gallery.calculator.provider"
+            android:authorities="com.androidbull.calculator.photo.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -53,7 +75,7 @@
         <!-- android:name="io.fabric.ApiKey" -->
         <!-- android:value="0ce6f17679679c8352cf0e5ef02141b9890d837c" /> -->
         <activity
-            android:name=".activities.HomeActivity"
+            android:name=".vault.activities.HomeActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
@@ -66,31 +88,31 @@
 <!--            android:excludeFromRecents="true"-->
 <!--            android:screenOrientation="sensorPortrait" />-->
         <activity
-            android:name=".activities.images.ImagesActivity"
+            android:name=".vault.activities.images.ImagesActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.images.AddImageActivity"
+            android:name=".vault.activities.images.AddImageActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.FullScreenImageActivity"
+            android:name=".vault.activities.FullScreenImageActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.video.VideoActivity"
+            android:name=".vault.activities.video.VideoActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.audio.AudiosActivity"
+            android:name=".vault.activities.audio.AudiosActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.files.FilesActivity"
+            android:name=".vault.activities.files.FilesActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.files.AddFileActivity"
+            android:name=".vault.activities.files.AddFileActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
 <!--        <activity-->
@@ -98,19 +120,19 @@
 <!--            android:excludeFromRecents="true"-->
 <!--            android:screenOrientation="sensorPortrait" />-->
         <activity
-            android:name=".activities.audio.AddAudiosActivity"
+            android:name=".vault.activities.audio.AddAudiosActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.video.AddVideoActivity"
+            android:name=".vault.activities.video.AddVideoActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.SecurityQuestionActivity"
+            android:name=".vault.activities.SecurityQuestionActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activities.PrivacyPolicyActivity"
+            android:name=".vault.activities.PrivacyPolicyActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
 
