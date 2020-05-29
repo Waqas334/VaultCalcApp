@@ -38,7 +38,7 @@ public class FolderAdapter extends ArrayAdapter<String> {
             imageView.setImageResource(R.drawable.ic_folder_with_round_bg);
         } else if (file.isFile()) {
             Glide.with(getContext()).load(new File(this.ParentFolder + "/" + this.web[position]))
-                    .placeholder(R.drawable.document_gray)
+                    .placeholder(R.drawable.ic_file_white_24dp)
                     .into(imageView);
 
 //            Picasso.get().load().placeholder((int) R.drawable.document_gray).resize(50, 50).into(imageView);

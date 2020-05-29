@@ -97,7 +97,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
     private void setHeaderInfo() {
         // toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_video));
+        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.video)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
@@ -257,7 +257,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
         txtCount = dialog.findViewById(R.id.txt_count);
         TextView txtTitle = dialog.findViewById(R.id.txt_title);
         txtTitle.setText(getString(R.string.moving_videos));
-        txtCount.setText(getString(R.string.moving_1_of)+" " + files.size());
+        this.txtCount.setText(getString(R.string.moving_1_of,files.size()));
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -274,7 +274,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
 
     private void publishProgress(int size) {
         if (dialog != null && dialog.isShowing()) {
-            txtCount.setText(getString(R.string.moving) + " " + (count + 1) + " " + getString(R.string.of) + " " + size);
+            txtCount.setText(getString(R.string.moving_dash_of_dash_size,(count + 1),size));
 
         }
     }

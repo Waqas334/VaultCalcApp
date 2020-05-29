@@ -105,7 +105,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
     private void setHeaderInfo() {
         //this.toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(this.toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_audio));
+        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.audio)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
     }
@@ -249,7 +249,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
         this.progressbar = this.dialog.findViewById(R.id.progress_bar);
         this.txtCount = this.dialog.findViewById(R.id.txt_count);
         ((TextView) this.dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_audios));
-        this.txtCount.setText(getString(R.string.moving_1_of) + files.size());
+        this.txtCount.setText(getString(R.string.moving_1_of,files.size()));
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -266,7 +266,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
 
     private void publishProgress(int size) {
         if (this.dialog != null && this.dialog.isShowing()) {
-            this.txtCount.setText(getString(R.string.moving) + " " + (this.count + 1) +" " +  getString(R.string.of) +" "+ size);
+            txtCount.setText(getString(R.string.moving_dash_of_dash_size,(count + 1),size));
         }
     }
 

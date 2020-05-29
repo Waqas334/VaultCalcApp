@@ -26,34 +26,6 @@
             android:layout_below="@+id/toolbar"
             android:orientation="vertical" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/banner_container"
-            android:orientation="horizontal"
-            android:weightSum="60.0">
-
-            <Button
-                android:id="@+id/New"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10.0dip"
-                android:layout_weight="30.0"
-                tools:visibility="visible"
-                android:text="@string/New"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/storage"
-                android:layout_width="fill_parent"
-                tools:visibility="visible"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10.0dip"
-                android:layout_weight="30.0"
-                android:text="@string/ext"
-                android:visibility="gone" />
-        </LinearLayout>
-
         <TextView
             android:id="@+id/folderpath"
             android:layout_width="fill_parent"
@@ -70,38 +42,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_below="@+id/banner_container"
-            android:layout_weight="1.0"
             android:choiceMode="multipleChoice" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            tools:visibility="visible"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:weightSum="90.0">
-
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30.0"
-                android:text="@string/cancel" />
-
-            <Button
-                android:id="@+id/all"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30.0"
-                android:text="@string/all" />
-
-            <Button
-                android:id="@+id/ok"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="30.0"
-                android:text="@string/ok" />
-        </LinearLayout>
 
         <Button
             android:id="@+id/btn_hide"

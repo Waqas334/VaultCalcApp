@@ -229,7 +229,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
         progressbar = dialog.findViewById(R.id.progress_bar);
         txtCount = dialog.findViewById(R.id.txt_count);
         ((TextView) dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_files));
-        txtCount.setText(getString(R.string.moving_1_of) + " " + files.size());
+        this.txtCount.setText(getString(R.string.moving_1_of,files.size()));
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -246,7 +246,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
 
     private void publishProgress(int size) {
         if (dialog != null && dialog.isShowing()) {
-            txtCount.setText(getString(R.string.moving)+ " " + (count + 1) + " " + getString(R.string.of)+ " " + size);
+            txtCount.setText(getString(R.string.moving_dash_of_dash_size,(count + 1),size));
         }
     }
 

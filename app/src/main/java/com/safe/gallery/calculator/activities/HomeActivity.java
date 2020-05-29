@@ -1,12 +1,15 @@
 package com.safe.gallery.calculator.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.safe.gallery.calculator.MainApplication;
 import com.safe.gallery.calculator.MyBassActivity;
 import com.safe.gallery.calculator.R;
 import com.safe.gallery.calculator.fragment.HomeFragment;
@@ -14,6 +17,8 @@ import com.safe.gallery.calculator.fragment.HomeFragment;
 public class HomeActivity extends MyBassActivity {
 
     ImageView iv_settings;
+    private int counter = 0;
+    private static final String TAG = "HomeActivity";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,26 @@ public class HomeActivity extends MyBassActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.frame, new HomeFragment());
         ft.commit();
+
+        counter = MainApplication.getInstance().getTimeOpened() == -1 ? 0 : MainApplication.getInstance().getTimeOpened();
+        counter++;
+        MainApplication.getInstance().saveTimeOpened(counter);
+        if (counter == 1) {
+            //App Opened for the very first time
+            showWelcomeDialog();
+        }
+    }
+
+    private void showWelcomeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.welcome));
+        String hint = getString(R.string.hint);
+        builder.setMessage(getResources().getString(R.string.welcome_message,hint));
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.show();
+
     }
 
 

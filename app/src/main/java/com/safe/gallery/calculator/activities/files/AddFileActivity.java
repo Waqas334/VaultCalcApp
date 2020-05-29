@@ -45,7 +45,6 @@ import butterknife.ButterKnife;
 public class AddFileActivity extends BaseActivity {
 
     private Button btnHide;
-    Button cancel;
     String choiceMode;
     private int count = 0;
     private String destPath;
@@ -57,14 +56,11 @@ public class AddFileActivity extends BaseActivity {
     private ArrayList<String> fileNames = new ArrayList();
     int index = 0;
 
-    Button ok;
     TextView path;
     String primary_sd;
     private int progress;
-    Button New;
     Boolean Switch = false;
 
-    Button all;
 
     private boolean isFileCopied = true;
     private boolean isImageAddedToNewAlbum;
@@ -73,7 +69,6 @@ public class AddFileActivity extends BaseActivity {
     private ProgressBar progressbar;
     String secondary_sd;
     private ArrayList<File> selectedFiles = new ArrayList();
-    Button storage;
     Boolean switcher = false;
     private Timer timer;
     Toolbar toolbar;
@@ -101,21 +96,11 @@ public class AddFileActivity extends BaseActivity {
         if (choiceMode != null) {
             directoryView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
-        ok = findViewById(R.id.ok);
-        all = findViewById(R.id.all);
-        cancel = findViewById(R.id.cancel);
-        storage = findViewById(R.id.storage);
-        New = findViewById(R.id.New);
         path = findViewById(R.id.folderpath);
         toolbar = findViewById(R.id.toolbar);
         loadLists();
-        New.setEnabled(false);
         directoryView.setOnItemClickListener(new C05511());
-        ok.setOnClickListener(new C05522());
         btnHide.setOnClickListener(new C05533());
-        cancel.setOnClickListener(new C05544());
-        storage.setOnClickListener(new C05555());
-        all.setOnClickListener(new C05566());
 
     }
 
@@ -159,63 +144,6 @@ public class AddFileActivity extends BaseActivity {
 
         public void onClick(View view) {
             ok();
-        }
-    }
-
-    class C05544 implements OnClickListener {
-        C05544() {
-        }
-
-        public void onClick(View v) {
-            finish();
-        }
-    }
-
-    class C05555 implements OnClickListener {
-        C05555() {
-        }
-
-        public void onClick(View v) {
-            try {
-                if (switcher) {
-                    mainPath = new File(primary_sd);
-                    loadLists();
-                    switcher = false;
-                    storage.setText(getString(R.string.ext));
-                    return;
-                }
-                mainPath = new File(secondary_sd);
-                loadLists();
-                switcher = true;
-                storage.setText(getString(R.string.Int));
-            } catch (Throwable th) {
-            }
-        }
-    }
-
-    class C05566 implements OnClickListener {
-        C05566() {
-        }
-
-        public void onClick(View v) {
-            int i;
-            if (!Switch) {
-                for (i = directoryList.size(); i < directoryView.getCount(); i++) {
-                    directoryView.setItemChecked(i, true);
-                }
-
-                all.setText(getString(R.string.none));
-                Switch = true;
-
-            } else if (Switch) {
-
-                for (i = directoryList.size(); i < directoryView.getCount(); i++) {
-                    directoryView.setItemChecked(i, false);
-
-                }
-                all.setText(getString(R.string.all));
-                Switch = false;
-            }
         }
     }
 
@@ -271,7 +199,7 @@ public class AddFileActivity extends BaseActivity {
 
     private void setHeaderInfo() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.select_file));
+        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.file)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -329,7 +257,7 @@ public class AddFileActivity extends BaseActivity {
         progressbar = dialog.findViewById(R.id.progress_bar);
         txtCount = dialog.findViewById(R.id.txt_count);
         ((TextView) dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_files));
-        txtCount.setText(getString(R.string.moving_1_of) + " " + files.size());
+        this.txtCount.setText(getString(R.string.moving_1_of,files.size()));
         int totalFileSize = 0;
         Iterator it = files.iterator();
         while (it.hasNext()) {
@@ -347,7 +275,7 @@ public class AddFileActivity extends BaseActivity {
 
     private void publishProgress(int size) {
         if (dialog != null && dialog.isShowing()) {
-            txtCount.setText(getString(R.string.moving) + " " + (count + 1) + " " + getString(R.string.of) + " " + size);
+            txtCount.setText(getString(R.string.moving_dash_of_dash_size,(count + 1),size));
         }
     }
 

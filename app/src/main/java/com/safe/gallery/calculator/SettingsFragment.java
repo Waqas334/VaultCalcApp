@@ -13,6 +13,7 @@ import com.safe.gallery.calculator.activities.NewChangePasswordActivity;
 import com.safe.gallery.calculator.activities.SecurityQuestionActivity;
 import com.safe.gallery.calculator.dialog.AboutUsDialog;
 import com.safe.gallery.calculator.activities.PrivacyPolicyActivity;
+import com.safe.gallery.calculator.utils.Utils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
@@ -83,7 +84,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(getResources().getString(R.string.rate_app));
         builder.setMessage(getResources().getString(R.string.rate_app_desc));
-        builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> gotoPlayStore());
+        builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> Utils.gotoPlayStore(getContext().getPackageName(),getContext()));
         builder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> letUsKnow());
         builder.show();
     }
@@ -108,15 +109,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         emailIntent.putExtra(Intent.EXTRA_TEXT, deviceInfo);
         startActivity(emailIntent);
 
-    }
-
-    private void gotoPlayStore() {
-        String appPackageName = requireContext().getPackageName();
-        try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-        } catch (Exception e) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-        }
     }
 
 

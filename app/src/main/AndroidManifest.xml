@@ -34,11 +34,11 @@
             android:name=".activities.ConfirmCalcActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.CalcActivity">
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
+<!--                        <intent-filter>-->
+<!--                            <action android:name="android.intent.action.MAIN" />-->
 
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>
+<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                        </intent-filter>-->
         </activity>
 
         <provider
@@ -56,10 +56,10 @@
             android:name=".activities.HomeActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 <!--        <activity-->
 <!--            android:name=".image.ImageActivity"-->
@@ -114,15 +114,6 @@
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait" />
 
-        <receiver android:name=".utils.PolicyManager">
-            <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.device_admin"
-                android:resource="@xml/device_admin_sample" />
-        </receiver>
     </application>
 
 </manifest>

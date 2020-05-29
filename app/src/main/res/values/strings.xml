@@ -1,37 +1,18 @@
 <resources>
 
     <string name="app_name">Calculator Vault</string>
-    <string name="Int">Internal</string>
-    <string name="New">New Folder</string>
-    <string name="add_audio">Add Audio</string>
-    <string name="add_image">Add Image</string>
-    <string name="add_video">Add Video</string>
-    <string name="all">Select All</string>
+    <string name="add_dash">Add %1$s</string>
     <string name="audio">Audio</string>
-    <string name="cancel">Cancel</string>
-    <string name="device_admin_disabled">Uninstall Protection deactivated</string>
-    <string name="device_admin_enabled">Unistall Protection activated</string>
-    <string name="ext">SD Card</string>
-    <string name="file">File</string>
+    <string name="video">Video</string>
     <string name="image">Image</string>
+    <string name="file">File</string>
     <string name="no_app_found">No application found to perform this action!</string>
     <string name="no_item_found">No Item Found.\nPlease tap add button to add one.</string>
-    <string name="none">None</string>
-    <string name="ok">Select</string>
     <string name="select_file">Select File</string>
-    <string name="video">Video</string>
 
     <string name="hint">If you forgot password then just open the app. Enter 1122334 on calculator to recover your password."</string>
 
-    <string name="pref_key_change_question">pref_change_security_question</string>
-    <string name="pref_key_forgot_password">pref_forgot_password</string>
-    <string name="pref_key_about_us">pref_about_us</string>
-    <string name="pref_key_share_app">pref_share_app</string>
-    <string name="pref_key_rate_app">pref_rate_app</string>
-    <string name="pref_key_privacy_policy">pref_privacy_policy</string>
-    <string name="pref_key_contact_us">pref_contact_us</string>
-    <string name="pref_key_change_password">pref_change_password</string>
-
+<!--    Settings-->
     <string name="security">Security</string>
     <string name="change_password">Change Password</string>
     <string name="forgot_password">Forgot Password</string>
@@ -58,29 +39,6 @@
         ]]>
     </string>
 
-
-
-
-    <string name="_ac" translatable="false">AC</string>
-    <string name="_sqrt" translatable="false">√</string>
-    <string name="_percentage" translatable="false">%</string>
-    <string name="_divide" translatable="false">/</string>
-    <string name="_0" translatable="false">0</string>
-    <string name="_1" translatable="false">1</string>
-    <string name="_2" translatable="false">2</string>
-    <string name="_3" translatable="false">3</string>
-    <string name="_4" translatable="false">4</string>
-    <string name="_5" translatable="false">5</string>
-    <string name="_6" translatable="false">6</string>
-    <string name="_7" translatable="false">7</string>
-    <string name="_8" translatable="false">8</string>
-    <string name="_9" translatable="false">9</string>
-    <string name="_mul" translatable="false">X</string>
-    <string name="_sub" translatable="false">-</string>
-    <string name="_add" translatable="false">+</string>
-    <string name="_equal" translatable="false">=</string>
-    <string name="_dot" translatable="false">.</string>
-    <string name="_sign" translatable="false">+/-</string>
     <string name="permission_not_granted">Sorry!!!, you can\'t use this app without granting permission</string>
     <string name="select_num_first">Select Number First</string>
     <string name="cant_divide_by_zero">Can\'t divide by 0</string>
@@ -107,12 +65,12 @@
     <string name="your_pass_is">Your password is</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="grant_permission_desc">Please grant all permissions to access additional functionality.</string>
-    <string name="dismiss">DISMISS</string>
+    <string name="dismiss">Dismiss</string>
     <string name="select_atleat_1_image">Please select at least one image!</string>
+    <string name="moving_dash_of_dash_size">Moving %1$i of %1$i </string>
     <string name="moving">Moving</string>
-    <string name="of">of</string>
     <string name="moving_audios">Moving Audio(s)</string>
-    <string name="moving_1_of">Moving 1 of</string>
+    <string name="moving_1_of">Moving 1 of %1$i</string>
     <string name="alert">Alert</string>
     <string name="delete_file_desc">Are you sure you want to delete selected files?</string>
     <string name="select_1_file">Please select at least one file!</string>
@@ -138,7 +96,13 @@
     <string name="set_password">Set Password</string>
     <string name="set_pass_desc">Type your password (4 digit) into Calculator and hit \'=\'.</string>
     <string name="error">Error</string>
-    <string name="confirm_pass_error_desc">Your \"Confirm Password\" not match with previous password.</string>
+    <string name="confirm_pass_error_desc">Your \"Confirm Password\" does not match with previous password.</string>
     <string name="pass_set_desc">Password has been set successfully</string>
+    <string name="download_now">Download Now</string>
+    <string name="incognito_browser_dialog_title">Increase Privacy</string>
+    <string name="incognito_browser_download_desc">Browse privately and lock everything you download with Incognito Browser</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_message">Welcome to Calculator Photo Vault, here you can have more privacy than other.\n\n%1$s</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

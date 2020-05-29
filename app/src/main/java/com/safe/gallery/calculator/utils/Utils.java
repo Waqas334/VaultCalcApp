@@ -1,9 +1,12 @@
 package com.safe.gallery.calculator.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.media.Image;
+import android.net.Uri;
 import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
@@ -123,5 +126,14 @@ public class Utils {
         }
 
     }
+
+    public static void gotoPlayStore(String packageName, Context context) {
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+        } catch (Exception e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+        }
+    }
+
 
 }

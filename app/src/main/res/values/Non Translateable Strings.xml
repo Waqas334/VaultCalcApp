@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    Settings Preference Keys-->
+    <string name="pref_key_change_question">pref_change_security_question</string>
+    <string name="pref_key_forgot_password">pref_forgot_password</string>
+    <string name="pref_key_about_us">pref_about_us</string>
+    <string name="pref_key_share_app">pref_share_app</string>
+    <string name="pref_key_rate_app">pref_rate_app</string>
+    <string name="pref_key_privacy_policy">pref_privacy_policy</string>
+    <string name="pref_key_contact_us">pref_contact_us</string>
+    <string name="pref_key_change_password">pref_change_password</string>
+
+
+<!--    Calcculator Keys-->
+    <string name="_ac" translatable="false">AC</string>
+    <string name="_sqrt" translatable="false">√</string>
+    <string name="_percentage" translatable="false">%</string>
+    <string name="_divide" translatable="false">/</string>
+    <string name="_0" translatable="false">0</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="_3" translatable="false">3</string>
+    <string name="_4" translatable="false">4</string>
+    <string name="_5" translatable="false">5</string>
+    <string name="_6" translatable="false">6</string>
+    <string name="_7" translatable="false">7</string>
+    <string name="_8" translatable="false">8</string>
+    <string name="_9" translatable="false">9</string>
+    <string name="_mul" translatable="false">X</string>
+    <string name="_sub" translatable="false">-</string>
+    <string name="_add" translatable="false">+</string>
+    <string name="_equal" translatable="false">=</string>
+    <string name="_dot" translatable="false">.</string>
+    <string name="_sign" translatable="false">+/-</string>
+
+</resources>

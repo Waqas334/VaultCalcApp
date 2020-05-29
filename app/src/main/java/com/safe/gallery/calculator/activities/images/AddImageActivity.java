@@ -96,7 +96,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
     private void setHeaderInfo() {
         //this.toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(this.toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_image));
+        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.image)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
@@ -254,7 +254,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
         this.progressbar = this.dialog.findViewById(R.id.progress_bar);
         this.txtCount = this.dialog.findViewById(R.id.txt_count);
         ((TextView) this.dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_images));
-        this.txtCount.setText(getString(R.string.moving_1_of) + " " + files.size());
+        this.txtCount.setText(getString(R.string.moving_1_of,files.size()));
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -271,7 +271,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
 
     private void publishProgress(int size) {
         if (this.dialog != null && this.dialog.isShowing()) {
-            txtCount.setText(getString(R.string.moving) + " " + (count + 1) + " " + getString(R.string.of) + " " + size);
+            txtCount.setText(getString(R.string.moving_dash_of_dash_size,(count + 1),size));
 
         }
     }

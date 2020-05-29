@@ -29,6 +29,8 @@
         <ImageView
             android:id="@+id/dialog_iv_header"
             android:layout_width="wrap_content"
+            android:maxHeight="80dp"
+            android:maxWidth="80dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:src="@drawable/ic_lock_white_new"
@@ -42,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5.0dip"
             android:paddingBottom="16dp"
+            android:paddingTop="16dp"
             android:text="@string/set_password"
             android:textColor="@color/white"
             android:textSize="16.0sp"

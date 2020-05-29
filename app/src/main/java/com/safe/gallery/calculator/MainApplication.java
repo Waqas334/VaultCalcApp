@@ -17,6 +17,7 @@ public class MainApplication extends Application {
     private static final String CONSTANAT_SECURITY_QUESTION = "constant_question";
     private static final String CONSTANT_AUDIO_COUNT = "constant_audio_count";
     private static final String CONSTANT_EMAIL = "constant_email";
+    private static final String OPEN_COUNTER= "open_counter";
     private static final String CONSTANT_FILES_COUNT = "constant_files_count";
     private static final String CONSTANT_FP_HINT = "consatnt_fp_hint";
     private static final String CONSTANT_IMAGE_COUNT = "constant_image_count";
@@ -49,12 +50,12 @@ public class MainApplication extends Application {
     }
 
 
-    public synchronized String getEmail() {
-        return sharedPreferences.getString(CONSTANT_EMAIL, "");
+    public synchronized int getTimeOpened() {
+        return sharedPreferences.getInt(OPEN_COUNTER, -1);
     }
 
-    public synchronized void setShowFPHint(boolean isChecked) {
-        sharedPreferences.edit().putBoolean(CONSTANT_FP_HINT, isChecked).apply();
+    public synchronized void saveTimeOpened(int openedTime) {
+        sharedPreferences.edit().putInt(OPEN_COUNTER, openedTime).apply();
     }
 
 
