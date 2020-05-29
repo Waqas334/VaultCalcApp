@@ -199,7 +199,7 @@ public class AddFileActivity extends BaseActivity {
 
     private void setHeaderInfo() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.file)));
+        getSupportActionBar().setTitle(getString(R.string.add_files));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

@@ -96,7 +96,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
     private void setHeaderInfo() {
         //this.toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(this.toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.image)));
+        getSupportActionBar().setTitle(getString(R.string.add_images));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);

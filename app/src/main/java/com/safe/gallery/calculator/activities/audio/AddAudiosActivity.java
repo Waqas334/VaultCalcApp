@@ -105,7 +105,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
     private void setHeaderInfo() {
         //this.toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(this.toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.audio)));
+        getSupportActionBar().setTitle(getString(R.string.add_audios));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
     }

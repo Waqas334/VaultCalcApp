@@ -97,7 +97,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
     private void setHeaderInfo() {
         // toolbar.setNavigationIcon((int) R.drawable.ic_close);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.add_dash,getString(R.string.video)));
+        getSupportActionBar().setTitle(getString(R.string.add_videos));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
 
