@@ -36,6 +36,7 @@
 
     <string name="facebook_app_id" translatable="false">1142389666122236</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1142389666122236</string>
+    <string name="home_banner_ad_id">1142389666122236_1142408702786999</string>
 
 
 </resources>

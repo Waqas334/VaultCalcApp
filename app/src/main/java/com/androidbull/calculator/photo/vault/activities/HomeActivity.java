@@ -44,7 +44,6 @@ public class HomeActivity extends MyBassActivity {
             //App Opened for the very first time
             showWelcomeDialog();
         }
-        Toast.makeText(this, "package name: " + getPackageName(), Toast.LENGTH_SHORT).show();
     }
 
     private void showWelcomeDialog() {

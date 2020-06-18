@@ -15,10 +15,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.cardview.widget.CardView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidbull.calculator.photo.R;
@@ -29,6 +31,12 @@ import com.androidbull.calculator.photo.vault.activities.files.FilesActivity;
 import com.androidbull.calculator.photo.vault.activities.images.ImagesActivity;
 import com.androidbull.calculator.photo.vault.activities.video.VideoActivity;
 import com.androidbull.calculator.photo.vault.utils.Utils;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.InterstitialAd;
 
 import butterknife.ButterKnife;
 
@@ -36,6 +44,8 @@ public class HomeFragment extends Fragment {
 
     private int PERMISSION_REQUEST_CODE = 100;
     private final String INCOGNITO_BROWSER_PACKAGE_NAME = "com.androidbull.incognito.browser";
+    private AdView adView;
+    private LinearLayout mLlAd;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_laoyut, container, false);
@@ -43,8 +53,40 @@ public class HomeFragment extends Fragment {
         findViews(view);
         return view;
     }
-
+    AdListener adListener;
+    private static final String TAG = "HomeFragment";
     private void findViews(View v) {
+
+        adView =  new AdView(getContext(),getContext().getString(R.string.home_banner_ad_id), AdSize.BANNER_HEIGHT_50);
+        mLlAd = v.findViewById(R.id.home_banner_container);
+        mLlAd.addView(adView);
+        AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
+                .withAdListener(adListener)
+                .build();
+
+        adView.loadAd(loadAdConfig);
+        adListener = new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                Log.e(TAG, "onError: Ad WError: " + adError.getErrorMessage() );
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                Log.i(TAG, "onAdLoaded: ");
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                Log.i(TAG, "onAdClicked: ");
+
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                Log.i(TAG, "onLoggingImpression: ");
+            }
+        };
 
         CardView image = v.findViewById(R.id.card_picture);
         CardView audios = v.findViewById(R.id.card_audio);
@@ -55,7 +97,6 @@ public class HomeFragment extends Fragment {
         CardView browser = v.findViewById(R.id.card_browser);
 
         intruder.setOnClickListener(v16 -> startActivity(new Intent(getActivity(), IntruderActivity.class)));
-
 
         browser.setOnClickListener(v15 -> {
             showIncognitoBrowserDialog();
@@ -127,5 +168,13 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
 
 }

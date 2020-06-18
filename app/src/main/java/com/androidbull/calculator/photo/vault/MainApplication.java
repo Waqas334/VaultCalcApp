@@ -7,6 +7,9 @@ import android.os.StrictMode.VmPolicy.Builder;
 import android.preference.PreferenceManager;
 import androidx.multidex.MultiDex;
 
+import com.facebook.ads.AudienceNetworkActivity;
+import com.facebook.ads.AudienceNetworkAds;
+
 import java.text.DecimalFormat;
 
 //import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -34,6 +37,8 @@ public class MainApplication extends Application {
         mInstance = this;
         MultiDex.install(this);
         StrictMode.setVmPolicy(new Builder().build());
+        AudienceNetworkAds.initialize(this);
+
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
