@@ -23,7 +23,7 @@
 
             <ImageView
                 android:layout_width="70dp"
-                android:src="@drawable/appicon"
+                android:src="@mipmap/ic_launcher"
                 android:scaleType="fitStart"
                 android:id="@+id/iv_app_bar_app_icon"
                 android:padding="5dp"

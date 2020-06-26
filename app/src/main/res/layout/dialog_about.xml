@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="96dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/appicon" />
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:layout_width="match_parent"
