@@ -47,17 +47,15 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.androidbull.calculator.photo.vault.utils.AutoFitTextureView;
-import com.androidbull.calculator.photo.vault.utils.Utils;
-import com.androidbull.calculator.photo.vault.MyBassActivity;
 import com.androidbull.calculator.photo.R;
-import com.androidbull.calculator.photo.vault.utils.AppConstants;
 import com.androidbull.calculator.photo.vault.MainApplication;
+import com.androidbull.calculator.photo.vault.MyBassActivity;
+import com.androidbull.calculator.photo.vault.utils.AppConstants;
+import com.androidbull.calculator.photo.vault.utils.AutoFitTextureView;
+import com.androidbull.calculator.photo.vault.utils.ExtendedDoubleEvaluator;
+import com.androidbull.calculator.photo.vault.utils.Utils;
 import com.androidbull.calculator.photo.vault.utils.share.Share;
 import com.androidbull.calculator.photo.vault.utils.share.share_calc;
-import com.androidbull.calculator.photo.vault.utils.ExtendedDoubleEvaluator;
-
-import net.objecthunter.exp4j.ExpressionBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -76,7 +74,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -115,6 +112,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
 
     boolean mSurfaceTextureAvailable = false;
     boolean mPermissionsGranted = false;
+
 
     TextView tv_eight;
 
@@ -222,6 +220,16 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
     TextView tv_zero;
 
     TextView tv_percent;
+
+    //my variable
+    String firstString = "";
+    String secondString = "";
+    String oprator = "";
+    String completeString = "";
+    boolean opererationSelected = false;
+    boolean firstOpratorSelected = false;
+    double answer;
+
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -837,1481 +845,292 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
 
     }
 
-    private void mid_calculation() {
 
-        if (f6026X.equals("/") && f6025W.equals("0")) {
-            f6033r = true;
-            tv_Display.setText("0");
-            et_main.setText(getResources().getString(R.string.cant_divide_by_zero));
-            ab = "";
-            return;
-        }
-        String valueOf = String.valueOf(f6028Z);
-        Log.e("string", "" + valueOf);
-        try {
-            aa = Double.valueOf(new ExpressionBuilder(valueOf).build().evaluate());
-            Log.e("result", "" + aa);
-        } catch (ArithmeticException e) {
-            e.printStackTrace();
-        }
-        if (String.valueOf(aa).contains("E")) {
-            Double d = (Double) new ExtendedDoubleEvaluator().evaluate(String.valueOf(aa).replaceAll("%", "").replace("E", "*10^"));
-            String valueOf2 = String.valueOf(d.doubleValue() / 100.0d);
-            Log.e("new result", "" + d);
-            Log.e("new result", "" + valueOf2);
-        }
-        aa = Double.valueOf(Double.parseDouble(new DecimalFormat(".##########################################").format(aa)));
-        try {
-            CharSequence charSequence = null;
-            ExtendedDoubleEvaluator extendedDoubleEvaluator = new ExtendedDoubleEvaluator();
-            Object obj;
-            if (az) {
-                int i;
-                int i2 = 0;
-                int i3 = 0;
-                for (i = 0; i < valueOf.length(); i++) {
-                    if (valueOf.charAt(i) == '(') {
-                        i2++;
-                        Log.e("count_left_bracket", "" + i2);
-                    }
-                    if (valueOf.charAt(i) == ')') {
-                        i3++;
-                        Log.e("count_right_bracket", "" + i3);
-                    }
-                }
-                i = i2 - i3;
-                Log.e("diff", "" + i);
-                charSequence = valueOf;
-                int i4 = 0;
-                while (i4 < i) {
-                    i4++;
-                    obj = charSequence + ")";
-                }
-                az = false;
-            } else {
-                obj = valueOf;
-            }
-            tv_Display.setText(charSequence);
-            Log.e("Answer", aa + "");
-            Double d = aa;
-            Long valueOf3 = d.longValue();
-            Log.e("Double", d + "");
-            Log.e("long", valueOf3 + "");
-            Locale locale = Locale.US;
-            NumberFormat instance = NumberFormat.getInstance();
-            instance.setMaximumIntegerDigits(20);
-            instance.setMaximumFractionDigits(20);
-            instance.setGroupingUsed(false);
-            ab = instance.format(aa);
-            if (ab.length() > 16) {
-                ab = ab.substring(0, 16);
-            } else {
-                tv_Display.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
-            }
-            if (ab.equalsIgnoreCase("-0")) {
-                ab = "0";
-            }
-            tv_Display.setText(ab);
-            et_main.setText(ab);
-            f6024V = ab;
-        } catch (Exception e2) {
-            Log.e("TAG", "Toast");
-            Toast.makeText(this, getString(R.string.syntax_error), Toast.LENGTH_SHORT).show();
-            et_main.setText("");
-            tv_Display.setText("0");
-            ab = "";
-            ac = "";
-            firststr = "";
-            aC = false;
-            e2.printStackTrace();
-            Log.e("Exception", e2 + "");
-        }
-    }
-
-    private void operation() {
-        if (et_main.getText().toString().length() != 0) {
-            if (ah) {
-                ah = false;
-            }
-            if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))
-                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+'
-                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-'
-                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/'
-                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*'
-                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
-                if (tv_Display.length() > 0) {
-                    int i;
-                    if (tv_Display.getText().charAt(0) == '-') {
-                        Log.e("TAG", "if for loop :");
-                        i = 1;
-                        while (i < tv_Display.length()) {
-                            if (tv_Display.getText().charAt(i) == '+'
-                                    || tv_Display.getText().charAt(i) == '-'
-                                    || tv_Display.getText().charAt(i) == '*'
-                                    || tv_Display.getText().charAt(i) == '/') {
-                                aC = false;
-                                break;
-                            } else {
-                                aC = true;
-                                i++;
-                            }
-                        }
-                    } else {
-                        Log.e("TAG", "else for loop :");
-                        i = 0;
-                        while (i < tv_Display.length()) {
-                            if (tv_Display.getText().charAt(i) == '+' || tv_Display.getText().charAt(i) == '-'
-                                    || tv_Display.getText().charAt(i) == '*'
-                                    || tv_Display.getText().charAt(i) == '/') {
-                                aC = false;
-                                break;
-                            } else {
-                                aC = true;
-                                i++;
-                            }
-                        }
-                    }
-                }
-                String obj = tv_Display.getText().toString();
-                if (obj.length() > 16) {
-                    obj.substring(0, 16);
-                } else {
-                    tv_Display.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
-                }
-                if (aC) {
-                    if (tv_Display.getText().charAt(0) != '-' || tv_Display.length() <= 1) {
-                        Log.e("TAG", "display : " + ab);
-                        Log.e("TAG", "display length : " + ab.length());
-                        et_main.setText(et_main.getText().toString().substring(0, et_main.getText().toString().length() - ab.length()) + "-" + ab);
-                        tv_Display.setText("-" + ab);
-                        ar = false;
-                        ab = tv_Display.getText().toString();
-                    } else {
-                        Log.e("TAG", "oth pos - in display");
-                        obj = tv_Display.getText().toString();
-                        Log.e("TAG", "s before : " + obj);
-                        Log.e("TAG", "s before replacing string : " + tv_Display.getText().toString().substring(1));
-                        CharSequence replace = obj.replace(tv_Display.getText().toString(), tv_Display.getText().toString().substring(1));
-                        tv_Display.setText(tv_Display.getText().toString().substring(1));
-                        if (f6025W.equalsIgnoreCase("")) {
-                            et_main.setText(replace);
-                        } else {
-                            et_main.setText(firststr + replace);
-                        }
-                        ab = tv_Display.getText().toString();
-                    }
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-            }
-        }
-    }
-
+    //TODO : OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_clear:
-                f6029n = false;
                 et_main.setText("");
                 tv_Display.setText("0");
-                ab = "";
-                f6025W = "";
-                f6024V = "";
-                f6026X = "";
-                f6033r = false;
-                f6031p = false;
-                f6032q = false;
-                ac = "";
-                firststr = "";
-                f6026X = "";
-                aC = false;
-                return;
-            case R.id.tv_divide:
-                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                    if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Log.e("divide", et_main.getText().toString());
-                    if (!f6033r) {
-                        f6031p = false;
-                        f6032q = false;
-                        if (ah) {
-                            et_main.setText(ab);
-                            ab = aa + "";
-                            tv_Display.setText(ab);
-                            ah = false;
-                        }
-                        am = true;
-                        f6030o = false;
-                        if (av) {
-                            ac += "/";
-                        }
-                        if (et_main.length() > 0) {
-                            tv_Display.setText(ab);
-                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '%') {
-                                f6028Z = et_main.getText();
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("/");
-                                    f6029n = true;
-                                    f6027Y = true;
-                                    f6026X = "/";
-                                    if (ap) {
-                                        ab += "/";
-                                    }
-                                } else {
-                                    return;
-                                }
-                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
-                                et_main.setText(et_main.getText().toString().substring(0, et_main.getText().length() - 1));
-                                f6028Z = et_main.getText();
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("/");
-                                    f6029n = true;
-                                    f6027Y = true;
-                                    f6026X = "/";
-                                    if (ap) {
-                                        ab += "/";
-                                    }
-                                } else {
-                                    return;
-                                }
-                            }
-                            firststr = et_main.getText().toString();
-                            return;
-                        }
-                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    return;
-                }
+                opererationSelected = false;
+                firstString = "";
+                secondString = "";
+                oprator = "";
                 return;
             case R.id.tv_dot:
-                if (!f6033r) {
-                    try {
-                        dot_operation();
-                        return;
-                    } catch (Exception e) {
-                        return;
-                    }
-                }
+                tv_Display.setText("");
+                dotOpration();
+
                 return;
+
+            case R.id.tv_nine:
+                tv_Display.setText("");
+                getvalue("9");
+                return;
+
             case R.id.tv_eight:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                    aq = false;
-                }
-                if (av) {
-                    ac += "8";
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    et_main.append("8");
-                    ab += "8";
-                    tv_Display.setText(ab);
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
+                tv_Display.setText("");
+                getvalue("8");
                 return;
+
+            case R.id.tv_seven:
+                tv_Display.setText("");
+                getvalue("7");
+                return;
+
+            case R.id.tv_six:
+                tv_Display.setText("");
+                getvalue("6");
+                return;
+
+            case R.id.tv_five:
+                tv_Display.setText("");
+                getvalue("5");
+                return;
+
+            case R.id.tv_four:
+                tv_Display.setText("");
+                getvalue("4");
+                return;
+
+            case R.id.tv_three:
+                tv_Display.setText("");
+                getvalue("3");
+                return;
+            case R.id.tv_two:
+                tv_Display.setText("");
+                getvalue("2");
+                return;
+
+            case R.id.tv_one:
+                tv_Display.setText("");
+                getvalue("1");
+                return;
+            case R.id.tv_zero:
+                tv_Display.setText("");
+                getvalue("0");
+                return;
+
+
+            //oprators
+
+            case R.id.tv_plus:
+                if (!(tv_Display.getText().toString().isEmpty())){
+                    opererationSelected = true;
+                    oprator = "+";
+                    firstString = tv_Display.getText().toString();
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                    tv_Display.setText("");
+
+                }
+               else if (firstString.isEmpty()) {
+                    Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
+                } else {
+                    opererationSelected = true;
+                    oprator = "+";
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                }
+                return;
+
+            case R.id.tv_min:
+                if (!(tv_Display.getText().toString().isEmpty())){
+                    opererationSelected = true;
+                    oprator = "-";
+                    firstString = tv_Display.getText().toString();
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                    tv_Display.setText("");
+
+                }
+               else if (firstString.isEmpty()) {
+                    Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    opererationSelected = true;
+                    oprator = "-";
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                }
+
+                return;
+
+            case R.id.tv_mul:
+                if (!(tv_Display.getText().toString().isEmpty())){
+                    opererationSelected = true;
+                    oprator = "*";
+                    firstString = tv_Display.getText().toString();
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                    tv_Display.setText("");
+
+                 }
+                else if (firstString.isEmpty()) {
+                    Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    opererationSelected = true;
+                    oprator = "*";
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                }
+
+                return;
+
+            case R.id.tv_divide:
+                if (!(tv_Display.getText().toString().isEmpty())){
+                    opererationSelected = true;
+                    oprator = "/";
+                    firstString = tv_Display.getText().toString();
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                    tv_Display.setText("");
+
+                }
+               else if (firstString.isEmpty()) {
+                    Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    opererationSelected = true;
+                    oprator = "/";
+                    completeString = firstString + " " + oprator +" ";
+                    et_main.setText(completeString);
+                }
+
+                return;
+
+            case R.id.tv_sqrt:
+                if (et_main.getText().toString().isEmpty()) {
+                    Toast.makeText(this, "First Enter Number", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    double val = Double.valueOf(et_main.getText().toString());
+                    answer = val * val;
+                    tv_Display.setText(Double.toString(answer));
+                    et_main.setText("");
+                    firstString = "";
+                }
+                return;
+
             case R.id.tv_equal:
 
+                if (opererationSelected) {
 
-                if (!MainApplication.getInstance().getPassword().equals("")) {
+                    if (!(secondString.isEmpty())) {
+                        answer = calculateResult(oprator);
+                        tv_Display.setText(Double.toString(answer));
+                        et_main.setText("");
+                        firstString = "";
+                        secondString = "";
+                        opererationSelected = false;
+                        oprator = "";
+                        completeString = "";
+                    }
+                } else {
 
-                    Log.i(TAG, "onClick: Password is already set");
-                    //Means that someone have set it's password
-                    String cpass = et_main.getText().toString();
-                    if (MainApplication.getInstance().getPassword().equalsIgnoreCase(cpass)) {
-                        //Correct password
-                        //Now check if user have set the security question or not
-                        Log.i(TAG, "onClick: Correct Password Entered");
 
-                        String secretQuestion = MainApplication.getInstance().getSecurityQuestion();
-                        if (TextUtils.isEmpty(secretQuestion)) {
-                            //Security question is not set.
-                            //Start add security question activity
-                            Log.i(TAG, "onClick: Security question was not added, so adding one");
-                            startActivity(new Intent(CalcActivity.this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.ADD));
+                    if (!MainApplication.getInstance().getPassword().equals("")) {
+
+                        Log.i(TAG, "onClick: Password is already set");
+                        //Means that someone have set it's password
+                        String cpass = et_main.getText().toString();
+                        if (MainApplication.getInstance().getPassword().equalsIgnoreCase(cpass)) {
+                            //Correct password
+                            //Now check if user have set the security question or not
+                            Log.i(TAG, "onClick: Correct Password Entered");
+
+                            String secretQuestion = MainApplication.getInstance().getSecurityQuestion();
+                            if (TextUtils.isEmpty(secretQuestion)) {
+                                //Security question is not set.
+                                //Start add security question activity
+                                Log.i(TAG, "onClick: Security question was not added, so adding one");
+                                startActivity(new Intent(CalcActivity.this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.ADD));
+                                finish();
+                                return;
+                            }
+                            //Password is correct and security question is already added so now start home activity
+                            startActivity(new Intent(CalcActivity.this, HomeActivity.class));
                             finish();
                             return;
-                        }
-                        //Password is correct and security question is already added so now start home activity
-                        startActivity(new Intent(CalcActivity.this, HomeActivity.class));
-                        finish();
-                        return;
-                    } else if (cpass.equals("11223344")) {
-                        Log.i(TAG, "onClick: Master password is entered");
-                        //Asking to reset password
-                        //Start the security question activity
-                        startActivity(new Intent(this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.FORGOT_PASS));
+                        } else if (cpass.equals("11223344")) {
+                            Log.i(TAG, "onClick: Master password is entered");
+                            //Asking to reset password
+                            //Start the security question activity
+                            startActivity(new Intent(this, SecurityQuestionActivity.class).putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.FORGOT_PASS));
 
-                    } else if (!f6033r) {
-                        Log.i(TAG, "onClick: Boolean value is false");
+                        } else if (!f6033r) {
+                            Log.i(TAG, "onClick: Boolean value is false");
 
 
-                        if (MainApplication.getInstance().getPassword().length() == cpass.length()) {
-                            Log.i(TAG, "onClick: Both have same length");
+                            if (MainApplication.getInstance().getPassword().length() == cpass.length()) {
+                                Log.i(TAG, "onClick: Both have same length");
 
-                            takePicture();
-                        }
-
-                        if (!(!ah
-                                || f6026X.equals("")
-                                || f6025W == null
-                                || f6025W.equalsIgnoreCase(""))) {
-                            Log.e("str2equal", f6025W);
-                            f6028Z = new SpannableStringBuilder(tv_Display.getText().toString() + f6026X + f6025W);
-                            mid_calculation();
-                        }
-                        if (et_main.getText().length() <= 0) {
-
-                            Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                            return;
-
-                        } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                != '%') {
-
-                            aj = false;
-                            ak = false;
-                            am = false;
-                            al = false;
-                            an = false;
-                            ao = false;
-                            f6028Z = et_main.getText();
-                            ah = true;
-                            mid_calculation();
-                            ac = "";
-                            return;
-                        } else {
-                            return;
-                        }
-                    }
-                    return;
-                }
-                if (MainApplication.getInstance().getPassword().equals("")) {
-                    //It's first time user opened the app
-                    //So ask to set password
-
-                    if (et_main.getText().length() != 4) {
-                        //Password was less or more than 4 digits
-                        Toast.makeText(this, getString(R.string.password_must_be_4_digit), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-
-                    //Password was 4 digit long
-                    //Starting the confirm password activity
-                    Share.pass = Integer.parseInt(et_main.getText().toString());
-                    Intent i = new Intent(CalcActivity.this, ConfirmCalcActivity.class);
-                    startActivity(i);
-
-
-                    return;
-                }
-
-                return;
-            case R.id.tv_five:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                    aq = false;
-                }
-                if (av) {
-                    ac += "5";
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    et_main.append("5");
-                    ab += "5";
-                    tv_Display.setText(ab);
-                    f6029n = false;
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-                return;
-            case R.id.tv_four:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                    aq = false;
-                }
-                if (av) {
-                    ac += "4";
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    et_main.append("4");
-                    ab += "4";
-                    tv_Display.setText(ab);
-                    f6029n = false;
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-                return;
-            case R.id.tv_min:
-                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                    if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Log.e("minus", et_main.getText().toString());
-                    if (!f6033r) {
-                        f6027Y = true;
-                        f6031p = false;
-                        f6032q = false;
-                        if (ah) {
-                            et_main.setText(ab);
-                            ab = aa + "";
-                            tv_Display.setText(ab);
-                            ah = false;
-                        }
-                        ak = true;
-                        f6030o = false;
-                        if (av) {
-                            ac += "-";
-                        }
-                        if (et_main.length() > 0) {
-                            tv_Display.setText(ab);
-                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '+'
-                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '-'
-                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '/'
-                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '*'
-                                    && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
-                                    != '%') {
-                                f6028Z = et_main.getText();
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("-");
-                                    f6026X = "-";
-                                    f6029n = true;
-                                    f6027Y = true;
-                                } else {
-                                    return;
-                                }
-                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
-                                et_main.setText(et_main.getText().toString().substring(0, et_main.getText().length() - 1));
-                                f6028Z = et_main.getText();
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("-");
-                                    f6026X = "-";
-                                    f6029n = true;
-                                    f6027Y = true;
-                                } else {
-                                    return;
-                                }
+                                takePicture();
                             }
-                            firststr = et_main.getText().toString();
-                            return;
-                        }
-                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    return;
-                }
-                return;
-            case R.id.tv_mul:
-                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                    if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Log.e("multiply", et_main.getText().toString());
-                    if (!f6033r) {
-                        f6031p = false;
-                        f6032q = false;
-                        if (ah) {
-                            et_main.setText(ab);
-                            ab = aa + "";
-                            tv_Display.setText(ab);
-                            ah = false;
-                        }
-                        al = true;
-                        f6030o = false;
-                        if (av) {
-                            ac += "*";
-                        }
-                        if (et_main.length() > 0) {
-                            tv_Display.setText(ab);
-                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
+
+                            if (!(!ah
+                                    || f6026X.equals("")
+                                    || f6025W == null
+                                    || f6025W.equalsIgnoreCase(""))) {
+                                Log.e("str2equal", f6025W);
+                                f6028Z = new SpannableStringBuilder(tv_Display.getText().toString() + f6026X + f6025W);
+
+                            }
+                            if (et_main.getText().length() <= 0) {
+
+                                Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
+                                return;
+
+                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
                                     != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
                                     != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
                                     != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
                                     != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1)
                                     != '%') {
+
+                                aj = false;
+                                ak = false;
+                                am = false;
+                                al = false;
+                                an = false;
+                                ao = false;
                                 f6028Z = et_main.getText();
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("*");
-                                    f6026X = "*";
-                                    f6029n = true;
-                                    f6027Y = true;
-                                } else {
-                                    return;
-                                }
-                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*'
-                                    || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
-                                et_main.setText(et_main.getText().toString().substring(0, et_main.getText().length() - 1));
-                                f6028Z = et_main.getText();
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("*");
-                                    f6026X = "*";
-                                    f6029n = true;
-                                    f6027Y = true;
-                                } else {
-                                    return;
-                                }
-                            }
-                            firststr = et_main.getText().toString();
-                            return;
-                        }
-                        Toast.makeText(this, getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    return;
-                }
-                return;
-            case R.id.tv_nine:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                    aq = false;
-                }
-                if (av) {
-                    ac += "9";
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    f6029n = false;
-                    et_main.append("9");
-                    ab += "9";
-                    tv_Display.setText(ab);
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-                return;
-            case R.id.tv_one:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = false;
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                }
-                if (av) {
-                    ac += "1";
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    et_main.append("1");
-                    ab += "1";
-                    tv_Display.setText(ab);
-                    f6029n = false;
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-                return;
-            case R.id.tv_percent:
-                if (!f6033r) {
-                    try {
-                        if (et_main.length() > 0) {
-                            az = true;
-                            try {
-                                aa = new ExpressionBuilder(et_main.getText().toString() + "/100").build().evaluate();
-                                Log.e("result", "" + aa);
-                            } catch (ArithmeticException e2) {
-                                e2.printStackTrace();
-                            }
-                            f6026X = "";
-                            NumberFormat instance = NumberFormat.getInstance();
-                            instance.setMaximumIntegerDigits(20);
-                            instance.setMaximumFractionDigits(20);
-                            instance.setGroupingUsed(false);
-                            String format = instance.format(aa);
-                            if (format.length() > 16) {
-                                format = format.substring(0, 16);
+                                ah = true;
+
+                                ac = "";
+                                return;
                             } else {
-                                tv_Display.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+                                return;
                             }
-                            et_main.setText(format);
-                            ab = format + "";
-                            tv_Display.setText(format);
-                            f6024V = format;
-                            f6025W = "";
-                            f6032q = true;
+                        }
+                        return;
+                    }
+                    if (MainApplication.getInstance().getPassword().equals("")) {
+                        //It's first time user opened the app
+                        //So ask to set password
+
+                        if (et_main.getText().length() != 4) {
+                            //Password was less or more than 4 digits
+                            Toast.makeText(this, getString(R.string.password_must_be_4_digit), Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Toast.makeText(this, getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    } catch (Exception e3) {
-                        Log.e("TAG", "Invalid for percentage" + e3.getMessage());
-                        return;
-                    }
-                }
-                return;
-            case R.id.tv_plus:
-                if (!et_main.getText().toString().equals(getResources().getString(R.string.cant_divide_by_zero))) {
-                    if (et_main.getText().length() == 0) {
-                        Toast.makeText(this, getResources().getString(R.string.cant_divide_by_zero), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Log.e("plus", et_main.getText().toString());
-                    if (!f6033r) {
-                        f6031p = false;
-                        f6032q = false;
-                        if (ah) {
-                            et_main.setText(ab);
-                            ab = aa + "";
-                            tv_Display.setText(ab);
-                            ah = false;
-                        }
-                        aj = true;
-                        f6030o = false;
-                        if (av) {
-                            ac += "+";
-                        }
-                        if (et_main.length() > 0) {
-                            tv_Display.setText(ab);
-                            if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '+' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '/' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '*' && et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '%') {
-                                f6028Z = et_main.getText();
-                                Log.e("if", "if");
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("+");
-                                    f6026X = "+";
-                                    f6029n = true;
-                                    f6027Y = true;
-                                } else {
-                                    return;
-                                }
-                            } else if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '+' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '-' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '*' || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == '/') {
-                                et_main.setText(et_main.getText().toString().substring(0, et_main.getText().length() - 1));
-                                f6028Z = et_main.getText();
-                                Log.e("else", "else");
-                                mid_calculation();
-                                if (!et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
-                                    et_main.append("+");
-                                    f6026X = "+";
-                                    f6027Y = true;
-                                    if (tv_Display.getText().toString().length() == 16) {
-                                        f6029n = true;
-                                    }
-                                } else {
-                                    return;
-                                }
-                            }
-                            firststr = et_main.getText().toString();
-                            return;
-                        }
-                        Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    return;
-                }
-                return;
-            case R.id.tv_sign:
-                if (!et_main.getText().toString().equals("0")
-                        && !et_main.getText().toString().equals(getString(R.string.invalid_input))
-                        && !et_main.getText().toString().equals(getString(R.string.cant_divide_by_zero))) {
-                    try {
-                        operation();
-                        return;
-                    } catch (Exception e4) {
+
+
+                        //Password was 4 digit long
+                        //Starting the confirm password activity
+                        Share.pass = Integer.parseInt(et_main.getText().toString());
+                        Intent i = new Intent(CalcActivity.this, ConfirmCalcActivity.class);
+                        startActivity(i);
+
+
                         return;
                     }
                 }
-                return;
-            case R.id.tv_seven:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("0");
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                    aq = false;
-                }
-                if (av) {
-                    ac += "7";
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    f6029n = false;
-                    et_main.append("7");
-                    ab += "7";
-                    tv_Display.setText(ab);
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-                return;
-            case R.id.tv_six:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase("0")) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                    aq = false;
-                }
-                if (av) {
-                    ac += getString(R.string._6);
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    et_main.append(getString(R.string._6));
-                    ab += getString(R.string._6);
-                    tv_Display.setText(ab);
-                    f6029n = false;
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-                return;
-            case R.id.tv_sqrt:
-                if (!f6033r) {
-                    if (et_main.length() > 0) {
-                        f6026X = "";
-                        sqrlEquals();
-                        return;
-                    }
-                    Toast.makeText(this, getResources().getString(R.string.select_num_first), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                return;
-            /*case R.id.iv_square_root:
-                if (!f6033r.booleanValue()) {
-                    if (ae == 0) {
-                        share_calc.flag_expand = Boolean.valueOf(true);
-                        ae = 1;
-                        return;
-                    }
-                    share_calc.flag_expand = Boolean.valueOf(false);
-                    ae = 0;
-                    return;
-                }
-                return;*/
-            case R.id.tv_three:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
-                    et_main.setText("");
-                    tv_Display.setText("");
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                    aq = false;
-                }
-                if (av) {
-                    ac += getString(R.string._3);
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    et_main.append(getString(R.string._3));
-                    ab += getString(R.string._3);
-                    tv_Display.setText(ab);
-                    f6029n = false;
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
-                return;
-            case R.id.tv_two:
-                f6033r = false;
-                if (et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText("");
-                }
-                if (f6032q) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    f6032q = false;
-                }
-                if (f6031p) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    f6031p = false;
-                }
-                if (ah) {
-                    et_main.setText("");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    tv_Display.setText(getString(R.string._0));
-                    ah = false;
-                }
-                if (aj || ak || am || al || an || ao) {
-                    if (!f6030o) {
-                        ab = "";
-                        f6030o = false;
-                    }
-                    aj = false;
-                    ak = false;
-                    am = false;
-                    al = false;
-                    an = false;
-                    ao = false;
-                }
-                if (av) {
-                    ac += getString(R.string._2);
-                }
-                if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                    et_main.append(getString(R.string._2));
-                    ab += getString(R.string._2);
-                    tv_Display.setText(ab);
-                    f6029n = false;
-                }
-                if (f6027Y) {
-                    f6025W = ab;
-                    Log.e("str2", f6025W);
-                    return;
-                }
-                f6024V = ab;
-                Log.e("str1", f6024V);
+
                 return;
 
-/*            case R.id.iv_x_exclamation:
-
-                if (!f6033r.booleanValue() && et_main.length() != 0) {
-
-                    String str;
-                    Boolean valueOf;
-                    az = Boolean.valueOf(true);
-                    Boolean.valueOf(false);
-                    Log.e("string", ac);
-                    if (et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) == ')') {
-                        str = ac;
-                        valueOf = Boolean.valueOf(true);
-                    } else {
-                        str = et_main.getText().toString();
-                        valueOf = Boolean.valueOf(false);
-                    }
-                    String str2 = "";
-                    try {
-                        CharSequence charSequence;
-                        CalculateFactorial calculateFactorial = new CalculateFactorial();
-                        int[] factorial = calculateFactorial.factorial((int) Double.parseDouble(String.valueOf(new ExtendedDoubleEvaluator().evaluate(str))));
-                        int res = calculateFactorial.getRes();
-                        if (res > 20) {
-                            for (int i = res - 1; i >= res - 20; i--) {
-                                if (i == res - 2) {
-                                    str2 = str2 + ".";
-                                }
-                                str2 = str2 + factorial[i];
-                            }
-                            charSequence = str2 + "E" + (res - 1);
-                        } else {
-                            charSequence = str2;
-                            int i2 = res - 1;
-                            while (i2 >= 0) {
-                                *//*String str3 = charSequence + factorial[i2];
-                                i2--;
-                                Object obj = str3;*//*
-                            }
-                        }
-                        if (valueOf.booleanValue()) {
-                            CharSequence d = ((Double) new ExtendedDoubleEvaluator().evaluate(et_main.getText().toString().replace(ac, charSequence))).toString();
-                            et_main.setText(d);
-                            tv_Display.setText(d);
-                            ac = "";
-                            aw = Boolean.valueOf(false);
-                            return;
-                        }
-                        et_main.setText(charSequence);
-                        tv_Display.setText(charSequence);
-                        return;
-                    } catch (Exception e32) {
-                        if (e32.toString().contains("ArrayIndexOutOfBoundsException")) {
-                            et_main.setText("Result too big!");
-                        } else {
-                            et_main.setText("Invalid!!");
-                        }
-                        e32.printStackTrace();
-                        return;
-                    }
-                }
-                return;*/
-            case R.id.tv_zero:
-                if (!et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
-                    if (f6031p) {
-                        et_main.setText("");
-                        ab = "";
-                        f6025W = "";
-                        f6024V = "";
-                        f6026X = "";
-                        tv_Display.setText(getString(R.string._0));
-                        f6031p = false;
-                    }
-                    if (f6032q) {
-                        et_main.setText("");
-                        ab = "";
-                        f6025W = "";
-                        f6024V = "";
-                        f6026X = "";
-                        tv_Display.setText(getString(R.string._0));
-                        f6032q = false;
-                    }
-                    f6033r = false;
-                    if (ah) {
-                        et_main.setText("");
-                        f6025W = "";
-                        f6024V = "";
-                        f6026X = "";
-                        ab = "";
-                        tv_Display.setText(getString(R.string._0));
-                        ah = false;
-                    }
-                    if (aj || ak || am || al || an || ao) {
-                        if (!f6030o) {
-                            ab = "";
-                            f6030o = false;
-                        }
-                        aj = false;
-                        ak = false;
-                        am = false;
-                        al = false;
-                        an = false;
-                        ao = false;
-                    }
-                    if (av) {
-                        ac += getString(R.string._0);
-                    }
-                    if (tv_Display.getText().toString().length() != 16 || f6029n) {
-                        if (tv_Display.getText().length() != 1 || !tv_Display.getText().toString().equalsIgnoreCase(getString(R.string._0)) || !et_main.getText().toString().equalsIgnoreCase(getString(R.string._0))) {
-                            et_main.append(getString(R.string._0));
-                            ab += getString(R.string._0);
-                            tv_Display.setText(ab);
-                            f6029n = false;
-                        } else {
-                            return;
-                        }
-                    }
-                    if (f6027Y) {
-                        f6025W = ab;
-                        Log.e("str2", f6025W);
-                        return;
-                    }
-                    f6024V = ab;
-                    Log.e("str2", f6024V);
-                    return;
-                }
-                return;
-            /*case R.id.ll_delete:
-                f6033r = Boolean.valueOf(false);
-                int length = et_main.getText().length();
-                if (et_main.getText().toString().equals("Can't divide by 0")) {
-                    f6029n = Boolean.valueOf(false);
-                    et_main.setText("");
-                    tv_Display.setText("0");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    f6033r = Boolean.valueOf(false);
-                    f6031p = Boolean.valueOf(false);
-                    f6032q = Boolean.valueOf(false);
-                    ac = "";
-                    prev = "";
-                    firststr = "";
-                    f6026X = "";
-                    aC = false;
-                    return;
-                } else if (et_main.getText().toString().equals("Invalid Input")) {
-                    f6029n = Boolean.valueOf(false);
-                    et_main.setText("");
-                    tv_Display.setText("0");
-                    ab = "";
-                    f6025W = "";
-                    f6024V = "";
-                    f6026X = "";
-                    f6033r = Boolean.valueOf(false);
-                    f6031p = Boolean.valueOf(false);
-                    f6032q = Boolean.valueOf(false);
-                    ac = "";
-                    prev = "";
-                    firststr = "";
-                    f6026X = "";
-                    aC = false;
-                    return;
-                } else {
-                    if (length > 0) {
-                        if (Character.isDigit(et_main.getText().charAt(length - 1)) || et_main.getText().toString().substring(length - 1).equalsIgnoreCase(".") || !Character.isDigit(et_main.getText().charAt(length - 2))) {
-                            if (et_main.getText().charAt(length - 1) == '+' || et_main.getText().charAt(length - 1) == '-' || et_main.getText().charAt(length - 1) == '*' || et_main.getText().charAt(length - 1) == '/') {
-                                Log.e("TAG", "here for back operator called : " + et_main.getText().charAt(length - 1));
-                                firststr = "";
-                            } else {
-                                firststr = "";
-                            }
-                            et_main.getText().delete(length - 1, length);
-                            if (!(et_main.getText().toString().equalsIgnoreCase("") || et_main.getText().toString().charAt(et_main.getText().toString().length() - 1) != '-' || Character.isDigit(et_main.getText().length() - 1))) {
-                                et_main.setText(et_main.getText().toString().substring(0, et_main.getText().toString().length() - 1));
-                            }
-                            if (ah.booleanValue()) {
-                                ab = et_main.getText().toString();
-                            } else if (f6025W != null) {
-
-                                if (f6025W.equalsIgnoreCase("")) {
-                                    ab = et_main.getText().toString();
-                                } else {
-                                    f6025W = f6025W.substring(0, f6025W.length() - 1);
-                                    if (f6025W.equalsIgnoreCase("-")) {
-                                        f6025W = "";
-                                    }
-                                    ab = f6025W;
-                                }
-                            }
-                            tv_Display.setText(ab);
-                            if (et_main.getText().toString().length() == 1 && !Character.isDigit(et_main.getText().toString().charAt(0))) {
-
-                                tv_Display.setText("0");
-                                et_main.setText("");
-                                ab = "";
-                            }
-                        } else {
-
-                            f6030o = Boolean.valueOf(true);
-                            f6027Y = Boolean.valueOf(false);
-                            et_main.getText().delete(length - 1, length);
-                            ab = f6024V;
-                            tv_Display.setText(ab);
-                            Log.e("idis2", ab);
-                            f6025W = "";
-                        }
-                    }
-                    if (et_main.getText().length() == 0) {
-
-                        et_main.setText("");
-                        tv_Display.setText("0");
-                        ab = "";
-                    }
-                    if (et_main.getText().length() == 0) {
-
-                        f6029n = Boolean.valueOf(false);
-                        et_main.setText("");
-                        tv_Display.setText("0");
-                        ab = "";
-                        f6025W = "";
-                        f6024V = "";
-                        f6026X = "";
-                        f6033r = Boolean.valueOf(false);
-                        f6031p = Boolean.valueOf(false);
-                        f6032q = Boolean.valueOf(false);
-                        ac = "";
-                        prev = "";
-                        firststr = "";
-                        f6026X = "";
-                        aC = false;
-                    }
-                    aC = false;
-                    return;
-                }*/
             default:
                 return;
         }
@@ -2430,5 +1249,90 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
         btnOk.setOnClickListener(view -> dialog.dismiss());
         dialog.show();
     }
+
+
+    //get value method
+    public void getvalue(String value) {
+        if (opererationSelected) {
+            secondString += value;
+            completeString = completeString + value;
+            et_main.setText(completeString);
+//            answer = calculateResult(oprator);
+//            tv_Display.setText(Double.toString(answer));
+//            firstString = Double.toString(answer);
+//            secondString = "";
+
+        } else {
+            firstString += value;
+            et_main.setText(firstString);
+        }
+    }
+
+    //dot opration
+    public void dotOpration() {
+        if (opererationSelected) {
+            if (!secondString.contains(".")) {
+                secondString += ".";
+                completeString += ".";
+                et_main.setText(completeString);
+            }
+
+        } else {
+            if (!firstString.contains(".")) {
+                firstString += ".";
+
+                et_main.setText(firstString);
+            }
+        }
+    }
+
+    //calculate result
+    public double calculateResult(String oprator) {
+        double ans = 0;
+
+        switch (oprator) {
+            case "-":
+                ans = Double.valueOf(firstString) - Double.valueOf(secondString);
+                firstString = "";
+                secondString = "";
+                oprator = "";
+                opererationSelected = false;
+
+                break;
+            case "+":
+                ans = Double.valueOf(firstString) + Double.valueOf(secondString);
+                firstString = "";
+                secondString = "";
+                oprator = "";
+                opererationSelected = false;
+                break;
+
+            case "/":
+                if (secondString == "0") {
+                    tv_Display.setText("infinity");
+                    firstString = "";
+                    secondString = "";
+                    oprator = "";
+                    opererationSelected = false;
+                } else {
+                    ans = Double.valueOf(firstString) / Double.valueOf(secondString);
+                    firstString = "";
+                    secondString = "";
+                    oprator = "";
+                    opererationSelected = false;
+                }
+                break;
+            case "*":
+                ans = Double.valueOf(firstString) * Double.valueOf(secondString);
+                break;
+        }
+        return ans;
+
+    }
+
+    public void validateValues() {
+
+    }
+
 
 }

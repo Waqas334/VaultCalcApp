@@ -44,7 +44,6 @@
         android:inputType="number"
         android:paddingBottom="@dimen/half"
         android:scrollbars="vertical"
-        android:text="@string/_0"
         android:textAppearance="?android:textAppearanceLarge"
         android:textColorHint="@android:color/black"
         android:textSize="27sp"

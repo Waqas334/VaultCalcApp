@@ -56,11 +56,11 @@
             android:name=".vault.activities.ConfirmCalcActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".vault.activities.CalcActivity">
-<!--                        <intent-filter>-->
-<!--                            <action android:name="android.intent.action.MAIN" />-->
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
 
-<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--                        </intent-filter>-->
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
 
         <provider
@@ -78,10 +78,10 @@
             android:name=".vault.activities.HomeActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="sensorPortrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 <!--        <activity-->
 <!--            android:name=".image.ImageActivity"-->

@@ -8,12 +8,11 @@ import android.os.Environment;
 import android.provider.MediaStore.Audio.Media;
 import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
-import androidx.annotation.Nullable;
-
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.androidbull.calculator.photo.vault.MyBassActivity;
-import com.androidbull.calculator.photo.vault.utils.AppConstants;
 import com.androidbull.calculator.photo.vault.callbacks.OnAllAudiosLoadedListener;
 import com.androidbull.calculator.photo.vault.callbacks.OnAllImagesLoadedListener;
 import com.androidbull.calculator.photo.vault.callbacks.OnAllVideosLoadedListener;
@@ -21,16 +20,18 @@ import com.androidbull.calculator.photo.vault.callbacks.OnAudioLoadedListener;
 import com.androidbull.calculator.photo.vault.callbacks.OnFilesLoadedListener;
 import com.androidbull.calculator.photo.vault.callbacks.OnImagesLoadedListener;
 import com.androidbull.calculator.photo.vault.callbacks.OnVideosLoadedListener;
-//import com.safe.galleryigh.calculator.calligraphy.CalligraphyContextWrapper;
 import com.androidbull.calculator.photo.vault.model.AllAudioModel;
 import com.androidbull.calculator.photo.vault.model.AllFilesModel;
 import com.androidbull.calculator.photo.vault.model.AllImagesModel;
 import com.androidbull.calculator.photo.vault.model.AllVideosModel;
+import com.androidbull.calculator.photo.vault.utils.AppConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+//import com.safe.galleryigh.calculator.calligraphy.CalligraphyContextWrapper;
 
 public class BaseActivity extends MyBassActivity {
 
