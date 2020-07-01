@@ -286,7 +286,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
             }
             mPermissionsGranted = true;
 
-            // Execute some code after 500 milliseconds have passed
+            // Execute some code after 10 milliseconds have passed
             Handler handler = new Handler();
             handler.postDelayed(() -> {
 
@@ -294,7 +294,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                     openCamera(width, height);
                 }
                 //setupCameraIfPossible();
-            }, 500);
+            }, 10);
 
 
         }
@@ -1102,7 +1102,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                                 ac = "";
                                 return;
                             } else {
-                                return;
+
                             }
                         }
                         return;
