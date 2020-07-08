@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Калькулятор Vault</string>
+    <string name="add_audios">Добавить Аудио</string>
+    <string name="add_videos">Добавить Bидео</string>
+    <string name="add_images">Добавить Изображения</string>
+    <string name="add_files">Добавить Файлы</string>
+    <string name="audio">Aудио</string>
+    <string name="video">Bидео</string>
+    <string name="image">Изображение</string>
+    <string name="file">Файл</string>
+    <string name="no_app_found">Не найдено приложение для выполнения этого действия!</string>
+    <string name="no_item_found">Предмет не найден. \ Пожалуйста, нажмите кнопку Добавить, чтобы добавить его.</string>
+    <string name="select_file">Выбрать Файл</string>
+    <string name="hint">Если вы забыли пароль, просто откройте приложение. Введите 1122334 на калькуляторе, чтобы восстановить пароль.\"</string>
+    <!--    Settings-->
+    <string name="security">Безопасность</string>
+    <string name="change_password">Сменить Пароль</string>
+    <string name="forgot_password">Забыли Пароль</string>
+    <string name="change_security_question">Изменить Вопрос Безопасности</string>
+    <string name="mroe">Более</string>
+    <string name="about_us">О нас</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="rate_app">Заявка на ставку</string>
+    <string name="privacy_policy">Политика Конфиденциальности</string>
+    <string name="contact_us">Связаться с нами</string>
+    <string name="select_security_question">Выберите Вопрос Безопасности</string>
+    <string name="share_app_desc">Привет, хочешь приватности и прячешь свои личные фотографии, как на самом деле? Оформить заказ на это новое классное приложение:</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="later">Позже</string>
+    <string name="inform_us_description">Vă rugăm să ne spuneți ce a mers greșit sau dacă există ceva care cauzează probleme. Cu siguranță te-am ajuta. Mulțumesc</string>
+    <string name="inform_us">Informează-ne!</string>
+    <string name="rate_app_desc">Hei, mulțumesc mult pentru că ai luat timp pentru a evalua aplicația noastră. Ne puteți spune, vă rog, dacă vă bucurați sau nu de aplicație?</string>
+    <string name="about_description"><![CDATA[Калькулятор Vault разработан на<a href="https://twitter.com/waqasyounis334">AndroidBull</a>.<br><br>Калькулятор Vault отлично работает с<a href="https://play.google.com/store/apps/details?id=com.androidbull.incognito.browser">Incognito Browser</a>все, что вы загружаете с помощью нашего браузера Incognito, будет автоматически заблокировано в Калькулятор Vault<br><br>
+        ]]></string>
+    <string name="permission_not_granted">Извините !!!, вы не можете использовать это приложение без разрешения</string>
+    <string name="select_num_first">Сначала Выберите Номер</string>
+    <string name="cant_divide_by_zero">Не можем разделить на 0</string>
+    <string name="invalid_input">Некорректный Ввод</string>
+    <string name="invalid_expression">Неверное Выражение</string>
+    <string name="password_must_be_4_digit">Пароль должен состоять из 4 цифр</string>
+    <string name="syntax_error">Ошибка Синтаксиса</string>
+    <string name="enter_new_pass">Пожалуйста, введите ваш новый пароль.</string>
+    <string name="sorry">Простите</string>
+    <string name="something_went_wrong">Что-то пошло не так. Пожалуйста, повторите попытку позже.</string>
+    <string name="deleting">Удаление</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="ask_delete_all_intruder">Вы хотите удалить все фотографии нарушителей?</string>
+    <string name="intruder">Нарушитель</string>
+    <string name="error_password_not_matched">ОШИБКА: пароль не совпадает</string>
+    <string name="enter_confirm_pass">Пожалуйста, подтвердите пароль</string>
+    <string name="done">Готово</string>
+    <string name="password_updated">Пароль обновлен</string>
+    <string name="invalid_confirm_pass">Подтверждения пароля не совпадает</string>
+    <string name="pass_must_be_numeric">ОШИБКА: пароль должен быть числовым</string>
+    <string name="select_security_answer">Пожалуйста, введите защитный ответ</string>
+    <string name="security_question_incorrect">Контрольный вопрос неверен!</string>
+    <string name="security_answer_incorrect">Ответ безопасности неверен!</string>
+    <string name="your_pass_is">Ваш пароль</string>
+    <string name="grant_permission">Предоставить разрешение</string>
+    <string name="grant_permission_desc">Пожалуйста, предоставьте все разрешения для доступа к дополнительным функциям.</string>
+    <string name="dismiss">Oтклонять</string>
+    <string name="select_atleat_1_image">Пожалуйста, выберите хотя бы одно изображение!</string>
+    <string name="moving_dash_of_dash_size">Перемещение %1$i из %1$i </string>
+    <string name="moving">Подвижной</string>
+    <string name="moving_audios">Перемещение аудио (s)</string>
+    <string name="moving_1_of">Перемещение 1 из %1$i</string>
+    <string name="alert">Сигнал</string>
+    <string name="delete_file_desc">Вы уверены, что хотите удалить выбранные файлы?</string>
+    <string name="select_1_file">Пожалуйста, выберите хотя бы один файл!</string>
+    <string name="moving_files">Перемещение файла (s)</string>
+    <string name="moving_images">Движущиеся изображения (s)</string>
+    <string name="moving_videos">Перемещение видео</string>
+    <string name="select_1_video">Пожалуйста, выберите хотя бы одно видео!</string>
+    <string name="config_change">Изменение конфигурации</string>
+    <string name="settings">Hастройки</string>
+    <string name="select_all">Выбрать все</string>
+    <string name="share">Поделиться</string>
+    <string name="edit">Pедактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="hide">Cкрыть</string>
+    <string name="unhide">Показать</string>
+    <string name="no_one_intruded">Никто не вмешивался!</string>
+    <string name="enter_current_pass">Пожалуйста, введите текущий пароль</string>
+    <string name="next">Следующий</string>
+    <string name="submit">Отправить</string>
+    <string name="confirm_password">Подтвердите Пароль</string>
+    <string name="confirm_pass_desc">Пожалуйста, подтвердите свой пароль, введя его снова</string>
+    <string name="set_password">Установка пароля</string>
+    <string name="set_pass_desc">Введите свой пароль (4 цифры) в калькулятор и нажмите «=».</string>
+    <string name="error">Ошибка</string>
+    <string name="confirm_pass_error_desc">Ваш «Подтверждение пароля» не совпадает с предыдущим паролем.</string>
+    <string name="pass_set_desc">Пароль был успешно установлен</string>
+    <string name="download_now">Скачать сейчас</string>
+    <string name="incognito_browser_dialog_title">Увеличить конфиденциальность</string>
+    <string name="incognito_browser_download_desc">Просматривайте конфиденциально и блокируйте все, что вы загружаете, с помощью браузера Incognito</string>
+    <string name="welcome">Добро пожаловать</string>
+    <string name="welcome_message">Добро пожаловать в Фотохранилище калькулятора, здесь вы можете иметь больше конфиденциальности, чем другие. \ N \ n% 1 $ s</string>
+    <string name="cancel">Отмена</string>
+    <string name="photos">Фото</string>
+    <string name="audios">Аудиозаписей</string>
+    <string name="videos">Видео</string>
+    <string name="files">Файлы</string>
+    <string name="browser">Браузер</string>
+    <string-array name="questions">
+        <item>Кто твоя девушка?</item>
+        <item>"Как зовут твоего отца?"</item>
+        <item>"Как зовут твоего брата?"</item>
+        <item>"Какое имя вашей матери?"</item>
+        <item>Какая у тебя мечта детства?</item>
+        <item>Сколько у тебя родственников?</item>
+        <item>Кто твой парень?</item>
+    </string-array>
+</resources>

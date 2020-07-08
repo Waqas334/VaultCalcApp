@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calculadora Bóveda</string>
+    <string name="add_audios">Agregar Audios</string>
+    <string name="add_videos">Agregar Videos</string>
+    <string name="add_images">Agregar Imágenes</string>
+    <string name="add_files">Agregar Archivos</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="image">Imagen</string>
+    <string name="file">Archivo</string>
+    <string name="no_app_found">¡No se ha encontrado ninguna aplicación para realizar esta acción!</string>
+    <string name="no_item_found">No se encontró ningún artículo.\nPor favor, pulse el botón de añadir para agregar uno.</string>
+    <string name="select_file">Seleccionar Archivo</string>
+    <string name="hint">Si olvidó la contraseña, sólo abra la aplicación. Introduzca 1122334 en la calculadora para recuperar su contraseña.\"</string>
+    <!--    Settings-->
+    <string name="security">Seguridad</string>
+    <string name="change_password">Cambiar Contraseña</string>
+    <string name="forgot_password">Olvidó Contraseña</string>
+    <string name="change_security_question">Cambiar Pregunta de Seguridad</string>
+    <string name="mroe">Más</string>
+    <string name="about_us">Sobre nosotros</string>
+    <string name="share_app">Compartir la aplicación</string>
+    <string name="rate_app">Calificar la aplicación</string>
+    <string name="privacy_policy">Política de Privacidad</string>
+    <string name="contact_us">Contáctenos</string>
+    <string name="select_security_question">Seleccionar Pregunta de Seguridad</string>
+    <string name="share_app_desc">Oye, ¿quieres un poco de privacidad y ocultar de verdad tus fotos privadas? \nPrueba esta nueva y genial aplicación:\n\n </string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="later">Después</string>
+    <string name="inform_us_description">Por favor, háganos saber qué salió mal o si hay algo que cause problemas. De seguro le ayudaremos. Gracias</string>
+    <string name="inform_us">¡Infórmenos!</string>
+    <string name="rate_app_desc">Hola, muchas gracias por tomarse el tiempo para calificar nuestra aplicación. ¿Puede decirnos si está disfrutando o no la aplicación?</string>
+    <string name="about_description"><![CDATA[    La Calculadora Bóveda es desarrollada por <a href="https://twitter.com/waqasyounis334">AndroidBull</a>.<br><br>
+    La Calculadora Bóveda funciona perfectamente con <a href="https://play.google.com/store/apps/details?id=com.androidbull.incognito.browser">Incognito Browser</a> como cualquier cosa que descargue
+    utilizando nuestro Navegador Incógnito estará automáticamente en la Calculadora Bóveda <br><br>
+        ]]></string>
+    <string name="permission_not_granted">¡¡¡Disculpe!!!, no puede usar esta aplicación sin conceder permiso</string>
+    <string name="select_num_first">Seleccione Primero el Número</string>
+    <string name="cant_divide_by_zero">No se puede dividir entre 0</string>
+    <string name="invalid_input">Entrada Inválida</string>
+    <string name="invalid_expression">Expresión Inválida</string>
+    <string name="password_must_be_4_digit">La contraseña debe tener 4 dígitos</string>
+    <string name="syntax_error">Error de Sintaxis</string>
+    <string name="enter_new_pass">Por Favor Introduzca su Nueva Contraseña.</string>
+    <string name="sorry">Disculpe</string>
+    <string name="something_went_wrong">Algo salió mal, por favor intente más tarde.</string>
+    <string name="deleting">Eliminando</string>
+    <string name="are_you_sure">¿Está seguro?</string>
+    <string name="ask_delete_all_intruder">¿Quiere eliminar todas las fotos del intruso?</string>
+    <string name="intruder">Intruso</string>
+    <string name="error_password_not_matched">ERROR: La contraseña no coincide</string>
+    <string name="enter_confirm_pass">Por favor, confirme la contraseña</string>
+    <string name="done">Listo</string>
+    <string name="password_updated">Contraseña actualizada</string>
+    <string name="invalid_confirm_pass">La confirmación de la contraseña no coincide</string>
+    <string name="pass_must_be_numeric">ERROR: La contraseña debe ser numérica</string>
+    <string name="select_security_answer">Por favor ingrese la respuesta de seguridad</string>
+    <string name="security_question_incorrect">¡La pregunta de seguridad es incorrecta!</string>
+    <string name="security_answer_incorrect">¡La respuesta de seguridad es incorrecta!</string>
+    <string name="your_pass_is">Su contraseña es %1$s</string>
+    <string name="grant_permission">Conceder Permiso</string>
+    <string name="grant_permission_desc">Por favor, conceda todos los permisos para acceder a funciones adicionales.</string>
+    <string name="dismiss">Descargar</string>
+    <string name="select_atleat_1_image">¡Por favor, seleccione al menos una imagen!</string>
+    <string name="moving_dash_of_dash_size">Moviendo %1$i de %1$i </string>
+    <string name="moving">Moviendo</string>
+    <string name="moving_audios">Moviendo Audio(s)</string>
+    <string name="moving_1_of">Moviendo 1 de %1$i</string>
+    <string name="alert">Alerta</string>
+    <string name="delete_file_desc">¿Está seguro que desea eliminar los archivos seleccionados?</string>
+    <string name="select_1_file">¡Por favor seleccione al menos un archivo!</string>
+    <string name="moving_files">Moviendo Archivo(s)</string>
+    <string name="moving_images">Moviendo Imagen(es)</string>
+    <string name="moving_videos">Moviendo Video(s)</string>
+    <string name="select_1_video">¡Por favor seleccione al menos un video!</string>
+    <string name="config_change">Cambio de configuración</string>
+    <string name="settings">Ajustes</string>
+    <string name="select_all">Seleccionar Todo</string>
+    <string name="share">Compartir</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="hide">Ocultar</string>
+    <string name="unhide">Mostrar</string>
+    <string name="no_one_intruded">¡Ningún intruso!</string>
+    <string name="enter_current_pass">Por favor, introduzca la contraseña actual</string>
+    <string name="next">Siguiente</string>
+    <string name="submit">Enviar</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="confirm_pass_desc">Por favor confirme su contraseña introduciéndola nuevamente</string>
+    <string name="set_password">Establecer Contraseña</string>
+    <string name="set_pass_desc">Escriba su contraseña (4 dígítos) en la Calculadora y presione \'=\'.</string>
+    <string name="error">Error</string>
+    <string name="confirm_pass_error_desc">Su \"Confirmación de la Contraseña\" no coincide con la contraseña anterior.</string>
+    <string name="pass_set_desc">La contraseña se ha establecido exitosamente</string>
+    <string name="download_now">Descargar Ahora</string>
+    <string name="incognito_browser_dialog_title">Aumentar Privacidad</string>
+    <string name="incognito_browser_download_desc">Navegue en privado y bloquee todo lo descargado con el Navegador Incógnito</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="welcome_message">Bienvenido a la Bóveda de Calculadora y Foto, aquí puedes tener más privacidad que en otra.\n\n%1$s</string>
+    <string name="cancel">Cancelar</string>
+    <string name="photos">Fotos</string>
+    <string name="audios">Audios</string>
+    <string name="videos">Videos</string>
+    <string name="files">Archivos</string>
+    <string name="browser">Buscador</string>
+    <string-array name="questions">
+        <item>¿Quién es tu novia?</item>
+        <item>"¿Cuál es el nombre de tu padre?"</item>
+        <item>"¿Cuál es el nombre de tu hermano?"</item>
+        <item>"¿Cuál es el nombre de tu madre?"</item>
+        <item>¿Cuál es el sueño de tu infancia?</item>
+        <item>¿Cuántos hermanos tienes?</item>
+        <item>¿Quién es tu novio?</item>
+    </string-array>
+</resources>

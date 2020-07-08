@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cofre da Calculadora</string>
+    <string name="add_audios">Adicionar áudios</string>
+    <string name="add_videos">Adicionar Vídeo</string>
+    <string name="add_images">Adicionar Imagens</string>
+    <string name="add_files">Adicionar arquivos</string>
+    <string name="audio">Áudio</string>
+    <string name="video">Vídeo</string>
+    <string name="image">Imagem</string>
+    <string name="file">Arquivo</string>
+    <string name="no_app_found">Não foi encontrada nenhuma aplicação para realizar esta acção</string>
+    <string name="no_item_found">Nenhum item encontrado.\nToque no botão adicionar para adicionar um.</string>
+    <string name="select_file">Select File</string>
+    <string name="hint">Se você esqueceu a senha, apenas abra o aplicativo. Digite 1122334 na calculadora para recuperar a sua senha.\"</string>
+    <!--    Settings-->
+    <string name="security">Segurança</string>
+    <string name="change_password">Mudar Senha</string>
+    <string name="forgot_password">Esqueceu a sua senha</string>
+    <string name="change_security_question">Alterar Pergunta de Segurança</string>
+    <string name="mroe">Mais</string>
+    <string name="about_us">Quem somos</string>
+    <string name="share_app">Compartilhar aplicação</string>
+    <string name="rate_app">Classificar a aplicação</string>
+    <string name="privacy_policy">Política de privacidade</string>
+    <string name="contact_us">Contacte-nos</string>
+    <string name="select_security_question">Definir pergunta de segurança</string>
+    <string name="share_app_desc">E aí, quer um pouco de privacidade e esconde suas fotos privadas como verdade? \nSaia deste novo aplicativo legal:\n\n </string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="later">Mais tarde</string>
+    <string name="inform_us_description">Por favor, deixe-nos saber o que deu errado ou se houver algo que cause problemas. Nós ajudaríamos com certeza. Obrigado.</string>
+    <string name="inform_us">Informe Nós!</string>
+    <string name="rate_app_desc">Ei, muito obrigado por usar tempo para avaliar nosso aplicativo. Você pode nos dizer se está gostando do aplicativo ou não?</string>
+    <string name="about_description"><![CDATA[O Calculator Vault é desenvolvido por <a href="https://twitter.com/waqasyounis334"> AndroidBull </a>. <br> <br>
+     O Calculator Vault funciona perfeitamente com o <a href="https://play.google.com/store/apps/details?id=com.androidbull.incognito.browser"> Navegador anônimo </a> como o que você baixar
+     usar nosso navegador anônimo será automaticamente bloqueado dentro do Calculator Vault <br> <br>]]></string>
+    <string name="permission_not_granted">Desculpe !!!, você não pode usar este app sem conceder permissão</string>
+    <string name="select_num_first">Selecione o número primeiro</string>
+    <string name="cant_divide_by_zero">Impos. dividir por 0</string>
+    <string name="invalid_input">Entrada Inválida</string>
+    <string name="invalid_expression">Expressão inválida</string>
+    <string name="password_must_be_4_digit">Senha deve ter 4 dígitos</string>
+    <string name="syntax_error">Erro de Sintaxe!</string>
+    <string name="enter_new_pass">Por favor introduza a sua nova palavra-passe </string>
+    <string name="sorry">Desculpe</string>
+    <string name="something_went_wrong">Algo deu errado, por favor, tente novamente mais tarde.</string>
+    <string name="deleting">A apagar</string>
+    <string name="are_you_sure">Tem a certeza?</string>
+    <string name="ask_delete_all_intruder">Deseja excluir todas as fotos do invasor?</string>
+    <string name="intruder">Intrusivo</string>
+    <string name="error_password_not_matched">ERRO: Senha não correspondida</string>
+    <string name="enter_confirm_pass">Por favor, confirme a palavra-passe</string>
+    <string name="done">Realizado</string>
+    <string name="password_updated">Palavra passe atualizada</string>
+    <string name="invalid_confirm_pass">Senha de confirmação não coincide</string>
+    <string name="pass_must_be_numeric">ERRO: A senha deve ser numérica</string>
+    <string name="select_security_answer">Digite a resposta de segurança</string>
+    <string name="security_question_incorrect">A pergunta de segurança está incorreta!</string>
+    <string name="security_answer_incorrect">A resposta de segurança está incorreta!</string>
+    <string name="your_pass_is">Sua senha é %1$s</string>
+    <string name="grant_permission">Grantir Permissões</string>
+    <string name="grant_permission_desc">Conceda todas as permissões para acessar funcionalidades adicionais.</string>
+    <string name="dismiss">Dispensar</string>
+    <string name="select_atleat_1_image">Por favor, selecione pelo menos uma imagem!</string>
+    <string name="moving_dash_of_dash_size">Movendo %1$i de %1$i </string>
+    <string name="moving">A mover</string>
+    <string name="moving_audios">Movendo áudios</string>
+    <string name="moving_1_of">Movendo 1 de %1$i</string>
+    <string name="alert">Alerta</string>
+    <string name="delete_file_desc">Tem certeza de que deseja excluir os arquivos selecionados?</string>
+    <string name="select_1_file">Por favor, selecione pelo menos um arquivo</string>
+    <string name="moving_files">Movendo arquivos</string>
+    <string name="moving_images">A mover as imagens</string>
+    <string name="moving_videos">Movendo áudios</string>
+    <string name="select_1_video">Por favor, selecione pelo menos um arquivo</string>
+    <string name="config_change">Alteração de configuração</string>
+    <string name="settings">Definições</string>
+    <string name="select_all">Seleccionar Todos</string>
+    <string name="share">Compartilhar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="hide">Ocultar</string>
+    <string name="unhide">Tornar visível</string>
+    <string name="no_one_intruded">Ninguém intrusivo!</string>
+    <string name="enter_current_pass">Por favor insira a senha atual</string>
+    <string name="next">Próximo</string>
+    <string name="submit">Submeter</string>
+    <string name="confirm_password">Confirme sua senha</string>
+    <string name="confirm_pass_desc">Por favor, confirme sua senha digitando-a novamente</string>
+    <string name="set_password">Definir senha</string>
+    <string name="set_pass_desc">Digite sua senha (4 dígitos) na Calculadora e pressione \'=\'.</string>
+    <string name="error">Erro</string>
+    <string name="confirm_pass_error_desc">Sua \"Confirmar senha\" não corresponde à senha anterior.</string>
+    <string name="pass_set_desc">A senha foi definida com sucesso</string>
+    <string name="download_now">Faça o download agora</string>
+    <string name="incognito_browser_dialog_title">Aumentar Privacidade</string>
+    <string name="incognito_browser_download_desc">Navegue em particular e bloqueie tudo o que você baixar com o Navegador Incógnito</string>
+    <string name="welcome">Bem-vindo</string>
+    <string name="welcome_message">Bem-vindo ao Cofre de Fotos da Calculadora, aqui você pode ter mais privacidade que outros.\n\n%1$s</string>
+    <string name="cancel">Cancelar</string>
+    <string name="photos">Fotografias</string>
+    <string name="audios">Áudios</string>
+    <string name="videos">Vídeos</string>
+    <string name="files">Arquivos</string>
+    <string name="browser">Navegador</string>
+    <string-array name="questions">
+        <item>Quem é a sua namorada?</item>
+        <item>"Qual o nome do seu pai?"</item>
+        <item>"Qual é o nome do teu irmão?"</item>
+        <item>"Qual o nome da sua mãe?"</item>
+        <item>Qual é o seu sonho de infância?</item>
+        <item>Quantos irmãos você tem?</item>
+        <item>Quem é o seu namorado?</item>
+    </string-array>
+</resources>

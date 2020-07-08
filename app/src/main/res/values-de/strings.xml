@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rechnergewölbe</string>
+    <string name="add_audios">Audios hinzufügen</string>
+    <string name="add_videos">Videos hinzufügen</string>
+    <string name="add_images">Bilder hinzufügen</string>
+    <string name="add_files">Dateien hinzufügen</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="image">Bild</string>
+    <string name="file">Feile</string>
+    <string name="no_app_found">Keine Anwendung gefunden, um diese Aktion auszuführen!</string>
+    <string name="no_item_found">Kein Element gefunden. \ NBitte tippen Sie auf die Schaltfläche Hinzufügen, um eines hinzuzufügen.</string>
+    <string name="select_file">Feile aussuchen</string>
+    <string name="hint">Wenn Sie das Passwort vergessen haben, öffnen Sie einfach die App. Geben Sie 1122334 in den Taschenrechner ein, um Ihr Passwort wiederherzustellen. \"</string>
+    <!--    Settings-->
+    <string name="security">Sicherheit</string>
+    <string name="change_password">Ändere das Passwort</string>
+    <string name="forgot_password">Passwort vergessen</string>
+    <string name="change_security_question">Sicherheitsfrage ändern</string>
+    <string name="mroe">Mehr</string>
+    <string name="about_us">Über uns</string>
+    <string name="share_app">App teilen</string>
+    <string name="rate_app">Bewertungs App</string>
+    <string name="privacy_policy">Datenschutz-Bestimmungen</string>
+    <string name="contact_us">Kontaktiere uns</string>
+    <string name="select_security_question">Wählen Sie Sicherheitsfrage</string>
+    <string name="share_app_desc">Hey, willst du etwas Privatsphäre und versteckst deine privaten Fotos wie wirklich? \ nÜberprüfen Sie diese neue coole App: \ n \ n</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="later">Später</string>
+    <string name="inform_us_description">Bitte lassen Sie uns wissen, was schief gelaufen ist oder ob irgendetwas Probleme verursacht. Wir würden Ihnen sicherlich weiterhelfen. Vielen Dank</string>
+    <string name="inform_us">Informiere uns!</string>
+    <string name="rate_app_desc">Hey, vielen Dank, dass du dir die Zeit genommen hast, unsere App zu bewerten. Können Sie uns bitte sagen, ob Ihnen die App gefällt oder nicht?</string>
+    <string name="about_description"><![CDATA[Calculator Vault wird von entwickelt<a href="https://twitter.com/waqasyounis334">AndroidBull</a>.<br><br>
+    Calculator Vault funktioniert perfekt mit <a href="https://play.google.com/store/apps/details?id=com.androidbull.incognito.browser">IIncognito Browser</a> Was auch immer Sie mit unserem Inkognito-Browser herunterladen, wird automatisch in Calculator Vault gesperrt<br><br>
+        ]]></string>
+    <string name="permission_not_granted">Entschuldigung !!!, Sie können diese App nicht ohne Erlaubnis verwenden</string>
+    <string name="select_num_first">Wählen Sie zuerst Nummer</string>
+    <string name="cant_divide_by_zero">Kann nicht durch 0 teilen</string>
+    <string name="invalid_input">Ungültige Eingabe</string>
+    <string name="invalid_expression">Ungültiger Ausdruck</string>
+    <string name="password_must_be_4_digit">Das Passwort muss 4-stellig sein</string>
+    <string name="syntax_error">Syntax-Fehler</string>
+    <string name="enter_new_pass">Bitte geben Sie Ihr neues Passwort ein.</string>
+    <string name="sorry">Bitte</string>
+    <string name="something_went_wrong">Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.</string>
+    <string name="deleting">Streichen</string>
+    <string name="are_you_sure">Bist du sicher?</string>
+    <string name="ask_delete_all_intruder">Möchten Sie alle Eindringlingsfotos löschen?</string>
+    <string name="intruder">Eindringling</string>
+    <string name="error_password_not_matched">FEHLER: Passwort stimmt nicht überein</string>
+    <string name="enter_confirm_pass">Bitte bestätigen Sie das Passwort</string>
+    <string name="done">Gemacht</string>
+    <string name="password_updated">Passwort aktualisiert</string>
+    <string name="invalid_confirm_pass">Bestätigen Sie, dass das Passwort nicht übereinstimmt</string>
+    <string name="pass_must_be_numeric">FEHLER: Das Passwort muss numerisch sein</string>
+    <string name="select_security_answer">Bitte geben Sie die Sicherheitsantwort ein</string>
+    <string name="security_question_incorrect">Sicherheitsfrage ist falsch!</string>
+    <string name="security_answer_incorrect">Sicherheitsantwort ist falsch!</string>
+    <string name="your_pass_is">Ihr Passwort lautet ist %1$s</string>
+    <string name="grant_permission">Erlaubnis erteilen</string>
+    <string name="grant_permission_desc">Bitte erteilen Sie alle Berechtigungen für den Zugriff auf zusätzliche Funktionen.</string>
+    <string name="dismiss">Entlassen</string>
+    <string name="select_atleat_1_image">Bitte wählen Sie mindestens ein Bild aus!</string>
+    <string name="moving_dash_of_dash_size">Bewegend %1$i von %1$i </string>
+    <string name="moving">Bewegend</string>
+    <string name="moving_audios">Audio(s) verschieben</string>
+    <string name="moving_1_of">1 von verschieben %1$i</string>
+    <string name="alert">Aufmerksam</string>
+    <string name="delete_file_desc">Möchten Sie ausgewählte Dateien wirklich löschen?</string>
+    <string name="select_1_file">Bitte wählen Sie mindestens eine Datei aus!</string>
+    <string name="moving_files">Datei(en) verschieben</string>
+    <string name="moving_images">Bewegendes Bild(er)</string>
+    <string name="moving_videos">Videos verschieben</string>
+    <string name="select_1_video">Bitte wählen Sie mindestens ein Video aus!</string>
+    <string name="config_change">Konfigurationsänderung</string>
+    <string name="settings">die Einstellungen</string>
+    <string name="select_all">Wählen Sie Alle</string>
+    <string name="share">Teilen</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="delete">Löschen</string>
+    <string name="hide">Verstecken</string>
+    <string name="unhide">Einblenden</string>
+    <string name="no_one_intruded">Niemand drang ein!</string>
+    <string name="enter_current_pass">Bitte geben Sie das aktuelle Passwort ein</string>
+    <string name="next">Nächster</string>
+    <string name="submit">Einreichen</string>
+    <string name="confirm_password">Bestätige das Passwort</string>
+    <string name="confirm_pass_desc">Bitte bestätigen Sie Ihr Passwort, indem Sie es erneut eingeben</string>
+    <string name="set_password">Passwort festlegen</string>
+    <string name="set_pass_desc">Geben Sie Ihr Passwort (4-stellig) in Calculator ein und drücken Sie \'=\'.</string>
+    <string name="error">Fehler</string>
+    <string name="confirm_pass_error_desc">Ihr \"Passwort bestätigen\" stimmt nicht mit dem vorherigen Passwort überein.</string>
+    <string name="pass_set_desc">Passwort wurde erfolgreich gesetzt</string>
+    <string name="download_now">Jetzt downloaden</string>
+    <string name="incognito_browser_dialog_title">Erhöhen Sie die Privatsphäre</string>
+    <string name="incognito_browser_download_desc">Durchsuchen Sie privat und sperren Sie alles, was Sie herunterladen, mit Incognito Browser</string>
+    <string name="welcome">Herzlich willkommen</string>
+    <string name="welcome_message">Willkommen bei Calculator Photo Vault. Hier können Sie mehr Privatsphäre als bei anderen haben. \ N \ n%1$s</string>
+    <string name="cancel">Aufheben</string>
+    <string name="photos">Fotos</string>
+    <string name="audios">Audios</string>
+    <string name="videos">Videos</string>
+    <string name="files">Feile</string>
+    <string name="browser">Browser</string>
+    <string-array name="questions">
+        <item>Wer ist deine Freundin?</item>
+        <item>"Wie heißt dein Vater?"</item>
+        <item>"Wie heißt dein Bruder?"</item>
+        <item>"Wie heißt deine Mutter?"</item>
+        <item>Was ist dein Kindheitstraum?</item>
+        <item>Wieviele Geschwister hast du?</item>
+        <item>Wer ist dein Freund?</item>
+    </string-array>
+</resources>

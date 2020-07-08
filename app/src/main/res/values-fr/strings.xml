@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calculatrice Vault</string>
+    <string name="add_audios">Ajouter des audios</string>
+    <string name="add_videos">Ajouter des vidéos</string>
+    <string name="add_images">Ajouter des images</string>
+    <string name="add_files">Ajouter des fichiers</string>
+    <string name="audio">Audio</string>
+    <string name="video">Vidéo</string>
+    <string name="image">Image</string>
+    <string name="file">Fichier</string>
+    <string name="no_app_found">Aucune application trouvée pour effectuer cette action !</string>
+    <string name="no_item_found">Aucun élément trouvé.\nVeuillez appuyer sur le bouton \"Ajouter\" pour en ajouter un.</string>
+    <string name="select_file">Sélectionner un fichier</string>
+    <string name="hint">Si vous avez oublié votre mot de passe, il vous suffit d\'ouvrir l\'application. Entrez le 1122334 sur la calculatrice pour récupérer votre mot de passe\".</string>
+    <!--    Settings-->
+    <string name="security">Sécurité</string>
+    <string name="change_password">Modifier le mot de passe</string>
+    <string name="forgot_password">Mot de passe oublié</string>
+    <string name="change_security_question">Modifier la question de sécurité</string>
+    <string name="mroe">Plus</string>
+    <string name="about_us">À propos de nous</string>
+    <string name="share_app">Partager l’application</string>
+    <string name="rate_app">Noter l\'application</string>
+    <string name="privacy_policy">Politique de Confidentialité</string>
+    <string name="contact_us">Nous Contacter</string>
+    <string name="select_security_question">Sélectionner la Question de Sécurité</string>
+    <string name="share_app_desc">Hé là, vous voulez un peu d\'intimité et cacher vos photos privées pour de vrai ?\nEssayez cette nouvelle application sympa:\n\n </string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="later">Plus tard</string>
+    <string name="inform_us_description">Veuillez nous faire savoir ce qui a mal tourné ou si quelque chose cause des problèmes. Nous vous aiderons volontiers. Merci</string>
+    <string name="inform_us">Informez-Nous !</string>
+    <string name="rate_app_desc">Salut, Merci beaucoup d\'avoir pris le temps d\'évaluer notre application. Pouvez-vous nous dire si oui ou non vous appréciez l\'application ?</string>
+    <string name="about_description"><![CDATA[    La Calculatrice Vault est développée par <a href="https://twitter.com/waqasyounis334">AndroidBull</a>.<br><br>
+    La Calculatrice Vault fonctionne parfaitement avec <a href="https://play.google.com/store/apps/details?id=com.androidbull.incognito.browser">Navigateur Incognito</a> car tout ce que vous téléchargez
+    en utilisant notre navigateur Incognito sera automatiquement verrouillé dans la Calculatrice Vault<br><br>
+        ]]></string>
+    <string name="permission_not_granted">Désolé !!!, vous ne pouvez pas utiliser cette application sans autorisation</string>
+    <string name="select_num_first">Sélectionnez d\'abord le nombre</string>
+    <string name="cant_divide_by_zero">Non divisible par 0</string>
+    <string name="invalid_input">Entrée invalide</string>
+    <string name="invalid_expression">Expression invalide</string>
+    <string name="password_must_be_4_digit">Le mot de passe doit être composé de 4 chiffres</string>
+    <string name="syntax_error">Erreur de syntaxe</string>
+    <string name="enter_new_pass">Veuillez Saisir votre Nouveau Mot de Passe.</string>
+    <string name="sorry">Désolé</string>
+    <string name="something_went_wrong">Un problème est survenu, veuillez réessayer plus tard.</string>
+    <string name="deleting">Suppression</string>
+    <string name="are_you_sure">Êtes-vous sûr ?</string>
+    <string name="ask_delete_all_intruder">Voulez-vous supprimer toutes les photos d\'intrus ?</string>
+    <string name="intruder">Intrus</string>
+    <string name="error_password_not_matched">ERREUR: Le mot de passe ne correspond pas</string>
+    <string name="enter_confirm_pass">Veuillez confirmer le mot de passe</string>
+    <string name="done">Fait</string>
+    <string name="password_updated">Mot de passe mis à jour</string>
+    <string name="invalid_confirm_pass">La confirmation du mot de passe ne correspond pas</string>
+    <string name="pass_must_be_numeric">ERREUR : Le mot de passe doit être numérique</string>
+    <string name="select_security_answer">Veuillez entrer la réponse de sécurité</string>
+    <string name="security_question_incorrect">La question de sécurité est incorrecte !</string>
+    <string name="security_answer_incorrect">La réponse de sécurité est incorrecte !</string>
+    <string name="your_pass_is">Votre mot de passe est %1$s</string>
+    <string name="grant_permission">Accorder l’Autorisation</string>
+    <string name="grant_permission_desc">Veuillez accorder toutes les autorisations nécessaires pour accéder aux fonctionnalités supplémentaires.</string>
+    <string name="dismiss">Rejeter</string>
+    <string name="select_atleat_1_image">Veuillez sélectionner au moins une image !</string>
+    <string name="moving_dash_of_dash_size">Déplacement de %1$i sur %1$i </string>
+    <string name="moving">Déplacement</string>
+    <string name="moving_audios">Audio(s) en déplacement</string>
+    <string name="moving_1_of">Déplacement 1 de %1$i</string>
+    <string name="alert">Alerte</string>
+    <string name="delete_file_desc">Êtes-vous sûr de vouloir supprimer les fichiers sélectionnés ?</string>
+    <string name="select_1_file">Veuillez sélectionner au moins un fichier!</string>
+    <string name="moving_files">Déplacement de fichier(s)</string>
+    <string name="moving_images">Image(s) en déplacement</string>
+    <string name="moving_videos">Vidéo(s) en déplacement</string>
+    <string name="select_1_video">Veuillez sélectionner au moins une vidéo !</string>
+    <string name="config_change">Modification de configuration</string>
+    <string name="settings">Réglages</string>
+    <string name="select_all">Tout sélectionner</string>
+    <string name="share">Partager</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
+    <string name="hide">Cacher</string>
+    <string name="unhide">Afficher</string>
+    <string name="no_one_intruded">Personne n\'a fait intrusion !</string>
+    <string name="enter_current_pass">Veuillez entrer le mot de passe actuel</string>
+    <string name="next">Suivant</string>
+    <string name="submit">Soumettre</string>
+    <string name="confirm_password">Confirmez le mot de passe</string>
+    <string name="confirm_pass_desc">Veuillez confirmer votre mot de passe en le saisissant à nouveau</string>
+    <string name="set_password">Définir le mot de passe</string>
+    <string name="set_pass_desc">Tapez votre mot de passe (4 chiffres) dans la calculatrice et appuyez sur \"=\".</string>
+    <string name="error">Erreur</string>
+    <string name="confirm_pass_error_desc">Votre \"Mot de passe de confirmation\" ne correspond pas au mot de passe précédent.</string>
+    <string name="pass_set_desc">Le mot de passe a été défini avec succès</string>
+    <string name="download_now">Télécharger Maintenant</string>
+    <string name="incognito_browser_dialog_title">Renforcer la confidentialité</string>
+    <string name="incognito_browser_download_desc">Naviguez en privé et verrouillez tout ce que vous téléchargez avec le navigateur Incognito</string>
+    <string name="welcome">Bienvenue</string>
+    <string name="welcome_message">Bienvenue dans la Calculatrice Photo Vault, ici vous pouvez avoir plus d\'intimité que les autres.\n\n%1$s</string>
+    <string name="cancel">Annuler</string>
+    <string name="photos">Photos</string>
+    <string name="audios">Audios</string>
+    <string name="videos">Vidéos</string>
+    <string name="files">Fichiers</string>
+    <string name="browser">Navigateur</string>
+    <string-array name="questions">
+        <item>Qui est votre petite amie ?</item>
+        <item>"Quel est le nom de votre père ?"</item>
+        <item>"Quel est le nom de votre frère ?"</item>
+        <item>"Quel est le nom de votre mère ?"</item>
+        <item>Quel est votre rêve d\'enfant ?</item>
+        <item>Combien de frères et sœurs avez-vous ?</item>
+        <item>Qui est votre petit ami ?</item>
+    </string-array>
+</resources>
