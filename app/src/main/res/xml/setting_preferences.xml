@@ -27,6 +27,12 @@
         app:allowDividerBelow="true"
         app:iconSpaceReserved="false">
 
+        <SwitchPreference
+            android:key="@string/pref_key_dark_mode"
+            android:title="@string/dark_mode"
+            app:iconSpaceReserved="false"
+            android:defaultValue="false"/>
+
         <Preference
             android:key="@string/pref_key_about_us"
             android:title="@string/about_us"

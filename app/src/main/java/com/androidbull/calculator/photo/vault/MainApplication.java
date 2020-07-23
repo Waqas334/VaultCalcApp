@@ -27,6 +27,7 @@ public class MainApplication extends Application {
     private static final String CONSTANT_PASSWORD = "constant_password";
     private static final String CONSTANT_UNINSTALL = "constant_uninstall";
     private static final String CONSTANT_VIDEO_COUNT = "constant_video_count";
+    private static final String Switch_Preff = "switch_Preff";
     private static MainApplication mInstance;
     private static SharedPreferences sharedPreferences;
 
@@ -136,6 +137,16 @@ public class MainApplication extends Application {
         }
         return hrSize;
     }
+
+
+    public synchronized void setSwitchPreff(boolean mode) {
+        sharedPreferences.edit().putBoolean(Switch_Preff, mode).commit();
+    }
+
+    public synchronized boolean getSwitchPreff() {
+        return sharedPreferences.getBoolean(Switch_Preff,false );
+    }
+
 
 
 }

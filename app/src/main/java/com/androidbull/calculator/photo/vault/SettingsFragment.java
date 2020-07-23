@@ -1,14 +1,21 @@
 package com.androidbull.calculator.photo.vault;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.multidex.BuildConfig;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.androidbull.calculator.photo.BuildConfig;
+
 import com.androidbull.calculator.photo.R;
 import com.androidbull.calculator.photo.vault.activities.NewChangePasswordActivity;
 import com.androidbull.calculator.photo.vault.activities.SecurityQuestionActivity;
@@ -17,6 +24,13 @@ import com.androidbull.calculator.photo.vault.activities.PrivacyPolicyActivity;
 import com.androidbull.calculator.photo.vault.utils.Utils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
+
+    Context context;
+
+    public SettingsFragment(Context context) {
+        this.context = context;
+    }
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.setting_preferences);
@@ -38,6 +52,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
             case "pref_change_password":
                 startActivity(new Intent(getContext(), NewChangePasswordActivity.class));
+                return true;
+
+            case "pref_dark_mode":
+               darkMood("Dark Mode");
                 return true;
 
             case "pref_about_us":
@@ -127,6 +145,26 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         } catch (Exception e) {
         }
 
+    }
+
+    private void darkMood(String value){
+
+        SwitchPreference switchPreference = (SwitchPreference) findPreference(value);
+
+
+      switchPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+          @Override
+          public boolean onPreferenceChange(Preference preference, Object newValue) {
+              boolean isOn = (Boolean)newValue;
+
+              if(isOn){
+
+                  Toast.makeText(context, "dark mode", Toast.LENGTH_SHORT).show();
+              }else
+                  Toast.makeText(context, "light mode", Toast.LENGTH_SHORT).show();
+              return false;
+          }
+      });
     }
 
 }

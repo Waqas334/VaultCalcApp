@@ -21,7 +21,7 @@ public class SettingsActivity extends MyBassActivity {
         getSupportActionBar().setTitle(getString(R.string.settings));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SettingsFragment settingsFragment = new SettingsFragment();
+        SettingsFragment settingsFragment = new SettingsFragment(SettingsActivity.this);
         getSupportFragmentManager().beginTransaction().add(R.id.settings_fragment_container, settingsFragment).commit();
     }
 

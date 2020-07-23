@@ -22,6 +22,7 @@
     <string name="change_security_question">Change Security Question</string>
     <string name="mroe">More</string>
     <string name="about_us">About us</string>
+    <string name="dark_mode" translatable="false">Dark Mode</string>
     <string name="share_app">Share app</string>
     <string name="rate_app">Rate app</string>
     <string name="privacy_policy">Privacy Policy</string>
