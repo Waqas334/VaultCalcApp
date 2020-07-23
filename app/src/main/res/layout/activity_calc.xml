@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/newColorAccent">
+    android:background="@color/backcolr">
 
 
     <com.androidbull.calculator.photo.vault.utils.AutoFitTextureView
@@ -23,7 +23,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/newColorAccent"
+        android:background="@color/backcolr"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1.0"
-        android:background="@android:color/white"
+        android:background="@color/backcolr"
         android:cursorVisible="true"
         android:ellipsize="start"
         android:focusable="false"
@@ -58,7 +58,7 @@
         android:id="@+id/et_main"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="#ffe9e5e4"
+        android:background="@color/backcolr"
         android:cursorVisible="true"
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -67,7 +67,8 @@
         android:inputType="number"
         android:scrollbars="vertical"
         android:textAppearance="?android:textAppearanceLarge"
-        android:textColorHint="@android:color/black"
+        android:textColorHint="@color/symblclr"
+        android:textColor="@color/symblclr"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -76,18 +77,18 @@
 
     <TextView
         android:id="@+id/tv_clear"
-        style="@style/calculatorButtonsStyle"
+        style="@style/symbleButtonsStyle"
         android:text="@string/_ac"
         app:layout_constraintBottom_toTopOf="@+id/tv_seven"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tv_sqrt"
+        app:layout_constraintRight_toLeftOf="@+id/tv_sign"
         app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
 
     <TextView
-        android:id="@+id/tv_sqrt"
-        style="@style/calculatorButtonsStyle"
-        android:text="@string/_sqrt"
+        android:id="@+id/tv_sign"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_sign"
         app:layout_constraintBottom_toTopOf="@+id/tv_eight"
         app:layout_constraintLeft_toRightOf="@+id/tv_clear"
         app:layout_constraintRight_toLeftOf="@+id/tv_percent"
@@ -95,10 +96,10 @@
 
     <TextView
         android:id="@+id/tv_percent"
-        style="@style/calculatorButtonsStyle"
+        style="@style/symbleButtonsStyle"
         android:text="@string/_percentage"
         app:layout_constraintBottom_toTopOf="@+id/tv_nine"
-        app:layout_constraintLeft_toRightOf="@+id/tv_sqrt"
+        app:layout_constraintLeft_toRightOf="@+id/tv_sign"
         app:layout_constraintRight_toLeftOf="@+id/tv_divide"
         app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
@@ -106,7 +107,7 @@
 
     <TextView
         android:id="@+id/tv_divide"
-        style="@style/calculatorButtonsStyle"
+        style="@style/symbleButtonsStyle"
         android:text="@string/_divide"
         app:layout_constraintBottom_toTopOf="@+id/tv_mul"
         app:layout_constraintLeft_toRightOf="@+id/tv_percent"
@@ -145,6 +146,7 @@
         android:id="@+id/tv_zero"
         style="@style/calculatorButtonsStyle"
         android:text="@string/_0"
+        android:background="@drawable/circle_tv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/tv_dot"
@@ -157,7 +159,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_five"
         app:layout_constraintLeft_toRightOf="@+id/tv_seven"
         app:layout_constraintRight_toLeftOf="@+id/tv_nine"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sqrt" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_sign" />
 
 
     <TextView
@@ -171,7 +173,7 @@
 
     <TextView
         android:id="@+id/tv_mul"
-        style="@style/calculatorButtonsStyle"
+        style="@style/symbleButtonsStyle"
         android:text="@string/_mul"
         app:layout_constraintBottom_toTopOf="@+id/tv_min"
         app:layout_constraintLeft_toRightOf="@+id/tv_nine"
@@ -199,7 +201,7 @@
 
     <TextView
         android:id="@+id/tv_min"
-        style="@style/calculatorButtonsStyle"
+        style="@style/symbleButtonsStyle"
         android:text="@string/_sub"
         app:layout_constraintBottom_toTopOf="@id/tv_plus"
         app:layout_constraintLeft_toRightOf="@+id/tv_six"
@@ -209,7 +211,7 @@
 
     <TextView
         android:id="@+id/tv_plus"
-        style="@style/calculatorButtonsStyle"
+        style="@style/symbleButtonsStyle"
         android:text="@string/_add"
         app:layout_constraintBottom_toTopOf="@+id/tv_equal"
         app:layout_constraintLeft_toRightOf="@+id/tv_three"
@@ -218,8 +220,13 @@
 
     <TextView
         android:id="@+id/tv_equal"
-        style="@style/calculatorButtonsStyle"
+        android:layout_width="165dp"
+        android:layout_height="70dp"
         android:text="@string/_equal"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_equal"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_sign"
         app:layout_constraintRight_toRightOf="parent"
@@ -238,7 +245,7 @@
         android:id="@+id/tv_three"
         style="@style/calculatorButtonsStyle"
         android:text="@string/_3"
-        app:layout_constraintBottom_toTopOf="@+id/tv_sign"
+        app:layout_constraintBottom_toTopOf="@id/tv_equal"
         app:layout_constraintLeft_toRightOf="@+id/tv_two"
         app:layout_constraintRight_toLeftOf="@+id/tv_min"
         app:layout_constraintTop_toBottomOf="@+id/tv_six" />
@@ -249,16 +256,16 @@
         android:text="@string/_dot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/tv_zero"
-        app:layout_constraintRight_toLeftOf="@+id/tv_sign"
+        app:layout_constraintRight_toLeftOf="@+id/tv_equal"
         app:layout_constraintTop_toBottomOf="@+id/tv_two" />
 
-    <TextView
-        android:id="@+id/tv_sign"
-        style="@style/calculatorButtonsStyle"
-        android:text="@string/_sign"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_dot"
-        app:layout_constraintRight_toLeftOf="@+id/tv_equal"
-        app:layout_constraintTop_toBottomOf="@+id/tv_three" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/tv_sign"-->
+    <!--        style="@style/symbleButtonsStyle"-->
+    <!--        android:text="@string/_sign"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintLeft_toRightOf="@+id/tv_dot"-->
+    <!--        app:layout_constraintRight_toLeftOf="@+id/tv_equal"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tv_three" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
