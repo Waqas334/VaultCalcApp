@@ -830,7 +830,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
         tv_nine = findViewById(R.id.tv_nine);
         tv_six = findViewById(R.id.tv_six);
         tv_three = findViewById(R.id.tv_three);
-        tv_sign = findViewById(R.id.tv_sign);
+        tv_sign = findViewById(R.id.tv_sqrt);
         tv_mul = findViewById(R.id.tv_mul);
         tv_min = findViewById(R.id.tv_min);
         tv_plus = findViewById(R.id.tv_plus);
@@ -924,7 +924,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                     tv_Display.setText("");
 
                 }
-               else if (firstString.isEmpty()) {
+                else if (firstString.isEmpty()) {
                     Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
                 } else {
                     opererationSelected = true;
@@ -944,7 +944,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                     tv_Display.setText("");
 
                 }
-               else if (firstString.isEmpty()) {
+                else if (firstString.isEmpty()) {
                     Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -965,7 +965,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                     et_main.setText(completeString);
                     tv_Display.setText("");
 
-                 }
+                }
                 else if (firstString.isEmpty()) {
                     Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
                 }
@@ -988,7 +988,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                     tv_Display.setText("");
 
                 }
-               else if (firstString.isEmpty()) {
+                else if (firstString.isEmpty()) {
                     Toast.makeText(this, "First Enter a number", Toast.LENGTH_SHORT).show();
                 }
                 else {

@@ -278,7 +278,7 @@ public class ConfirmCalcActivity extends MyBassActivity implements View.OnClickL
         this.tv_nine = findViewById(R.id.tv_nine);
         this.tv_six = findViewById(R.id.tv_six);
         this.tv_three = findViewById(R.id.tv_three);
-        this.tv_sign = findViewById(R.id.tv_sign);
+        this.tv_sign = findViewById(R.id.tv_sqrt);
         this.tv_mul = findViewById(R.id.tv_mul);
         this.tv_min = findViewById(R.id.tv_min);
         this.tv_plus = findViewById(R.id.tv_plus);

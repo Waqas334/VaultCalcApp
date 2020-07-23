@@ -17,5 +17,6 @@
     <color name="newColorAccentFaint">#66643ced</color>
     <color name="backcolr">#efedee</color>
     <color name="symblclr">#899dfe</color>
+    <color name="darkclr">#414141</color>
 
 </resources>

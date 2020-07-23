@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backcolr">
+    android:background="@color/darkclr">
 
 
     <com.androidbull.calculator.photo.vault.utils.AutoFitTextureView
@@ -23,7 +23,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/backcolr"
+        android:background="@color/darkclr"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1.0"
-        android:background="@color/backcolr"
+        android:background="@color/darkclr"
         android:cursorVisible="true"
         android:ellipsize="start"
         android:focusable="false"
@@ -45,7 +45,8 @@
         android:paddingBottom="@dimen/half"
         android:scrollbars="vertical"
         android:textAppearance="?android:textAppearanceLarge"
-        android:textColorHint="@android:color/black"
+        android:textColorHint="@android:color/white"
+        android:textColor="@color/white"
         android:textSize="27sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/guideline1"
@@ -58,7 +59,7 @@
         android:id="@+id/et_main"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="@color/backcolr"
+        android:background="@color/darkclr"
         android:cursorVisible="true"
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -81,12 +82,12 @@
         android:text="@string/_ac"
         app:layout_constraintBottom_toTopOf="@+id/tv_seven"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/tv_sign"
+        app:layout_constraintRight_toLeftOf="@+id/tv_sqrt"
         app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
 
     <TextView
-        android:id="@+id/tv_sign"
+        android:id="@+id/tv_sqrt"
         style="@style/symbleButtonsStyle"
         android:text="@string/_sign"
         app:layout_constraintBottom_toTopOf="@+id/tv_eight"
@@ -99,7 +100,7 @@
         style="@style/symbleButtonsStyle"
         android:text="@string/_percentage"
         app:layout_constraintBottom_toTopOf="@+id/tv_nine"
-        app:layout_constraintLeft_toRightOf="@+id/tv_sign"
+        app:layout_constraintLeft_toRightOf="@+id/tv_sqrt"
         app:layout_constraintRight_toLeftOf="@+id/tv_divide"
         app:layout_constraintTop_toBottomOf="@+id/et_main" />
 
@@ -159,7 +160,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_five"
         app:layout_constraintLeft_toRightOf="@+id/tv_seven"
         app:layout_constraintRight_toLeftOf="@+id/tv_nine"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sign" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_sqrt" />
 
 
     <TextView
@@ -228,7 +229,7 @@
         android:background="@drawable/btn_equal"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/tv_sign"
+        app:layout_constraintLeft_toRightOf="@+id/tv_sqrt"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_plus" />
 
