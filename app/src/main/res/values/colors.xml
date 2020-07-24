@@ -6,11 +6,10 @@
     <color name="colorPrimaryDark">#ff373b44</color>
     <color name="black">#ff000000</color>
     <color name="gray_55">#ff555555</color>
-    <color name="material_grey_900" >#ff212121</color>
+    <color name="material_grey_900">#ff212121</color>
     <color name="tooltip_background_dark">#e6616161</color>
     <color name="tooltip_background_light">#e6ffffff</color>
     <color name="white">#ffffffff</color>
-
 
 
     <color name="newColorAccent">#643ced</color>
@@ -18,5 +17,6 @@
     <color name="backcolr">#efedee</color>
     <color name="symblclr">#899dfe</color>
     <color name="darkclr">#414141</color>
+    <color name="textColor">@color/black</color>
 
 </resources>

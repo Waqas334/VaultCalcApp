@@ -30,8 +30,8 @@
         <SwitchPreference
             android:key="@string/pref_key_dark_mode"
             android:title="@string/dark_mode"
-            app:iconSpaceReserved="false"
-            android:defaultValue="false"/>
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="@string/pref_key_about_us"

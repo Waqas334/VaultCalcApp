@@ -1,5 +1,6 @@
 package com.androidbull.calculator.photo.vault;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +8,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.SwitchPreference;
+
 import android.util.Log;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.multidex.BuildConfig;
@@ -23,17 +28,27 @@ import com.androidbull.calculator.photo.vault.dialog.AboutUsDialog;
 import com.androidbull.calculator.photo.vault.activities.PrivacyPolicyActivity;
 import com.androidbull.calculator.photo.vault.utils.Utils;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+import static com.androidbull.calculator.photo.vault.MainApplication.theme_boolean;
 
-    Context context;
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public SettingsFragment(Context context) {
-        this.context = context;
-    }
+    public Context mContext;
+    private Activity mActivity;
+
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.setting_preferences);
+        mContext = this.getActivity();
+        mActivity = this.getActivity();
+        SharedPreferences mPrefs = mContext.getSharedPreferences("THEME", 0);
+        theme_boolean = mPrefs.getBoolean("theme_boolean", true);
+        if (theme_boolean) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
     }
 
     @Override
@@ -41,8 +56,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         String key = preference.getKey();
         switch (key) {
             case "pref_change_security_question":
-                Intent changeSecurityQuestion = new Intent(getContext(),SecurityQuestionActivity.class);
-                changeSecurityQuestion.putExtra(SecurityQuestionActivity.TYPE,SecurityQuestionActivity.CHANGE);
+                Intent changeSecurityQuestion = new Intent(getContext(), SecurityQuestionActivity.class);
+                changeSecurityQuestion.putExtra(SecurityQuestionActivity.TYPE, SecurityQuestionActivity.CHANGE);
                 startActivity(changeSecurityQuestion);
                 return true;
 
@@ -55,7 +70,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
 
             case "pref_dark_mode":
-               darkMood("Dark Mode");
                 return true;
 
             case "pref_about_us":
@@ -103,7 +117,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(getResources().getString(R.string.rate_app));
         builder.setMessage(getResources().getString(R.string.rate_app_desc));
-        builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> Utils.gotoPlayStore(getContext().getPackageName(),getContext()));
+        builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> Utils.gotoPlayStore(getContext().getPackageName(), getContext()));
         builder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> letUsKnow());
         builder.show();
     }
@@ -147,24 +161,35 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     }
 
-    private void darkMood(String value){
 
-        SwitchPreference switchPreference = (SwitchPreference) findPreference(value);
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equalsIgnoreCase("pref_dark_mode")) {
+            boolean theme_boolean = MainApplication.theme_boolean;
+            if (theme_boolean && sharedPreferences.getBoolean(key, false)) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                theme_boolean = false;
 
-
-      switchPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-          @Override
-          public boolean onPreferenceChange(Preference preference, Object newValue) {
-              boolean isOn = (Boolean)newValue;
-
-              if(isOn){
-
-                  Toast.makeText(context, "dark mode", Toast.LENGTH_SHORT).show();
-              }else
-                  Toast.makeText(context, "light mode", Toast.LENGTH_SHORT).show();
-              return false;
-          }
-      });
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                theme_boolean = true;
+            }
+            SharedPreferences mPrefs = mContext.getSharedPreferences("THEME", 0);
+            SharedPreferences.Editor mEditor = mPrefs.edit();
+            mEditor.putBoolean("theme_boolean", theme_boolean).apply();
+        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+
+    }
 }

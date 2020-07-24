@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.os.StrictMode.VmPolicy.Builder;
 import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
 import com.facebook.ads.AudienceNetworkActivity;
@@ -27,8 +29,8 @@ public class MainApplication extends Application {
     private static final String CONSTANT_PASSWORD = "constant_password";
     private static final String CONSTANT_UNINSTALL = "constant_uninstall";
     private static final String CONSTANT_VIDEO_COUNT = "constant_video_count";
-    private static final String Switch_Preff = "switch_Preff";
     private static MainApplication mInstance;
+    public static  boolean theme_boolean;
     private static SharedPreferences sharedPreferences;
 
 
@@ -39,6 +41,14 @@ public class MainApplication extends Application {
         MultiDex.install(this);
         StrictMode.setVmPolicy(new Builder().build());
         AudienceNetworkAds.initialize(this);
+
+        SharedPreferences mPrefs = mInstance.getSharedPreferences("THEME", 0);
+        theme_boolean = mPrefs.getBoolean("theme_boolean", true);
+        if (theme_boolean) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
 
 
 
@@ -137,16 +147,5 @@ public class MainApplication extends Application {
         }
         return hrSize;
     }
-
-
-    public synchronized void setSwitchPreff(boolean mode) {
-        sharedPreferences.edit().putBoolean(Switch_Preff, mode).commit();
-    }
-
-    public synchronized boolean getSwitchPreff() {
-        return sharedPreferences.getBoolean(Switch_Preff,false );
-    }
-
-
 
 }
