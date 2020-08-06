@@ -23,6 +23,7 @@ public class SettingsActivity extends MyBassActivity {
 
         SettingsFragment settingsFragment = new SettingsFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.settings_fragment_container, settingsFragment).commit();
+
     }
 
 

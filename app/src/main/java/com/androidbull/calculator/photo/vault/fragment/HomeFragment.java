@@ -3,12 +3,14 @@ package com.androidbull.calculator.photo.vault.fragment;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidbull.calculator.photo.R;
+import com.androidbull.calculator.photo.vault.activities.HomeActivity;
 import com.androidbull.calculator.photo.vault.activities.IntruderActivity;
 import com.androidbull.calculator.photo.vault.utils.AppConstants;
 import com.androidbull.calculator.photo.vault.activities.audio.AudiosActivity;
@@ -40,12 +43,26 @@ import com.facebook.ads.InterstitialAd;
 
 import butterknife.ButterKnife;
 
+import static com.androidbull.calculator.photo.vault.MainApplication.theme_boolean;
+
 public class HomeFragment extends Fragment {
 
     private int PERMISSION_REQUEST_CODE = 100;
     private final String INCOGNITO_BROWSER_PACKAGE_NAME = "com.androidbull.incognito.browser";
     private AdView adView;
     private LinearLayout mLlAd;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SharedPreferences mPrefs = getContext().getSharedPreferences("THEME", 0);
+        theme_boolean = mPrefs.getBoolean("theme_boolean", true);
+        if (theme_boolean) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_laoyut, container, false);

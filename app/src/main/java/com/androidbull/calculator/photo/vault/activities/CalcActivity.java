@@ -77,7 +77,6 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-
 public class CalcActivity extends MyBassActivity implements View.OnClickListener, View.OnTouchListener {
 
     private static final String TAG = "CalcActivity";

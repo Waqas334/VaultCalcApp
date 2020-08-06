@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.SwitchPreference;
 
 import android.util.Log;
@@ -177,6 +179,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             SharedPreferences mPrefs = mContext.getSharedPreferences("THEME", 0);
             SharedPreferences.Editor mEditor = mPrefs.edit();
             mEditor.putBoolean("theme_boolean", theme_boolean).apply();
+            try {
+               getActivity().setResult(Activity.RESULT_OK);
+               getActivity().finish();
+            }catch (Exception e){
+                Toast.makeText(mContext, "Theme will be changed next time you login.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

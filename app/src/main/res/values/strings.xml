@@ -71,10 +71,10 @@
     <string name="grant_permission_desc">Please grant all permissions to access additional functionality.</string>
     <string name="dismiss">Dismiss</string>
     <string name="select_atleat_1_image">Please select at least one image!</string>
-    <string name="moving_dash_of_dash_size">Moving %1$i of %1$i </string>
+    <string name="moving_dash_of_dash_size">Moving %1$d of %1$d </string>
     <string name="moving">Moving</string>
     <string name="moving_audios">Moving Audio(s)</string>
-    <string name="moving_1_of">Moving 1 of %1$i</string>
+    <string name="moving_1_of">Moving 1 of %1$d</string>
     <string name="alert">Alert</string>
     <string name="delete_file_desc">Are you sure you want to delete selected files?</string>
     <string name="select_1_file">Please select at least one file!</string>

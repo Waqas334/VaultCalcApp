@@ -24,6 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
@@ -58,7 +59,9 @@
         <activity
             android:name=".vault.activities.ConfirmCalcActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".vault.activities.CalcActivity">
+        <activity
+            android:name=".vault.activities.CalcActivity"
+            android:autoRemoveFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
