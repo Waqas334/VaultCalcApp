@@ -333,9 +333,16 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
 
         @Override
         public void onError(CameraDevice camera, int error) {
+
             mCameraOpenCloseLock.release();
             cameraDevice.close();
             cameraDevice = null;
+        }
+
+        @Override
+        public void onClosed(@NonNull CameraDevice camera) {
+            super.onClosed(camera);
+//            finish();
         }
     };
 

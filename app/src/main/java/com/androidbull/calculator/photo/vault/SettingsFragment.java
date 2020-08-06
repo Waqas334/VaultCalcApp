@@ -114,16 +114,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
 
     private void rateUs() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         builder.setTitle(getResources().getString(R.string.rate_app));
         builder.setMessage(getResources().getString(R.string.rate_app_desc));
         builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> Utils.gotoPlayStore(getContext().getPackageName(), getContext()));
         builder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> letUsKnow());
+
         builder.show();
     }
 
     private void letUsKnow() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.MyDialogTheme);
         builder.setTitle(getResources().getString(R.string.inform_us));
         builder.setMessage(getResources().getString(R.string.inform_us_description));
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> openEmail("Not Enjoying App"));
@@ -147,7 +148,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private void share() {
         try {
-
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));

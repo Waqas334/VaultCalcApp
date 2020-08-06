@@ -1,5 +1,6 @@
 package com.androidbull.calculator.photo.vault.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -43,8 +44,10 @@ public class PrivacyPolicyActivity extends BaseActivity {
     private void loadContent() {
 
         mWebView = findViewById(R.id.txtInformtation);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            mWebView.setBackgroundColor(getColor(R.color.backcolr));
+//        }
         mWebView.loadUrl("file:///android_asset/privacy.html");
-
     }
 
 }
