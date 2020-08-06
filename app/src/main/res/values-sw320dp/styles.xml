@@ -1,0 +1,117 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:windowBackground">@color/backcolr</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorAccent">@color/newColorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="windowNoTitle">true</item>
+        <item name="drawerArrowStyle">@style/DrawerHamburgerStyle</item>
+    </style>
+
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:background">@color/backcolr</item>
+    </style>
+
+    <style name="CheckboxTheme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorControlActivated">@color/newColorAccent</item>
+        <item name="colorControlNormal">#ff858484</item>
+    </style>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/backcolr</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
+        <item name="android:subtitleTextColor" tools:targetApi="m">@color/textColor</item>
+    </style>
+
+    <style name="DrawerHamburgerStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/white</item>
+    </style>
+
+    <style name="calculatorButtonsStyle">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/circle_tv</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/txt0</item>
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:translationZ">5dp</item>\
+
+
+    </style>
+
+    <style name="card_style">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="cardBackgroundColor">@color/backcolr</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="ll_home_card_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="image_view_style_home">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:scaleType">fitStart</item>
+    </style>
+
+    <style name="tv_home_stye">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom|center</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="change_pass_style">
+        <item name="android:inputType">number</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="symbleButtonsStyle">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/circle_tv</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/txt0</item>
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+        <item name="android:textColor">@color/symblclr</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:translationZ">5dp</item>
+
+    </style>
+
+
+    <style name="text_color">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+    <style name="back_black">
+        <item name="android:background">@color/textColor</item>
+    </style>
+
+
+</resources>

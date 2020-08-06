@@ -2,9 +2,9 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_picture"
@@ -17,12 +17,12 @@
         <LinearLayout style="@style/ll_home_card_style">
 
             <ImageView
-                android:src="@drawable/ic_pictures_svg"
-                style="@style/image_view_style_home" />
+                style="@style/image_view_style_home"
+                android:src="@drawable/ic_pictures_svg" />
 
             <TextView
-                android:text="Photos"
-                style="@style/tv_home_stye" />
+                style="@style/tv_home_stye"
+                android:text="Photos" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -38,12 +38,12 @@
         <LinearLayout style="@style/ll_home_card_style">
 
             <ImageView
-                android:src="@drawable/ic_audio_svg"
-                style="@style/image_view_style_home" />
+                style="@style/image_view_style_home"
+                android:src="@drawable/ic_audio_svg" />
 
             <TextView
-                android:text="Audios"
-                style="@style/tv_home_stye" />
+                style="@style/tv_home_stye"
+                android:text="Audios" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -60,12 +60,12 @@
 
 
             <ImageView
-                android:src="@drawable/ic_videos_svg"
-                style="@style/image_view_style_home" />
+                style="@style/image_view_style_home"
+                android:src="@drawable/ic_videos_svg" />
 
             <TextView
-                android:text="Videos"
-                style="@style/tv_home_stye" />
+                style="@style/tv_home_stye"
+                android:text="Videos" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -81,12 +81,12 @@
         <LinearLayout style="@style/ll_home_card_style">
 
             <ImageView
-                android:src="@drawable/ic_files_svg"
-                style="@style/image_view_style_home" />
+                style="@style/image_view_style_home"
+                android:src="@drawable/ic_files_svg" />
 
             <TextView
-                android:text="Files"
-                style="@style/tv_home_stye" />
+                style="@style/tv_home_stye"
+                android:text="Files" />
 
         </LinearLayout>
 
@@ -104,12 +104,12 @@
 
 
             <ImageView
-                android:src="@drawable/ic_intruder_svg"
-                style="@style/image_view_style_home" />
+                style="@style/image_view_style_home"
+                android:src="@drawable/ic_intruder_svg" />
 
             <TextView
-                android:text="Intruder"
-                style="@style/tv_home_stye" />
+                style="@style/tv_home_stye"
+                android:text="Intruder" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -125,24 +125,24 @@
         <LinearLayout style="@style/ll_home_card_style">
 
             <ImageView
-                android:src="@drawable/ic_browser_svg"
-                style="@style/image_view_style_home" />
+                style="@style/image_view_style_home"
+                android:src="@drawable/ic_browser_svg" />
 
             <TextView
-                android:text="Browser"
-                style="@style/tv_home_stye" />
+                style="@style/tv_home_stye"
+                android:text="Browser" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:id="@+id/home_banner_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        tools:layout_height="50dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
