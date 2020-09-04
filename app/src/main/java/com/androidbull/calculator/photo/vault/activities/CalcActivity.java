@@ -577,8 +577,6 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                 @Override
                 public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-
-
                     //Toast.makeText(CalcActivity.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
                     createCameraPreview();
                 }
@@ -629,7 +627,6 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
         private void save(byte[] bytes) throws IOException {
             OutputStream output = null;
             try {
-
 
                 Date todayDate = Calendar.getInstance().getTime();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -1069,12 +1066,12 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                         } else if (!f6033r) {
                             Log.i(TAG, "onClick: Boolean value is false");
 
-
-                            if (MainApplication.getInstance().getPassword().length() == cpass.length()) {
-                                Log.i(TAG, "onClick: Both have same length");
-
-                                takePicture();
-                            }
+                            takePicture();
+//                            if (MainApplication.getInstance().getPassword().length() == cpass.length()) {
+//                                Log.i(TAG, "onClick: Both have same length");
+//
+//
+//                            }
 
                             if (!(!ah
                                     || f6026X.equals("")
