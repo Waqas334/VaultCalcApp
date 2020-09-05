@@ -47,7 +47,7 @@ import static com.androidbull.calculator.photo.vault.MainApplication.theme_boole
 
 public class HomeFragment extends Fragment {
 
-    private int PERMISSION_REQUEST_CODE = 100;
+    private final int PERMISSION_REQUEST_CODE = 100;
     private final String INCOGNITO_BROWSER_PACKAGE_NAME = "com.androidbull.incognito.browser";
     private AdView adView;
     private LinearLayout mLlAd;

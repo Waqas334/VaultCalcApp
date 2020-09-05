@@ -23,6 +23,7 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -625,6 +626,10 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
         }
 
         private void save(byte[] bytes) throws IOException {
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
+
+
+            }
             OutputStream output = null;
             try {
 
