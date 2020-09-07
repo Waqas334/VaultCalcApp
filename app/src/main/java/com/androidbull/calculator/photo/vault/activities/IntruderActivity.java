@@ -175,22 +175,25 @@ public class IntruderActivity extends MyBassActivity {
 
             File[] allFiles = path.listFiles((dir, name) -> (name.endsWith(".jpg")
                     || name.endsWith(".jpeg") || name.endsWith(".png")));
+            if (allFiles != null) {
 
-            if (allFiles.length > 0) {
 
-                for (int i = 0; i < allFiles.length; i++) {
+                if (allFiles.length > 0) {
 
-                    al_my_photos.add(allFiles[i]);
+                    for (int i = 0; i < allFiles.length; i++) {
+
+                        al_my_photos.add(allFiles[i]);
+
+                    }
+                    Collections.sort(al_my_photos, Collections.reverseOrder());
+                    Share.al_my_photos_photo.addAll(al_my_photos);
+                    Collections.reverse(Share.al_my_photos_photo);
+
+                    intruderAdapter = new IntruderAdapter(getApplicationContext(), Share.al_my_photos_photo, (view, position) -> adapterItemClickListener(position));
+
+                    mRecyclerView.setAdapter(intruderAdapter);
 
                 }
-                Collections.sort(al_my_photos, Collections.reverseOrder());
-                Share.al_my_photos_photo.addAll(al_my_photos);
-                Collections.reverse(Share.al_my_photos_photo);
-
-                intruderAdapter = new IntruderAdapter(getApplicationContext(), Share.al_my_photos_photo, (view, position) -> adapterItemClickListener(position));
-
-                mRecyclerView.setAdapter(intruderAdapter);
-
             }
         }
 
@@ -203,7 +206,7 @@ public class IntruderActivity extends MyBassActivity {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setContentView(R.layout.intruder_full_screen);
             int widthInPixel = Resources.getSystem().getDisplayMetrics().widthPixels;
-            dialog.getWindow().setLayout(widthInPixel- 50, Toolbar.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setLayout(widthInPixel - 50, Toolbar.LayoutParams.WRAP_CONTENT);
             dialog.setCancelable(true);
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
