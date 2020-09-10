@@ -13,20 +13,19 @@
         android:gravity="center_vertical">
 
         <LinearLayout
-            android:layout_margin="10dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_margin="10dp"
             android:background="@drawable/circle_bg"
             android:gravity="center">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/img"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_file_white_24dp"
-                android:tint="@color/newColorAccent" />
+                android:src="@drawable/ic_file_white_24dp" />
 
         </LinearLayout>
 

@@ -430,9 +430,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                 return;
             }
             manager.openCamera(cameraId, stateCallback, null);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Log.e("tag", "openCamera X");
@@ -464,7 +462,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                     Toast.makeText(CalcActivity.this, getString(R.string.config_change), Toast.LENGTH_SHORT).show();
                 }
             }, null);
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -476,7 +474,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
         captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
         try {
             cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, mBackgroundHandler);
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -589,7 +587,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                 public void onConfigured(CameraCaptureSession session) {
                     try {
                         session.capture(captureBuilder.build(), captureListener, mBackgroundHandler);
-                    } catch (CameraAccessException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -598,7 +596,7 @@ public class CalcActivity extends MyBassActivity implements View.OnClickListener
                 public void onConfigureFailed(CameraCaptureSession session) {
                 }
             }, mBackgroundHandler);
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

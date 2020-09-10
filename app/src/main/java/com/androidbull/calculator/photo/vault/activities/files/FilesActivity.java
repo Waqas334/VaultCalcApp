@@ -86,30 +86,28 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
         dbHelper = new DBHelper(this);
 
         findViews();
-
         setHeaderInfo();
         initViews();
+
+        setAdapter();
+
     }
 
     private void findViews() {
-
         btnUnhide = findViewById(R.id.btn_unhide);
         fabAdd = findViewById(R.id.fab_add);
         recyclerview = findViewById(R.id.recyclerview);
         toolbar = findViewById(R.id.toolbar);
         txtError = findViewById(R.id.txt_error);
         viewanimator = findViewById(R.id.viewanimator);
-
     }
 
     private void setHeaderInfo() {
-
         //toolbar.setNavigationIcon((int) R.drawable.ic_arrow);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.file));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-
     }
 
     private void initViews() {
@@ -120,6 +118,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
 
         adapter = new FilesAdapter(this);
         recyclerview.setAdapter(adapter);
+
         GetHiddenFiles task = new GetHiddenFiles();
         task.onFilesLoadedListener = this;
         task.execute(new Void[0]);
@@ -229,7 +228,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
         progressbar = dialog.findViewById(R.id.progress_bar);
         txtCount = dialog.findViewById(R.id.txt_count);
         ((TextView) dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_files));
-        this.txtCount.setText(getString(R.string.moving_1_of,files.size()));
+        this.txtCount.setText(getString(R.string.moving_1_of, files.size()));
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -246,7 +245,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
 
     private void publishProgress(int size) {
         if (dialog != null && dialog.isShowing()) {
-            txtCount.setText(getString(R.string.moving_dash_of_dash_size,(count + 1),size));
+            txtCount.setText(getString(R.string.moving_dash_of_dash_size, (count + 1), size));
         }
     }
 
@@ -316,7 +315,6 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
         menuItemSelect = menu.findItem(R.id.itm_select);
         menuItemDelete = menu.findItem(R.id.itm_delete);
         menuItemEdit = menu.findItem(R.id.itm_edit);
-        setAdapter();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -392,7 +390,7 @@ public class FilesActivity extends BaseActivity implements OnFilesLoadedListener
         if (menuItemDelete != null) {
             menuItemDelete.setVisible(needToshow);
         }
-        btnUnhide.setVisibility(needToshow ?View.VISIBLE: View.GONE);
+        btnUnhide.setVisibility(needToshow ? View.VISIBLE : View.GONE);
     }
 
     public void showSelectAllButton(boolean needToShow) {

@@ -115,9 +115,7 @@ public class HomeFragment extends Fragment {
 
         intruder.setOnClickListener(v16 -> startActivity(new Intent(getActivity(), IntruderActivity.class)));
 
-        browser.setOnClickListener(v15 -> {
-            showIncognitoBrowserDialog();
-        });
+        browser.setOnClickListener(v15 -> showIncognitoBrowserDialog());
 
         image.setOnClickListener(v14 -> startActivityForResult(new Intent(getActivity(), ImagesActivity.class), AppConstants.REFRESH_LIST));
 

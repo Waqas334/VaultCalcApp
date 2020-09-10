@@ -1,7 +1,10 @@
 package com.androidbull.calculator.photo.vault.adapters.video;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,9 +81,16 @@ public class VideoAdapter extends Adapter<ViewHolder> {
             }
             if (!bucket.getOldPath().isEmpty()) {
                 File fFile = new File(bucket.getOldPath());
+
                 Glide.with(this.context)
                         .load(Uri.fromFile(fFile))
                         .into(((ImageViewHolder) holder).img);
+
+               /* Bitmap bmThumbnail;
+                bmThumbnail = ThumbnailUtils.createVideoThumbnail(fFile.getPath(), MediaStore.Images.Thumbnails.MICRO_KIND);
+                ((ImageViewHolder) holder).img.setImageBitmap(bmThumbnail);
+*/
+
                 ((ImageViewHolder) holder).txtTitle.setText(fFile.getName());
                 ((ImageViewHolder) holder).txtSize.setText(MainApplication.getInstance().getFileSize(fFile.length()));
             }
