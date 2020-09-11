@@ -3,6 +3,7 @@ package com.androidbull.calculator.photo.vault.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.media.Image;
@@ -14,6 +15,7 @@ import android.view.Surface;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +27,42 @@ import java.util.List;
  */
 
 public class Utils {
+
+    public static boolean isImageFile(String path) {
+        String mimeType = URLConnection.guessContentTypeFromName(path);
+        return mimeType != null && mimeType.startsWith("image");
+    }
+
+    public static boolean isVideoFile(String path) {
+        String mimeType = URLConnection.guessContentTypeFromName(path);
+        return mimeType != null && mimeType.startsWith("video");
+    }
+
+    public static boolean isAudioFile(String path) {
+        String mimeType = URLConnection.guessContentTypeFromName(path);
+        return mimeType != null && mimeType.startsWith("audio");
+    }
+
+    public static void openAppInPlayStore(Context context, String packageName) {
+        Intent intent = new Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
+        try {
+            context.startActivity(new Intent(intent)
+                    .setPackage("com.android.vending"));
+        } catch (android.content.ActivityNotFoundException exception) {
+            context.startActivity(intent);
+        }
+    }
+
+    public static boolean isPackageInstalled(String packageName, PackageManager packageManager) {
+        try {
+            packageManager.getPackageInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
 
     public static Matrix configureTransform(int viewWidth, int viewHeight, Size mPreviewSize, Activity context) {
 
@@ -79,7 +117,7 @@ public class Utils {
         }
     }
 
-   public static class CompareSizesByArea implements Comparator<Size> {
+    public static class CompareSizesByArea implements Comparator<Size> {
 
         @Override
         public int compare(Size lhs, Size rhs) {

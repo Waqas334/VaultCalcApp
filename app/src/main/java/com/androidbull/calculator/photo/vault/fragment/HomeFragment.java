@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.androidbull.calculator.photo.R;
-import com.androidbull.calculator.photo.vault.activities.HomeActivity;
+import com.androidbull.calculator.photo.vault.activities.BrowserFilesActivity;
 import com.androidbull.calculator.photo.vault.activities.IntruderActivity;
 import com.androidbull.calculator.photo.vault.utils.AppConstants;
 import com.androidbull.calculator.photo.vault.activities.audio.AudiosActivity;
@@ -39,7 +39,6 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
-import com.facebook.ads.InterstitialAd;
 
 import butterknife.ButterKnife;
 
@@ -70,11 +69,13 @@ public class HomeFragment extends Fragment {
         findViews(view);
         return view;
     }
+
     AdListener adListener;
     private static final String TAG = "HomeFragment";
+
     private void findViews(View v) {
 
-        adView =  new AdView(getContext(),getContext().getString(R.string.home_banner_ad_id), AdSize.BANNER_HEIGHT_50);
+        adView = new AdView(getContext(), getContext().getString(R.string.home_banner_ad_id), AdSize.BANNER_HEIGHT_50);
         mLlAd = v.findViewById(R.id.home_banner_container);
         mLlAd.addView(adView);
         AdView.AdViewLoadConfig loadAdConfig = adView.buildLoadAdConfig()
@@ -85,7 +86,7 @@ public class HomeFragment extends Fragment {
         adListener = new AdListener() {
             @Override
             public void onError(Ad ad, AdError adError) {
-                Log.e(TAG, "onError: Ad WError: " + adError.getErrorMessage() );
+                Log.e(TAG, "onError: Ad WError: " + adError.getErrorMessage());
             }
 
             @Override
@@ -115,7 +116,9 @@ public class HomeFragment extends Fragment {
 
         intruder.setOnClickListener(v16 -> startActivity(new Intent(getActivity(), IntruderActivity.class)));
 
-        browser.setOnClickListener(v15 -> showIncognitoBrowserDialog());
+        browser.setOnClickListener(v15 -> {
+            startActivity(new Intent(requireContext(), BrowserFilesActivity.class));
+        });
 
         image.setOnClickListener(v14 -> startActivityForResult(new Intent(getActivity(), ImagesActivity.class), AppConstants.REFRESH_LIST));
 
@@ -126,7 +129,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void showIncognitoBrowserDialog() {
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(requireContext());
         dialog.requestWindowFeature(1);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_templete);

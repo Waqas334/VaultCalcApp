@@ -201,6 +201,40 @@ public class BaseActivity extends MyBassActivity {
         }
     }
 
+    public class GetHiddenBrowserFiles extends AsyncTask<Void, Void, ArrayList<AllFilesModel>> {
+
+        public OnFilesLoadedListener onFilesLoadedListener;
+
+        protected ArrayList<AllFilesModel> doInBackground(Void... voids) {
+            ArrayList<AllFilesModel> resultIAV = new ArrayList();
+            File file = new File(AppConstants.BROWSER_FILES_PATH);
+            if (!file.exists()) {
+                return null;
+            }
+            File[] imageList = file.listFiles();
+            if (imageList == null) {
+                return null;
+            }
+            for (File imagePath : imageList) {
+                Log.e("PATH", "" + imagePath.getAbsolutePath());
+                try {
+                    resultIAV.add(new AllFilesModel(imagePath.getAbsolutePath(), imagePath.lastModified()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return resultIAV;
+        }
+
+
+        protected void onPostExecute(ArrayList<AllFilesModel> allFileModels) {
+            super.onPostExecute(allFileModels);
+            if (this.onFilesLoadedListener != null) {
+                this.onFilesLoadedListener.onFilesLoaded(allFileModels);
+            }
+        }
+    }
+
     public class GetHiddenFiles extends AsyncTask<Void, Void, ArrayList<AllFilesModel>> {
 
         public OnFilesLoadedListener onFilesLoadedListener;
@@ -302,5 +336,4 @@ public class BaseActivity extends MyBassActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 }

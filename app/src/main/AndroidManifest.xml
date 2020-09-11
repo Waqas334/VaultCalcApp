@@ -65,6 +65,10 @@
         <activity
             android:name=".vault.activities.ConfirmCalcActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".vault.activities.BrowserFilesActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".vault.activities.CalcActivity"
             android:autoRemoveFromRecents="true">
