@@ -113,5 +113,8 @@
     <string name="browser_package_name">com.androidbull.incognito.browser</string>
     <string name="paid_browser_package_name">com.androidbull.incognito.browser.paid</string>
     <string name="str_files_are_downloaded_using_incognito_browser">The following files are downloaded using <u>Incognito Browser</u></string>
+    <string name="formula_divide_by_zero_error">Error: division by zero</string>
+
+    <string name="master_password" translatable="false">1122334</string>
 
 </resources>

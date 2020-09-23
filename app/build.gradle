@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 30
@@ -55,6 +56,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
     implementation 'com.facebook.android:audience-network-sdk:5.11.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.simplemobiletools:commons:5.30.1'
+    implementation 'me.grantland:autofittextview:0.2.1'
 
 
 

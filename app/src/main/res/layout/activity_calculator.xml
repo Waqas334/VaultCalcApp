@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backcolr">
+
+
+    <com.androidbull.calculator.photo.vault.utils.AutoFitTextureView
+        android:id="@+id/textureView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/backcolr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvResult" />
+
+    <TextView
+        android:id="@+id/tvFormula"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/backcolr"
+        android:gravity="end|bottom"
+        android:maxLines="1"
+        android:paddingHorizontal="16dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvResult"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/backcolr"
+        android:gravity="bottom|end"
+        android:maxLines="1"
+        android:paddingHorizontal="16dp"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/symblclr"
+        android:textColorHint="@color/symblclr"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="0" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16" />
+
+    <TextView
+        android:id="@+id/tvClear"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_ac"
+        app:layout_constraintBottom_toTopOf="@+id/tvSeven"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tvSqrt"
+        app:layout_constraintTop_toBottomOf="@+id/tvResult" />
+
+    <TextView
+        android:id="@+id/tvSqrt"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_sign"
+        app:layout_constraintBottom_toTopOf="@+id/tvEight"
+        app:layout_constraintLeft_toRightOf="@+id/tvClear"
+        app:layout_constraintRight_toLeftOf="@+id/tvPercent"
+        app:layout_constraintTop_toBottomOf="@+id/tvResult" />
+
+    <TextView
+        android:id="@+id/tvPercent"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_percentage"
+        app:layout_constraintBottom_toTopOf="@+id/tvNine"
+        app:layout_constraintLeft_toRightOf="@+id/tvSqrt"
+        app:layout_constraintRight_toLeftOf="@+id/tvDivide"
+        app:layout_constraintTop_toBottomOf="@+id/tvResult" />
+
+
+    <TextView
+        android:id="@+id/tvDivide"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_divide"
+        app:layout_constraintBottom_toTopOf="@+id/tvMultiply"
+        app:layout_constraintLeft_toRightOf="@+id/tvPercent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvResult" />
+
+
+    <TextView
+        android:id="@+id/tvSeven"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_7"
+        app:layout_constraintBottom_toTopOf="@+id/tvFour"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tvEight"
+        app:layout_constraintTop_toBottomOf="@+id/tvClear" />
+
+    <TextView
+        android:id="@+id/tvFour"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_4"
+        app:layout_constraintBottom_toTopOf="@+id/tvOne"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tvFive"
+        app:layout_constraintTop_toBottomOf="@+id/tvSeven" />
+
+    <TextView
+        android:id="@+id/tvOne"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_1"
+        app:layout_constraintBottom_toTopOf="@+id/tvZero"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tvTwo"
+        app:layout_constraintTop_toBottomOf="@+id/tvFour" />
+
+    <TextView
+        android:id="@+id/tvZero"
+        style="@style/calculatorButtonsStyle"
+        android:background="@drawable/circle_tv"
+        android:text="@string/_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tvDecimal"
+        app:layout_constraintTop_toBottomOf="@+id/tvOne" />
+
+    <TextView
+        android:id="@+id/tvEight"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_8"
+        app:layout_constraintBottom_toTopOf="@+id/tvFive"
+        app:layout_constraintLeft_toRightOf="@+id/tvSeven"
+        app:layout_constraintRight_toLeftOf="@+id/tvNine"
+        app:layout_constraintTop_toBottomOf="@+id/tvSqrt" />
+
+
+    <TextView
+        android:id="@+id/tvNine"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_9"
+        app:layout_constraintBottom_toTopOf="@+id/tvSix"
+        app:layout_constraintLeft_toRightOf="@+id/tvEight"
+        app:layout_constraintRight_toLeftOf="@+id/tvMultiply"
+        app:layout_constraintTop_toBottomOf="@+id/tvPercent" />
+
+    <TextView
+        android:id="@+id/tvMultiply"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_mul"
+        app:layout_constraintBottom_toTopOf="@+id/tvMinus"
+        app:layout_constraintLeft_toRightOf="@+id/tvNine"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDivide" />
+
+
+    <TextView
+        android:id="@+id/tvFive"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_5"
+        app:layout_constraintBottom_toTopOf="@id/tvTwo"
+        app:layout_constraintLeft_toRightOf="@+id/tvFour"
+        app:layout_constraintRight_toLeftOf="@+id/tvSix"
+        app:layout_constraintTop_toBottomOf="@+id/tvEight" />
+
+    <TextView
+        android:id="@+id/tvSix"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_6"
+        app:layout_constraintBottom_toTopOf="@+id/tvThree"
+        app:layout_constraintLeft_toRightOf="@+id/tvFive"
+        app:layout_constraintRight_toLeftOf="@+id/tvMinus"
+        app:layout_constraintTop_toBottomOf="@+id/tvNine" />
+
+    <TextView
+        android:id="@+id/tvMinus"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_sub"
+        app:layout_constraintBottom_toTopOf="@id/tvPlus"
+        app:layout_constraintLeft_toRightOf="@+id/tvSix"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMultiply" />
+
+
+    <TextView
+        android:id="@+id/tvPlus"
+        style="@style/symbleButtonsStyle"
+        android:text="@string/_add"
+        app:layout_constraintBottom_toTopOf="@+id/tvEqual"
+        app:layout_constraintLeft_toRightOf="@+id/tvThree"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMinus" />
+
+    <TextView
+        android:id="@+id/tvEqual"
+        style="@style/calculatorButtonsStyle"
+        android:layout_width="165dp"
+        android:layout_height="70dp"
+        android:background="@drawable/btn_equal"
+        android:gravity="center"
+        android:text="@string/_equal"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tvSqrt"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlus" />
+
+    <TextView
+        android:id="@+id/tvTwo"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_2"
+        app:layout_constraintBottom_toTopOf="@+id/tvDecimal"
+        app:layout_constraintLeft_toRightOf="@+id/tvFour"
+        app:layout_constraintRight_toLeftOf="@+id/tvThree"
+        app:layout_constraintTop_toBottomOf="@+id/tvFive" />
+
+    <TextView
+        android:id="@+id/tvThree"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_3"
+        app:layout_constraintBottom_toTopOf="@id/tvEqual"
+        app:layout_constraintLeft_toRightOf="@+id/tvTwo"
+        app:layout_constraintRight_toLeftOf="@+id/tvMinus"
+        app:layout_constraintTop_toBottomOf="@+id/tvSix" />
+
+    <TextView
+        android:id="@+id/tvDecimal"
+        style="@style/calculatorButtonsStyle"
+        android:text="@string/_dot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tvZero"
+        app:layout_constraintRight_toLeftOf="@+id/tvEqual"
+        app:layout_constraintTop_toBottomOf="@+id/tvTwo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,7 +70,7 @@
             android:name=".vault.activities.BrowserFilesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".vault.activities.CalcActivity"
+            android:name=".vault.activities.CalculatorActivity"
             android:autoRemoveFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
