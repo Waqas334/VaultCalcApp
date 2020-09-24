@@ -76,7 +76,7 @@ import static com.simplemobiletools.calculator.helpers.ConstantsKt.PERCENT;
 import static com.simplemobiletools.calculator.helpers.ConstantsKt.PLUS;
 import static com.simplemobiletools.calculator.helpers.ConstantsKt.ROOT;
 
-public class CalculatorActivity extends MyBassActivity implements Calculator, View.OnTouchListener {
+public class CalculatorActivity extends MyBassActivity implements Calculator {
 
     private static final String TAG = "CalcActivity";
     private static SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -165,37 +165,39 @@ public class CalculatorActivity extends MyBassActivity implements Calculator, Vi
     @SuppressLint("ClickableViewAccessibility")
     private void initListeners() {
 
-        for (TextView textView : Arrays.asList(tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven, tvEight, tvNine, tvZero, tvDecimal, tvPlus, tvMinus, tvMultiply, tvDivide, tvSqrt, tvClear, tvEqual)) {
-            textView.setOnTouchListener(this);
-        }
-
         for (TextView textView : Arrays.asList(tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven, tvEight, tvNine, tvZero, tvDecimal)) {
             textView.setOnClickListener(view -> calculator.numpadClicked(view.getId()));
         }
 
         tvPlus.setOnClickListener(view -> {
             calculator.handleOperation(PLUS);
+            setFormula("+", this);
             operationSelected = true;
 
         });
         tvMinus.setOnClickListener(view -> {
             calculator.handleOperation(MINUS);
+            setFormula("-", this);
             operationSelected = true;
         });
         tvMultiply.setOnClickListener(view -> {
             calculator.handleOperation(MULTIPLY);
+            setFormula("*", this);
             operationSelected = true;
         });
         tvDivide.setOnClickListener(view -> {
             calculator.handleOperation(DIVIDE);
+            setFormula("/", this);
             operationSelected = true;
         });
         tvPercent.setOnClickListener(view -> {
             calculator.handleOperation(PERCENT);
+            setFormula("%", this);
             operationSelected = true;
         });
         tvSqrt.setOnClickListener(view -> {
             calculator.handleOperation(ROOT);
+            setFormula("√", this);
             operationSelected = true;
         });
 
@@ -203,6 +205,7 @@ public class CalculatorActivity extends MyBassActivity implements Calculator, Vi
         tvClear.setOnClickListener(view -> {
             calculator.handleClear();
         });
+
         tvClear.setOnLongClickListener(view -> {
             calculator.handleReset();
             operationSelected = false;
@@ -709,20 +712,5 @@ public class CalculatorActivity extends MyBassActivity implements Calculator, Vi
         }
 
     }
-
-
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        switch (motionEvent.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                view.setAlpha(0.2f);
-                view.callOnClick();
-                break;
-            case MotionEvent.ACTION_UP:
-                view.setAlpha(1.0f);
-                break;
-        }
-        return true;
-    }
-
 
 }

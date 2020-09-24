@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid
-        android:color="#7c90e6" />
-    <corners
-        android:radius="180dp" />
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item android:drawable="@drawable/equal_button_bg_pressed" android:state_selected="true" />
+<item android:drawable="@drawable/equal_button_bg_pressed" android:state_pressed="true" />
+<item android:drawable="@drawable/equal_button_bg_pressed" android:state_focused="true" />
+
+<item android:drawable="@drawable/equal_button_bg_normal" />
+
+</selector>

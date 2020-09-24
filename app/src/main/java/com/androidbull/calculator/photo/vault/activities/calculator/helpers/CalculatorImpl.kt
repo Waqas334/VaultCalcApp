@@ -65,7 +65,6 @@ class CalculatorImpl(calculator: Calculator, val context: Context) {
                 if (secondValue.compareTo(BigDecimal.ZERO) == 0 && sign == "/") {
                     context.toast(context.getString(R.string.formula_divide_by_zero_error))
                 }
-
                 setFormula(first + sign + second)
             }
         }

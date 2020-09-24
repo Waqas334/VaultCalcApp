@@ -14,8 +14,11 @@
     <color name="newColorAccent">#643ced</color>
     <color name="newColorAccentFaint">#66643ced</color>
     <color name="backcolr">#efedee</color>
+    <color name="backcolr_pressed">#33EFEDEE</color>
     <color name="symblclr">#899dfe</color>
+    <color name="symblclr_pressed">#33899DFE</color>
     <color name="darkclr">#414141</color>
     <color name="textColor">@color/black</color>
+    <color name="textColorPressed">#33000000</color>
 
 </resources>

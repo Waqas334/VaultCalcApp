@@ -32,6 +32,7 @@
     </style>
 
     <style name="calculatorButtonsStyle">
+
         <item name="android:layout_width">70dp</item>
         <item name="android:layout_height">70dp</item>
         <item name="android:layout_gravity">center</item>
@@ -39,7 +40,7 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/txt0</item>
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
-        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textColor">@color/numpad_text_color</item>
         <item name="android:textStyle">normal</item>
         <item name="android:elevation">10dp</item>
         <item name="android:translationZ">5dp</item>\
@@ -98,7 +99,7 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/txt0</item>
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
-        <item name="android:textColor">@color/symblclr</item>
+        <item name="android:textColor">@color/numpad_text_color_symbol</item>
         <item name="android:textStyle">normal</item>
         <item name="android:elevation">10dp</item>
         <item name="android:translationZ">5dp</item>
