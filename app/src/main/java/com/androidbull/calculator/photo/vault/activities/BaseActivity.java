@@ -39,7 +39,7 @@ public class BaseActivity extends MyBassActivity {
         public OnAllAudiosLoadedListener onAllAudiosLoadedListener;
 
         protected ArrayList<AllAudioModel> doInBackground(Void... voids) {
-            ArrayList<AllAudioModel> arrayList = new ArrayList();
+            ArrayList<AllAudioModel> arrayList = new ArrayList<>();
             Cursor songCursor = BaseActivity.this.getContentResolver().query(Media.EXTERNAL_CONTENT_URI, null, null, null, null);
             if (songCursor == null || !songCursor.moveToFirst()) {
                 return arrayList;
@@ -71,7 +71,7 @@ public class BaseActivity extends MyBassActivity {
             String[] projection = new String[]{"_data", "date_modified"};
             Cursor c = null;
             SortedSet<String> dirList = new TreeSet();
-            ArrayList<AllImagesModel> resultIAV = new ArrayList();
+            ArrayList<AllImagesModel> resultIAV = new ArrayList<>();
             String[] directories = null;
             if (u != null) {
                 c = BaseActivity.this.getContentResolver().query(u, projection, null, null, null);
@@ -142,7 +142,7 @@ public class BaseActivity extends MyBassActivity {
         public OnAllVideosLoadedListener onAllVideosLoadedListener;
 
         protected ArrayList<AllVideosModel> doInBackground(Void... voids) {
-            ArrayList<AllVideosModel> videos = new ArrayList();
+            ArrayList<AllVideosModel> videos = new ArrayList<>();
             Cursor cursor = BaseActivity.this.getContentResolver().query(Video.Media.EXTERNAL_CONTENT_URI, new String[]{"_data", "date_modified"}, null, null, null);
             try {
                 cursor.moveToFirst();
@@ -173,14 +173,14 @@ public class BaseActivity extends MyBassActivity {
         public OnAudioLoadedListener onAudioLoadedListener;
 
         protected ArrayList<AllAudioModel> doInBackground(Void... voids) {
-            ArrayList<AllAudioModel> resultIAV = new ArrayList();
+            ArrayList<AllAudioModel> resultIAV = new ArrayList<>();
             File file = new File(AppConstants.AUDIO_PATH);
             if (!file.exists()) {
-                return null;
+                return resultIAV;
             }
             File[] imageList = file.listFiles();
             if (imageList == null) {
-                return null;
+                return resultIAV;
             }
             for (File imagePath : imageList) {
                 Log.e("PATH", "" + imagePath.getAbsolutePath());
@@ -206,14 +206,14 @@ public class BaseActivity extends MyBassActivity {
         public OnFilesLoadedListener onFilesLoadedListener;
 
         protected ArrayList<AllFilesModel> doInBackground(Void... voids) {
-            ArrayList<AllFilesModel> resultIAV = new ArrayList();
+            ArrayList<AllFilesModel> resultIAV = new ArrayList<>();
             File file = new File(AppConstants.BROWSER_FILES_PATH);
             if (!file.exists()) {
-                return null;
+                return resultIAV;
             }
             File[] imageList = file.listFiles();
             if (imageList == null) {
-                return null;
+                return resultIAV;
             }
             for (File imagePath : imageList) {
                 Log.e("PATH", "" + imagePath.getAbsolutePath());
@@ -240,14 +240,14 @@ public class BaseActivity extends MyBassActivity {
         public OnFilesLoadedListener onFilesLoadedListener;
 
         protected ArrayList<AllFilesModel> doInBackground(Void... voids) {
-            ArrayList<AllFilesModel> resultIAV = new ArrayList();
+            ArrayList<AllFilesModel> resultIAV = new ArrayList<>();
             File file = new File(AppConstants.FILES_PATH);
             if (!file.exists()) {
-                return null;
+                return resultIAV;
             }
             File[] imageList = file.listFiles();
             if (imageList == null) {
-                return null;
+                return resultIAV;
             }
             for (File imagePath : imageList) {
                 Log.e("PATH", "" + imagePath.getAbsolutePath());
@@ -273,14 +273,14 @@ public class BaseActivity extends MyBassActivity {
         public OnImagesLoadedListener onImagesLoadedListener;
 
         protected ArrayList<AllImagesModel> doInBackground(Void... voids) {
-            ArrayList<AllImagesModel> resultIAV = new ArrayList();
+            ArrayList<AllImagesModel> resultIAV = new ArrayList<>();
             File file = new File(AppConstants.IMAGE_PATH);
             if (!file.exists()) {
-                return null;
+                return resultIAV;
             }
             File[] imageList = file.listFiles();
             if (imageList == null) {
-                return null;
+                return resultIAV;
             }
             for (File imagePath : imageList) {
                 Log.e("PATH", "" + imagePath.getAbsolutePath());
@@ -305,14 +305,14 @@ public class BaseActivity extends MyBassActivity {
         public OnVideosLoadedListener onVideosLoadedListener;
 
         protected ArrayList<AllVideosModel> doInBackground(Void... voids) {
-            ArrayList<AllVideosModel> resultIAV = new ArrayList();
+            ArrayList<AllVideosModel> resultIAV = new ArrayList<>();
             File file = new File(AppConstants.VIDEO_PATH);
             if (!file.exists()) {
-                return null;
+                return resultIAV;
             }
             File[] imageList = file.listFiles();
             if (imageList == null) {
-                return null;
+                return resultIAV;
             }
             for (File imagePath : imageList) {
                 Log.e("PATH", "" + imagePath.getAbsolutePath());
