@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
@@ -38,13 +39,15 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'com.google.firebase:firebase-core:17.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'com.google.firebase:firebase-core:17.5.1'
     implementation fileTree(include: ['httpclient-4.3-beta1.jar'], dir: 'libs')
     implementation fileTree(include: ['javaluator-3.0.0.jar'], dir: 'libs')
     implementation fileTree(include: ['exp4j-0.4.5.jar'], dir: 'libs')
 
     implementation 'com.jakewharton:butterknife:10.1.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
     implementation 'androidx.multidex:multidex:2.0.1'
