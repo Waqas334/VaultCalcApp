@@ -112,4 +112,9 @@
         <item>Сколько у тебя родственников?</item>
         <item>Кто твой парень?</item>
     </string-array>
+    <string name="str_nothing_downloaded"><b> Ничего не загружено! </b> Все, что вы скачали с помощью браузера Incognito, будет автоматически сохранено здесь!</string>
+    <string name="str_download_incognito_browser_now">Загрузите браузер в режиме инкогнито сейчас</string>
+    <string name="str_files_are_downloaded_using_incognito_browser">Следующие файлы загружаются с помощью <u> браузера инкогнито </u></string>
+    <string name="formula_divide_by_zero_error">Ошибка: деление на ноль</string>
+    <string name="dark_mode">Темный режим</string>
 </resources>

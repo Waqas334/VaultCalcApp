@@ -113,4 +113,9 @@
         <item>Wieviele Geschwister hast du?</item>
         <item>Wer ist dein Freund?</item>
     </string-array>
+    <string name="str_nothing_downloaded"><b> Nichts heruntergeladen! </b> Alles, was Sie mit dem Incognito Browser heruntergeladen haben, wird automatisch hier gespeichert!</string>
+    <string name="str_download_incognito_browser_now">Laden Sie den Incognito Browser jetzt herunter</string>
+    <string name="str_files_are_downloaded_using_incognito_browser">Die folgenden Dateien werden mit <u> Incognito Browser </u> heruntergeladen</string>
+    <string name="formula_divide_by_zero_error">Fehler: Division durch Null</string>
+    <string name="dark_mode">Dunkler Modus</string>
 </resources>

@@ -114,4 +114,9 @@
         <item>¿Cuántos hermanos tienes?</item>
         <item>¿Quién es tu novio?</item>
     </string-array>
+    <string name="str_nothing_downloaded"><b> ¡Nada descargado! </b> ¡Todo lo que descargó con el navegador de incógnito se guardará automáticamente aquí!</string>
+    <string name="str_download_incognito_browser_now">Descarga Incognito Browser ahora</string>
+    <string name="str_files_are_downloaded_using_incognito_browser">Los siguientes archivos se descargan mediante <u> navegador de incógnito </u></string>
+    <string name="formula_divide_by_zero_error">Error: división por cero</string>
+    <string name="dark_mode">Modo oscuro</string>
 </resources>

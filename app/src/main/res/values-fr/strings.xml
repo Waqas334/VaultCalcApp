@@ -114,4 +114,9 @@
         <item>Combien de frères et sœurs avez-vous ?</item>
         <item>Qui est votre petit ami ?</item>
     </string-array>
+    <string name="str_nothing_downloaded"><b> Rien de téléchargé! </b> Tout ce que vous avez téléchargé à l\'aide du navigateur Incognito sera automatiquement enregistré ici!</string>
+    <string name="str_download_incognito_browser_now">Téléchargez le navigateur Incognito maintenant</string>
+    <string name="str_files_are_downloaded_using_incognito_browser">Les fichiers suivants sont téléchargés à l\'aide du <u> navigateur de navigation privée </u></string>
+    <string name="formula_divide_by_zero_error">Erreur: division par zéro</string>
+    <string name="dark_mode">Mode sombre</string>
 </resources>

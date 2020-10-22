@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Calculator Vault</string>
+    <string name="app_name">Calculator</string>
     <string name="add_audios">Add Audios</string>
     <string name="add_videos">Add Videos</string>
     <string name="add_images">Add Images</string>
@@ -22,7 +22,7 @@
     <string name="change_security_question">Change Security Question</string>
     <string name="mroe">More</string>
     <string name="about_us">About us</string>
-    <string name="dark_mode" translatable="false">Dark Mode</string>
+    <string name="dark_mode" >Dark Mode</string>
     <string name="share_app">Share app</string>
     <string name="rate_app">Rate app</string>
     <string name="privacy_policy">Privacy Policy</string>
@@ -37,7 +37,7 @@
     <string name="rate_app_desc">Hey, thanks a lot for taking time to rate our app. Can you please tell us if you are enjoying the app or not?</string>
 
 
-    <string name="about_description"><![CDATA[    Calculator Vault is developed by <a href="https://twitter.com/waqasyounis334">AndroidBull</a>.<br><br>
+    <string name="about_description"><![CDATA[    Calculator Vault is developed by <a href="https://twitter.com/android_bull">AndroidBull</a>.<br><br>
     Calculator Vault works perfectly with <a href="https://play.google.com/store/apps/details?id=com.androidbull.incognito.browser">Incognito Browser</a> as whatever you download
     using our Incognito Browser will be automatically locked inside Calculator Vault<br><br>
         ]]>
@@ -107,13 +107,13 @@
     <string name="welcome">Welcome</string>
     <string name="welcome_message">Welcome to Calculator Photo Vault, here you can have more privacy than other.\n\n%1$s</string>
     <string name="cancel">Cancel</string>
-    <string name="cd_todo">todo</string>
-    <string name="str_nothing_downloaded"><b>Nothing Downloaded!</b>\n\nEverything you downloaded using Incognito Browser will automatically be saved here!</string>
+    <string name="cd_todo" translatable="false">todo</string>
+    <string name="str_nothing_downloaded"><b>Nothing Downloaded!</b>  Everything you downloaded using Incognito Browser will automatically be saved here!</string>
     <string name="str_download_incognito_browser_now">Download Incognito Browser Now</string>
-    <string name="browser_package_name">com.androidbull.incognito.browser</string>
-    <string name="paid_browser_package_name">com.androidbull.incognito.browser.paid</string>
+    <string name="browser_package_name" translatable="false">com.androidbull.incognito.browser</string>
+    <string name="paid_browser_package_name" translatable="false">com.androidbull.incognito.browser.paid</string>
     <string name="str_files_are_downloaded_using_incognito_browser">The following files are downloaded using <u>Incognito Browser</u></string>
-    <string name="formula_divide_by_zero_error">Error: division by zero</string>
+    <string name="formula_divide_by_zero_error">Error: Division by zero</string>
 
     <string name="master_password" translatable="false">1122334</string>
 

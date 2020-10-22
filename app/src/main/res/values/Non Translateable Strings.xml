@@ -2,15 +2,15 @@
 <resources>
 
 <!--    Settings Preference Keys-->
-    <string name="pref_key_change_question">pref_change_security_question</string>
-    <string name="pref_key_forgot_password">pref_forgot_password</string>
-    <string name="pref_key_about_us">pref_about_us</string>
-    <string name="pref_key_dark_mode">pref_dark_mode</string>
-    <string name="pref_key_share_app">pref_share_app</string>
-    <string name="pref_key_rate_app">pref_rate_app</string>
-    <string name="pref_key_privacy_policy">pref_privacy_policy</string>
-    <string name="pref_key_contact_us">pref_contact_us</string>
-    <string name="pref_key_change_password">pref_change_password</string>
+    <string name="pref_key_change_question" translatable="false">pref_change_security_question</string>
+    <string name="pref_key_forgot_password" translatable="false">pref_forgot_password</string>
+    <string name="pref_key_about_us" translatable="false">pref_about_us</string>
+    <string name="pref_key_dark_mode" translatable="false">pref_dark_mode</string>
+    <string name="pref_key_share_app" translatable="false">pref_share_app</string>
+    <string name="pref_key_rate_app" translatable="false">pref_rate_app</string>
+    <string name="pref_key_privacy_policy" translatable="false">pref_privacy_policy</string>
+    <string name="pref_key_contact_us" translatable="false">pref_contact_us</string>
+    <string name="pref_key_change_password" translatable="false">pref_change_password</string>
 
 
 <!--    Calcculator Keys-->
@@ -37,7 +37,7 @@
 
     <string name="facebook_app_id" translatable="false">1142389666122236</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1142389666122236</string>
-    <string name="home_banner_ad_id">1142389666122236_1142408702786999</string>
+    <string name="home_banner_ad_id" translatable="false">1142389666122236_1142408702786999</string>
 
 
 </resources>
