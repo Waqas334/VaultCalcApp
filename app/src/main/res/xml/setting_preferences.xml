@@ -33,6 +33,13 @@
             app:defaultValue="false"
             app:iconSpaceReserved="false" />
 
+        <SwitchPreference
+            android:key="@string/pref_intruder_mode_key"
+            android:summary="@string/pref_intruder_mode_summary"
+            android:title="@string/pref_intruder_mode_title"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false" />
+
         <Preference
             android:key="@string/pref_key_about_us"
             android:title="@string/about_us"

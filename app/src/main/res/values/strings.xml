@@ -122,5 +122,11 @@
     <string name="videos">Videos</string>
     <string name="files">Files</string>
     <string name="browser">Browser</string>
+    <string name="pref_intruder_mode_key">pref_intruder_mode_key</string>
+    <string name="pref_intruder_mode_title">Intruder Mode</string>
+    <string name="str_permission_required_for_intruder_mode">Camera permissions required for Intruder Mode.</string>
+    <string name="str_permission_required_for_intruder_mode_allow_from_settings">Camera permissions required for Intruder Mode. Grant Camera Permissions from settings</string>
+    <string name="str_permission_required_intruder_mode_disabled">Camera permissions required. Intruder Mode is disabled for now. Please enable it from Settings</string>
+    <string name="pref_intruder_mode_summary">Capture Selfie secretly when wrong password entered</string>
 
 </resources>

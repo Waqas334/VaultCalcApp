@@ -1,16 +1,21 @@
 package com.androidbull.calculator.photo.vault;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.SwitchPreference;
 
@@ -24,6 +29,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 
 import com.androidbull.calculator.photo.R;
+import com.androidbull.calculator.photo.vault.activities.CalculatorActivity;
 import com.androidbull.calculator.photo.vault.activities.NewChangePasswordActivity;
 import com.androidbull.calculator.photo.vault.activities.SecurityQuestionActivity;
 import com.androidbull.calculator.photo.vault.dialog.AboutUsDialog;
@@ -34,6 +40,7 @@ import static com.androidbull.calculator.photo.vault.MainApplication.theme_boole
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private static final int REQUEST_CAMERA_PERMISSION = 100;
     public Context mContext;
     private Activity mActivity;
 
@@ -126,7 +133,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     }
 
     private void letUsKnow() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.MyDialogTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         builder.setTitle(getResources().getString(R.string.inform_us));
         builder.setMessage(getResources().getString(R.string.inform_us_description));
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> openEmail("Not Enjoying App"));
@@ -180,10 +187,45 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             SharedPreferences.Editor mEditor = mPrefs.edit();
             mEditor.putBoolean("theme_boolean", theme_boolean).apply();
             try {
-               getActivity().setResult(Activity.RESULT_OK);
-               getActivity().finish();
-            }catch (Exception e){
+                getActivity().setResult(Activity.RESULT_OK);
+                getActivity().finish();
+            } catch (Exception e) {
                 Toast.makeText(mContext, "Theme will be changed next time you login.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        if (key.equalsIgnoreCase(getString(R.string.pref_intruder_mode_key))) {
+            boolean intruderMode = sharedPreferences.getBoolean(key, false);
+            if (intruderMode) {
+                if (!hasCameraPermissions()) {
+                    requestCameraPermissions();
+                }
+            }
+        }
+    }
+
+    private boolean hasCameraPermissions() {
+        return (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestCameraPermissions() {
+        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+
+                if (!shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                    Toast.makeText(requireContext(), R.string.str_permission_required_for_intruder_mode_allow_from_settings, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), R.string.str_permission_required_for_intruder_mode, Toast.LENGTH_SHORT).show();
+                }
+
+                SwitchPreference switchPreferenceIntruder = findPreference(getString(R.string.pref_intruder_mode_key));
+                if (switchPreferenceIntruder != null)
+                    switchPreferenceIntruder.setChecked(false);
             }
         }
     }

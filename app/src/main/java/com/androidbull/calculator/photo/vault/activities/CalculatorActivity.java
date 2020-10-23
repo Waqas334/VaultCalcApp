@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -39,6 +40,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
 
 import com.androidbull.calculator.photo.R;
 import com.androidbull.calculator.photo.vault.MainApplication;
@@ -113,13 +116,15 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
             tvClear, tvPercent, tvDivide, tvMultiply, tvMinus, tvPlus, tvEqual, tvSqrt, tvFormula, tvResult;
     private CalculatorImpl calculator;
     boolean operationSelected = false;
+    private SharedPreferences sharedPreferences;
 
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_calculator);
 
         textureView = findViewById(R.id.textureView);
-        textureView.setSurfaceTextureListener(textureListener);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
 
         initViews();
         initListeners();
@@ -301,6 +306,86 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
         dialog.show();
     }
 
+    private void checkTablet() {
+//        f6017O = (ImageView) findViewById(R.id.iv_square_root);
+//        f6017O.setOnClickListener(this);
+        if (share_calc.flag_expand) {
+            Log.e("flag_expand", "" + share_calc.flag_expand);
+            share_calc.flag_expand = false;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        Log.e("tag", "onPause");
+
+        closeCamera();
+        stopBackgroundThread();
+
+        super.onPause();
+    }
+
+    protected void onResume() {
+        super.onResume();
+        Log.e("tag", "onResume");
+        checkIntruderMode();
+
+    }
+
+    private void checkIntruderMode() {
+        boolean intruderMode = sharedPreferences.getBoolean(getString(R.string.pref_intruder_mode_key), false);
+        if (intruderMode) {
+            Log.e("tagtagtag", "intruderMode On");
+            if (hasCameraPermissions()) {
+                startIntruderMode();
+            } else {
+                sharedPreferences.edit().putBoolean(getString(R.string.pref_intruder_mode_key), false).apply();
+                Log.e("tagtagtag", "intruderMode disabled");
+                Toast.makeText(this, R.string.str_permission_required_intruder_mode_disabled, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Log.e("tagtagtag", "intruderMode Off");
+        }
+    }
+
+    private void startIntruderMode() {
+        Log.e("tagtagtag", "intruderMode Started");
+        startBackgroundThread();
+        if (textureView.isAvailable()) {
+            openCamera(textureView.getWidth(), textureView.getHeight());
+        } else {
+            textureView.setSurfaceTextureListener(textureListener);
+        }
+    }
+
+    private boolean hasCameraPermissions() {
+        return (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestCameraPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+    }
+
+
+    protected void startBackgroundThread() {
+        mBackgroundThread = new HandlerThread("Camera Background");
+        mBackgroundThread.start();
+        mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
+    }
+
+
+    protected void stopBackgroundThread() {
+        if (mBackgroundThread != null) {
+            mBackgroundThread.quitSafely();
+            try {
+                mBackgroundThread.join();
+                mBackgroundThread = null;
+                mBackgroundHandler = null;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
         @Override
@@ -375,6 +460,53 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
 //            finish();
         }
     };
+
+
+    protected void createCameraPreview() {
+        Log.e("tag", "createCameraPreview");
+        try {
+            SurfaceTexture texture = textureView.getSurfaceTexture();
+            assert texture != null;
+            texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
+            Surface surface = new Surface(texture);
+            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            //captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+            captureRequestBuilder.addTarget(surface);
+            cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
+                @Override
+                public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
+                    //The camera is already closed
+                    if (null == cameraDevice) {
+                        return;
+                    }
+                    // When the session is ready, we start displaying the preview.
+                    cameraCaptureSessions = cameraCaptureSession;
+                    updatePreview();
+                }
+
+                @Override
+                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+                    Toast.makeText(CalculatorActivity.this, getString(R.string.config_change), Toast.LENGTH_SHORT).show();
+                }
+            }, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    protected void updatePreview() {
+        if (null == cameraDevice) {
+            Log.e("tag", "updatePreview error, return");
+        }
+        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
+        try {
+            cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, mBackgroundHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void openCamera(int width, int height) {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -466,67 +598,6 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
         Log.e("tag", "openCamera X");
     }
 
-    protected void createCameraPreview() {
-        Log.e("tag", "createCameraPreview");
-        try {
-            SurfaceTexture texture = textureView.getSurfaceTexture();
-            assert texture != null;
-            texture.setDefaultBufferSize(imageDimension.getWidth(), imageDimension.getHeight());
-            Surface surface = new Surface(texture);
-            captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            //captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-            captureRequestBuilder.addTarget(surface);
-            cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
-                @Override
-                public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    //The camera is already closed
-                    if (null == cameraDevice) {
-                        return;
-                    }
-                    // When the session is ready, we start displaying the preview.
-                    cameraCaptureSessions = cameraCaptureSession;
-                    updatePreview();
-                }
-
-                @Override
-                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    Toast.makeText(CalculatorActivity.this, getString(R.string.config_change), Toast.LENGTH_SHORT).show();
-                }
-            }, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void updatePreview() {
-        if (null == cameraDevice) {
-            Log.e("tag", "updatePreview error, return");
-        }
-        captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
-        try {
-            cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, mBackgroundHandler);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void startBackgroundThread() {
-        mBackgroundThread = new HandlerThread("Camera Background");
-        mBackgroundThread.start();
-        mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
-    }
-
-    protected void stopBackgroundThread() {
-        mBackgroundThread.quitSafely();
-        try {
-            mBackgroundThread.join();
-            mBackgroundThread = null;
-            mBackgroundHandler = null;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void closeCamera() {
         try {
             mCameraOpenCloseLock.acquire();
@@ -549,25 +620,6 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                // close the app
-                Toast.makeText(CalculatorActivity.this, getResources().getString(R.string.permission_not_granted), Toast.LENGTH_LONG).show();
-                finish();
-            }
-        }
-    }
-
-
-    @Override
-    protected void onPause() {
-        Log.e("tag", "onPause");
-        closeCamera();
-        stopBackgroundThread();
-        super.onPause();
-    }
 
     protected void takePicture() {
         Log.i(TAG, "takePicture: executed");
@@ -632,6 +684,7 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
         }
     }
 
+
     ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
         @Override
         public void onImageAvailable(ImageReader reader) {
@@ -688,29 +741,5 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
             }
         }
     };
-
-
-    private void checkTablet() {
-//        f6017O = (ImageView) findViewById(R.id.iv_square_root);
-//        f6017O.setOnClickListener(this);
-        if (share_calc.flag_expand) {
-            Log.e("flag_expand", "" + share_calc.flag_expand);
-            share_calc.flag_expand = false;
-        }
-    }
-
-
-    protected void onResume() {
-        super.onResume();
-
-        Log.e("tag", "onResume");
-        startBackgroundThread();
-        if (textureView.isAvailable()) {
-            openCamera(textureView.getWidth(), textureView.getHeight());
-        } else {
-            textureView.setSurfaceTextureListener(textureListener);
-        }
-
-    }
 
 }
