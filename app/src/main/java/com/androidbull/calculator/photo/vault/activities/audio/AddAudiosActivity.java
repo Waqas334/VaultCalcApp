@@ -83,7 +83,7 @@ public class AddAudiosActivity extends BaseActivity implements OnAllAudiosLoaded
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adds_image);
+        setContentView(R.layout.activity_add_image);
         ButterKnife.bind(this);
         this.dbHelper = new DBHelper(this);
         findViews();

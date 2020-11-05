@@ -52,13 +52,13 @@ import butterknife.OnClick;
 public class ImagesActivity extends BaseActivity implements OnImagesLoadedListener {
 
     private static final String TAG = "ImagesActivity";
+
     private ImagesAdapter adapter;
     @BindView(R.id.banner_container)
     LinearLayout bannerContainer;
     @BindView(R.id.btn_unhide)
     Button btnUnhide;
     private int count;
-    DBHelper dbHelper;
     private Dialog dialog;
     @BindView(R.id.fab_add)
     FloatingActionButton fabAdd;
@@ -70,7 +70,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
     private MenuItem menuItemSelect;
     private int progress;
     private ProgressBar progressbar;
-    @BindView(R.id.recyclerview)
+    @BindView(R.id.rvImages)
     RecyclerView recyclerview;
     /* renamed from: t */
     private Timer f16t;
@@ -82,12 +82,16 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
     @BindView(R.id.viewanimator)
     ViewAnimator viewanimator;
 
+    private DBHelper dbHelper;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image);
+        setContentView(R.layout.activity_images);
+
         ButterKnife.bind(this);
-        this.dbHelper = new DBHelper(this);
+
+        dbHelper = new DBHelper(this);
+
         setHeaderInfo();
         Init();
     }
@@ -131,12 +135,9 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                 onBackPressed();
                 return;
             case R.id.fab_add:
-
                 startActivityForResult(new Intent(this, AddImageActivity.class), 1012);
                 overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
                 return;
-
-
             default:
                 return;
         }
@@ -227,7 +228,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
         this.progressbar = this.dialog.findViewById(R.id.progress_bar);
         this.txtCount = this.dialog.findViewById(R.id.txt_count);
         ((TextView) this.dialog.findViewById(R.id.txt_title)).setText(getString(R.string.moving_images));
-        this.txtCount.setText(getString(R.string.moving_1_of,files.size()));
+        this.txtCount.setText(getString(R.string.moving_1_of, files.size()));
         int totalFileSize = 0;
         for (String ss : files) {
             totalFileSize += (int) new File(ss).length();
@@ -244,7 +245,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
 
     private void publishProgress(int size) {
         if (this.dialog != null && this.dialog.isShowing()) {
-            txtCount.setText(getString(R.string.moving_dash_of_dash_size,(count + 1),size));
+            txtCount.setText(getString(R.string.moving_dash_of_dash_size, (count + 1), size));
         }
     }
 

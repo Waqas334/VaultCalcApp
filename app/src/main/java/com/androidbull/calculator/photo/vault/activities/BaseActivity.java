@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-//import com.safe.galleryigh.calculator.calligraphy.CalligraphyContextWrapper;
 
 public class BaseActivity extends MyBassActivity {
 
@@ -40,7 +39,7 @@ public class BaseActivity extends MyBassActivity {
 
         protected ArrayList<AllAudioModel> doInBackground(Void... voids) {
             ArrayList<AllAudioModel> arrayList = new ArrayList<>();
-            Cursor songCursor = BaseActivity.this.getContentResolver().query(Media.EXTERNAL_CONTENT_URI, null, null, null, null);
+            Cursor songCursor = getContentResolver().query(Media.EXTERNAL_CONTENT_URI, null, null, null, null);
             if (songCursor == null || !songCursor.moveToFirst()) {
                 return arrayList;
             }
@@ -67,24 +66,25 @@ public class BaseActivity extends MyBassActivity {
         public OnAllImagesLoadedListener onAllImagesLoadedListener;
 
         protected ArrayList<AllImagesModel> doInBackground(Void... voids) {
-            Uri u = Images.Media.EXTERNAL_CONTENT_URI;
+            Uri uri = Images.Media.EXTERNAL_CONTENT_URI;
+
             String[] projection = new String[]{"_data", "date_modified"};
-            Cursor c = null;
+            Cursor cursor = null;
             SortedSet<String> dirList = new TreeSet();
             ArrayList<AllImagesModel> resultIAV = new ArrayList<>();
             String[] directories = null;
-            if (u != null) {
-                c = BaseActivity.this.getContentResolver().query(u, projection, null, null, null);
+            if (uri != null) {
+                cursor = getContentResolver().query(uri, projection, null, null, null);
             }
-            if (c != null && c.moveToFirst()) {
+            if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    String tempDir = c.getString(0);
+                    String tempDir = cursor.getString(0);
                     try {
                         dirList.add(tempDir.substring(0, tempDir.lastIndexOf("/")));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                } while (c.moveToNext());
+                } while (cursor.moveToNext());
                 directories = new String[dirList.size()];
                 dirList.toArray(directories);
             }
@@ -112,9 +112,9 @@ public class BaseActivity extends MyBassActivity {
                                     || imagePath.getName().contains(".BMP")) {
                                 String path = imagePath.getAbsolutePath();
                                 long lastModified = imagePath.lastModified();
-                                if (path.contains(Environment.getExternalStorageDirectory().getAbsolutePath())) {
-                                    resultIAV.add(new AllImagesModel(path, lastModified));
-                                }
+//                                if (path.contains(Environment.getExternalStorageDirectory().getAbsolutePath())) {
+                                resultIAV.add(new AllImagesModel(path, lastModified));
+//                                }
                                 i2++;
                             } else {
                                 i2++;
@@ -274,7 +274,7 @@ public class BaseActivity extends MyBassActivity {
 
         protected ArrayList<AllImagesModel> doInBackground(Void... voids) {
             ArrayList<AllImagesModel> resultIAV = new ArrayList<>();
-            File file = new File(AppConstants.IMAGE_PATH);
+            File file = new File(AppConstants.IMAGES_PATH);
             if (!file.exists()) {
                 return resultIAV;
             }

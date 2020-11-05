@@ -2,57 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
-        android:id="@id/toolbar"
+        android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
     <LinearLayout
-        android:id="@id/banner_container"
+        android:id="@+id/banner_container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@+id/toolbar"
         android:orientation="vertical" />
 
     <ViewAnimator
         android:id="@+id/viewanimator"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/banner_container">
+        android:layout_below="@+id/banner_container">
 
         <include layout="@layout/progress_view" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@id/recyclerview"
+            android:id="@+id/rvImages"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/txt_error"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_empty"
+            android:drawablePadding="10.0dip"
             android:gravity="center"
             android:text="@string/no_item_found"
-            android:textColor="@color/white" />
+            />
 
     </ViewAnimator>
 
     <Button
-        android:id="@+id/btn_hide"
+        android:id="@+id/btn_unhide"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        tools:visibility="visible"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_back"
         android:layout_alignParentBottom="true"
-        android:text="@string/hide"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/btn_back"
+        android:text="@string/unhide"
         android:textColor="@color/white"
-        android:visibility="invisible" />
+        android:visibility="gone" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        xmlns:n2="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20.0dip"
+        android:src="@drawable/ic_add_white_24dp"
+        android:layout_alignParentBottom="true"
+        n2:backgroundTint="@color/newColorAccent"
+        n2:fabSize="normal"
+        />
 
 
 </RelativeLayout>
-

@@ -77,7 +77,7 @@ public class AddVideoActivity extends BaseActivity implements OnAllVideosLoadedL
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adds_image);
+        setContentView(R.layout.activity_add_image);
         ButterKnife.bind(this);
 
         findViews();

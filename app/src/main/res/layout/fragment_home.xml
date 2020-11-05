@@ -7,11 +7,11 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_picture"
+        android:id="@+id/cvPhotos"
         style="@style/card_style"
-        app:layout_constraintBottom_toTopOf="@+id/card_video"
+        app:layout_constraintBottom_toTopOf="@+id/cvVideos"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/card_audio"
+        app:layout_constraintRight_toLeftOf="@+id/cvAudios"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout style="@style/ll_home_card_style">
@@ -28,10 +28,10 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_audio"
+        android:id="@+id/cvAudios"
         style="@style/card_style"
-        app:layout_constraintBottom_toTopOf="@+id/card_files"
-        app:layout_constraintLeft_toRightOf="@+id/card_picture"
+        app:layout_constraintBottom_toTopOf="@+id/cvFiles"
+        app:layout_constraintLeft_toRightOf="@+id/cvPhotos"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -49,12 +49,12 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_video"
+        android:id="@+id/cvVideos"
         style="@style/card_style"
-        app:layout_constraintBottom_toTopOf="@+id/card_intruder"
+        app:layout_constraintBottom_toTopOf="@+id/cvIntruder"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/card_files"
-        app:layout_constraintTop_toBottomOf="@+id/card_picture">
+        app:layout_constraintRight_toLeftOf="@+id/cvFiles"
+        app:layout_constraintTop_toBottomOf="@+id/cvPhotos">
 
         <LinearLayout style="@style/ll_home_card_style">
 
@@ -71,12 +71,12 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_files"
+        android:id="@+id/cvFiles"
         style="@style/card_style"
-        app:layout_constraintBottom_toTopOf="@+id/card_browser"
-        app:layout_constraintLeft_toRightOf="@+id/card_video"
+        app:layout_constraintBottom_toTopOf="@+id/cvBrowser"
+        app:layout_constraintLeft_toRightOf="@+id/cvVideos"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_audio">
+        app:layout_constraintTop_toBottomOf="@+id/cvAudios">
 
         <LinearLayout style="@style/ll_home_card_style">
 
@@ -93,12 +93,12 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_intruder"
+        android:id="@+id/cvIntruder"
         style="@style/card_style"
         app:layout_constraintBottom_toTopOf="@+id/home_banner_container"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/card_browser"
-        app:layout_constraintTop_toBottomOf="@+id/card_video">
+        app:layout_constraintRight_toLeftOf="@+id/cvBrowser"
+        app:layout_constraintTop_toBottomOf="@+id/cvVideos">
 
         <LinearLayout style="@style/ll_home_card_style">
 
@@ -115,12 +115,12 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_browser"
+        android:id="@+id/cvBrowser"
         style="@style/card_style"
         app:layout_constraintBottom_toTopOf="@+id/home_banner_container"
-        app:layout_constraintLeft_toRightOf="@+id/card_intruder"
+        app:layout_constraintLeft_toRightOf="@+id/cvIntruder"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_files">
+        app:layout_constraintTop_toBottomOf="@+id/cvFiles">
 
         <LinearLayout style="@style/ll_home_card_style">
 

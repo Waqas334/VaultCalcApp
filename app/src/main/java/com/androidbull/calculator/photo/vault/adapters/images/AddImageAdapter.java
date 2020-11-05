@@ -64,10 +64,10 @@ public class AddImageAdapter extends Adapter<ViewHolder> {
 
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final AllImagesModel bucket = this.buckets.get(position);
+        final AllImagesModel bucket = buckets.get(position);
         if (holder instanceof ImageViewHolder) {
             if (!bucket.getImagePath().isEmpty()) {
-                Glide.with(this.context).load(Uri.fromFile(new File(bucket.getImagePath()))).into(((ImageViewHolder) holder).img);
+                Glide.with(context).load(Uri.fromFile(new File(bucket.getImagePath()))).into(((ImageViewHolder) holder).img);
             }
             ((ImageViewHolder) holder).imgSelection.setVisibility(bucket.isSelected() ? View.VISIBLE : View.INVISIBLE);
             ((ImageViewHolder) holder).mView.setOnClickListener(view -> {
@@ -92,16 +92,8 @@ public class AddImageAdapter extends Adapter<ViewHolder> {
                 selectedFiles.add(bucket.getImagePath());
             }
         }
-        if (selectedFiles.size() != 0) {
-            ((AddImageActivity) this.context).showHideButton(true);
-        } else {
-            ((AddImageActivity) this.context).showHideButton(false);
-        }
-        if (selectedFiles.size() == this.buckets.size()) {
-            ((AddImageActivity) this.context).setSelectAll(true);
-        } else {
-            ((AddImageActivity) this.context).setSelectAll(false);
-        }
+        ((AddImageActivity) context).showHideButton(selectedFiles.size() != 0);
+        ((AddImageActivity) context).setSelectAll(selectedFiles.size() == this.buckets.size());
     }
 
     public List<String> getSelectedImages() {
