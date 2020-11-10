@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Size;
@@ -162,16 +164,18 @@ public class Utils {
                 }
             }
         }
-
     }
 
-    public static void gotoPlayStore(String packageName, Context context) {
-        try {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-        } catch (Exception e) {
-            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager manager =
+                (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        boolean isAvailable = false;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Network is present and connected
+            isAvailable = true;
         }
+        return isAvailable;
     }
-
 
 }

@@ -42,4 +42,8 @@ public class AppConstants {
 
     public static final String INTRUDER= "Intruder";
     public static final String INTRUDER_PATH= (Environment.getExternalStorageDirectory() + File.separator + HIDDEN_FOLDER + File.separator + INTRUDER);
+
+
+    public static final String PREF_SECURITY_QUESTION_INDEX= "security_question_index";
+
 }

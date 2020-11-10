@@ -103,7 +103,7 @@ public class CalculatorActivity extends MyBassActivity implements Calculator {
     private HandlerThread mBackgroundThread;
 
     private AutoFitTextureView textureView;
-    private Semaphore mCameraOpenCloseLock = new Semaphore(1);
+    private final Semaphore mCameraOpenCloseLock = new Semaphore(1);
 
     private static final int MAX_PREVIEW_WIDTH = 1920;
     private static final int MAX_PREVIEW_HEIGHT = 1080;

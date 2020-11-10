@@ -2,8 +2,10 @@ package com.androidbull.calculator.photo.vault.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,8 +26,10 @@ import com.androidbull.calculator.photo.vault.MainApplication;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.androidbull.calculator.photo.vault.utils.AppConstants.PREF_SECURITY_QUESTION_INDEX;
 
-public class SecurityQuestionActivity extends MyBassActivity {
+
+public class SecurityQuestionActivity extends MyBassActivity implements View.OnClickListener {
 
     public static final String ADD = "add";
     public static final String CHANGE = "change";
@@ -44,11 +48,11 @@ public class SecurityQuestionActivity extends MyBassActivity {
 
     private String type;
 
+    private SharedPreferences sharedPreferences;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security_question);
-        ButterKnife.bind(this);
 
         findViews();
         initViews();
@@ -64,7 +68,10 @@ public class SecurityQuestionActivity extends MyBassActivity {
         toolbar = findViewById(R.id.toolbar);
 
     }
+
     private void initViews() {
+        btnSubmit.setOnClickListener(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.change_security_question));
@@ -97,14 +104,27 @@ public class SecurityQuestionActivity extends MyBassActivity {
                     return;
                 }
             }
+        } else if (type != null && type.equals(FORGOT_PASS)) {
+            spinQuestions.setSelection(getSavedSecurityQuestionIndex());
         }
+
+
     }
+
+    private void saveSelectedQuestionIndex(int index) {
+        sharedPreferences.edit().putInt(PREF_SECURITY_QUESTION_INDEX, index).apply();
+    }
+
+    private int getSavedSecurityQuestionIndex() {
+        return sharedPreferences.getInt(PREF_SECURITY_QUESTION_INDEX, 0);
+    }
+
+
     class runnable implements Runnable {
         runnable() {
         }
 
-        public void run()
-        {
+        public void run() {
             spinQuestions.setSelection(position);
         }
     }
@@ -117,24 +137,29 @@ public class SecurityQuestionActivity extends MyBassActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.btn_submit})
-    public void onClick() {
-        if (selectedQuestion == null || selectedQuestion.equals(getString(R.string.select_security_question))) {
-            Toast.makeText(this, getString(R.string.select_security_question), Toast.LENGTH_LONG).show();
-        } else if (etAnswer.getText().toString().isEmpty()) {
-            Toast.makeText(this, getString(R.string.select_security_answer), Toast.LENGTH_LONG).show();
-        } else if (type == null || !type.equals(FORGOT_PASS)) {
-            MainApplication.getInstance().setSecurityQuestion(selectedQuestion);
-            MainApplication.getInstance().setSecurityAnswer(etAnswer.getText().toString());
-            setBackData();
-        } else if (!selectedQuestion.equalsIgnoreCase(MainApplication.getInstance().getSecurityQuestion())) {
-            Toast.makeText(this, getString(R.string.security_question_incorrect), Toast.LENGTH_LONG).show();
-        } else if (etAnswer.getText().toString().equalsIgnoreCase(MainApplication.getInstance().getSecurityAnswer())) {
-            showPassword();
-        } else {
-            Toast.makeText(this, getString(R.string.security_answer_incorrect), Toast.LENGTH_LONG).show();
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == R.id.btn_submit) {
+            if (selectedQuestion == null || selectedQuestion.equals(getString(R.string.select_security_question))) {
+                Toast.makeText(this, getString(R.string.select_security_question), Toast.LENGTH_LONG).show();
+            } else if (etAnswer.getText().toString().isEmpty()) {
+                Toast.makeText(this, getString(R.string.select_security_answer), Toast.LENGTH_LONG).show();
+            } else if (type == null || !type.equals(FORGOT_PASS)) {
+                MainApplication.getInstance().setSecurityQuestion(selectedQuestion);
+                MainApplication.getInstance().setSecurityAnswer(etAnswer.getText().toString());
+                saveSelectedQuestionIndex(spinQuestions.getSelectedItemPosition());
+                setBackData();
+            } else if (!selectedQuestion.equalsIgnoreCase(MainApplication.getInstance().getSecurityQuestion())) {
+                Toast.makeText(this, getString(R.string.security_question_incorrect), Toast.LENGTH_LONG).show();
+            } else if (etAnswer.getText().toString().equalsIgnoreCase(MainApplication.getInstance().getSecurityAnswer())) {
+                showPassword();
+            } else {
+                Toast.makeText(this, getString(R.string.security_answer_incorrect), Toast.LENGTH_LONG).show();
+            }
         }
     }
+
 
     private void showPassword() {
         final Dialog dialog = new Dialog(this);
@@ -145,8 +170,8 @@ public class SecurityQuestionActivity extends MyBassActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             dialog.getWindow().setLayout(-1, -2);
         }
-        ((TextView)dialog.findViewById(R.id.dialog_title)).setText(getString(R.string.done));
-        ((ImageView)dialog.findViewById(R.id.dialog_iv_header)).setImageResource(R.drawable.ic_check_white_new_24dp);
+        ((TextView) dialog.findViewById(R.id.dialog_title)).setText(getString(R.string.done));
+        ((ImageView) dialog.findViewById(R.id.dialog_iv_header)).setImageResource(R.drawable.ic_check_white_new_24dp);
         ((TextView) dialog.findViewById(R.id.dialog_tv_message)).setText(getString(R.string.your_pass_is, MainApplication.getInstance().getPassword()));
         dialog.findViewById(R.id.img_close).setOnClickListener(view -> {
             dialog.dismiss();
@@ -166,7 +191,7 @@ public class SecurityQuestionActivity extends MyBassActivity {
             finish();
         } else if (type != null && type.equals(ADD)) {
             finish();
-            Intent homeIntent = new Intent(this,HomeActivity.class);
+            Intent homeIntent = new Intent(this, HomeActivity.class);
             homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
         }

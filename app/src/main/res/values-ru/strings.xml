@@ -57,7 +57,7 @@
     <string name="select_security_answer">Пожалуйста, введите защитный ответ</string>
     <string name="security_question_incorrect">Контрольный вопрос неверен!</string>
     <string name="security_answer_incorrect">Ответ безопасности неверен!</string>
-    <string name="your_pass_is">Ваш пароль</string>
+    <string name="your_pass_is">Ваш пароль %1$s</string>
     <string name="grant_permission">Предоставить разрешение</string>
     <string name="grant_permission_desc">Пожалуйста, предоставьте все разрешения для доступа к дополнительным функциям.</string>
     <string name="dismiss">Oтклонять</string>
@@ -96,7 +96,7 @@
     <string name="incognito_browser_dialog_title">Увеличить конфиденциальность</string>
     <string name="incognito_browser_download_desc">Просматривайте конфиденциально и блокируйте все, что вы загружаете, с помощью браузера Incognito</string>
     <string name="welcome">Добро пожаловать</string>
-    <string name="welcome_message">Добро пожаловать в Фотохранилище калькулятора, здесь вы можете иметь больше конфиденциальности, чем другие. \ N \ n% 1 $ s</string>
+    <string name="welcome_message">Добро пожаловать в Фотохранилище калькулятора, здесь вы можете иметь больше конфиденциальности, чем другие. \ N \ n %1$s</string>
     <string name="cancel">Отмена</string>
     <string name="photos">Фото</string>
     <string name="audios">Аудиозаписей</string>

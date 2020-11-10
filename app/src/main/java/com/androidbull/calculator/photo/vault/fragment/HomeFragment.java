@@ -82,13 +82,14 @@ public class HomeFragment extends Fragment {
 
     private void initActions() {
 
-        mcvPhotos.setOnClickListener(v -> startActivityForResult(new Intent(requireContext(), ImagesActivity.class), AppConstants.REFRESH_LIST));
-        mcvAudios.setOnClickListener(v -> startActivityForResult(new Intent(requireContext(), AudiosActivity.class), AppConstants.REFRESH_LIST));
-        mcvVideos.setOnClickListener(v -> startActivityForResult(new Intent(requireContext(), VideoActivity.class), AppConstants.REFRESH_LIST));
-        mcvFiles.setOnClickListener(v -> startActivityForResult(new Intent(requireContext(), FilesActivity.class), AppConstants.REFRESH_LIST));
+        mcvPhotos.setOnClickListener(v -> startActivity(new Intent(requireContext(), ImagesActivity.class)));
+        mcvAudios.setOnClickListener(v -> startActivity(new Intent(requireContext(), AudiosActivity.class)));
+        mcvVideos.setOnClickListener(v -> startActivity(new Intent(requireContext(), VideoActivity.class)));
+        mcvFiles.setOnClickListener(v -> startActivity(new Intent(requireContext(), FilesActivity.class)));
         mcvIntruder.setOnClickListener(v -> startActivity(new Intent(requireContext(), IntruderActivity.class)));
         mcvBrowser.setOnClickListener(v -> startActivity(new Intent(requireContext(), BrowserFilesActivity.class)));
     }
+
 
     private void initAds() {
         adView = new AdView(requireContext(), requireContext().getString(R.string.home_banner_ad_id), AdSize.BANNER_HEIGHT_50);
@@ -135,6 +136,22 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @Override
+    public void startActivity(Intent intent) {
+        if (hasPermissions()) {
+            super.startActivity(intent);
+        } else {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private boolean hasPermissions() {
+        if (VERSION.SDK_INT < 23) {
+            return true;
+        }
+        return ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == 0
+                && ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == 0;
+    }
 
     private void showIncognitoBrowserDialog() {
         final Dialog dialog = new Dialog(requireContext());
@@ -157,12 +174,12 @@ public class HomeFragment extends Fragment {
         btnCancel.setOnClickListener(view -> dialog.dismiss());
         btnOk.setOnClickListener(view -> {
             dialog.dismiss();
-            Utils.gotoPlayStore(INCOGNITO_BROWSER_PACKAGE_NAME, getContext());
+            Utils.openAppInPlayStore(getContext(), INCOGNITO_BROWSER_PACKAGE_NAME);
         });
         dialog.show();
     }
 
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+  /*  public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 //        DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getActivity().getSystemService("device_policy");
         if (VERSION.SDK_INT < 23) {
@@ -172,7 +189,7 @@ public class HomeFragment extends Fragment {
                 || ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != 0) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
         }
-    }
+    }*/
 
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -188,7 +205,7 @@ public class HomeFragment extends Fragment {
             alertDialog.setMessage(getString(R.string.grant_permission_desc));
             alertDialog.setButton(-1, getString(R.string.dismiss), (dialogInterface, i) -> {
                 alertDialog.dismiss();
-                HomeFragment.this.requireActivity().finish();
+                requireActivity().finish();
             });
             alertDialog.show();
         }
@@ -202,5 +219,6 @@ public class HomeFragment extends Fragment {
         }
         super.onDestroy();
     }
+
 
 }

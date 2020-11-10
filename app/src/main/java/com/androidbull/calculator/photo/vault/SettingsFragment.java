@@ -126,7 +126,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         builder.setTitle(getResources().getString(R.string.rate_app));
         builder.setMessage(getResources().getString(R.string.rate_app_desc));
-        builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> Utils.gotoPlayStore(getContext().getPackageName(), getContext()));
+        builder.setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> Utils.openAppInPlayStore(getContext(), getContext().getPackageName()));
         builder.setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> letUsKnow());
 
         builder.show();
