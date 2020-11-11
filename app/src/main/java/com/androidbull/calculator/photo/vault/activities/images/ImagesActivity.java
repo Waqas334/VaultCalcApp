@@ -70,7 +70,7 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
     private MenuItem menuItemSelect;
     private int progress;
     private ProgressBar progressbar;
-    @BindView(R.id.rvImages)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     /* renamed from: t */
     private Timer f16t;

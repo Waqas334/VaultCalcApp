@@ -63,7 +63,7 @@ public class AddImageActivity extends BaseActivity implements OnAllImagesLoadedL
     private MenuItem itemSelectAll;
     private int progress;
     private ProgressBar progressbar;
-    @BindView(R.id.rvImages)
+    @BindView(R.id.recyclerview)
     RecyclerView rvImages;
     /* renamed from: t */
     private Timer f17t;
