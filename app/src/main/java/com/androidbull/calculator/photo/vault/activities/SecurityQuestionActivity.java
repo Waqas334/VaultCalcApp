@@ -23,6 +23,8 @@ import com.androidbull.calculator.photo.vault.MyBassActivity;
 import com.androidbull.calculator.photo.R;
 import com.androidbull.calculator.photo.vault.MainApplication;
 
+import org.w3c.dom.Text;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -105,9 +107,14 @@ public class SecurityQuestionActivity extends MyBassActivity implements View.OnC
                 }
             }
         } else if (type != null && type.equals(FORGOT_PASS)) {
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle(R.string.str_please_enter_security_answer);
+            }
+            ((TextView) findViewById(R.id.tv_select_sec_question)).setText(R.string.str_security_question);
+            ((ImageView) findViewById(R.id.spnIcon)).setVisibility(View.GONE);
             spinQuestions.setSelection(getSavedSecurityQuestionIndex());
+            spinQuestions.setEnabled(false);
         }
-
 
     }
 
