@@ -398,7 +398,7 @@ public class VideoActivity extends BaseActivity implements OnVideosLoadedListene
         if (menuItemDelete != null) {
             menuItemDelete.setVisible(needToshow);
         }
-        btnUnhide.setVisibility(needToshow ? View.INVISIBLE : View.GONE);
+        btnUnhide.setVisibility(needToshow ? View.VISIBLE : View.GONE);
     }
 
     public void showSelectAllButton(boolean needToShow) {

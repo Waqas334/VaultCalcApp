@@ -169,17 +169,17 @@ public class ImagesActivity extends BaseActivity implements OnImagesLoadedListen
                     }
 
                     public void run() {
-                        ImagesActivity.this.hideProgressDialog();
-                        ImagesActivity.this.btnUnhide.setVisibility(View.GONE);
-                        if (ImagesActivity.this.menuItemEdit != null) {
-                            ImagesActivity.this.menuItemEdit.setVisible(true);
+                        hideProgressDialog();
+                        btnUnhide.setVisibility(View.GONE);
+                        if (menuItemEdit != null) {
+                            menuItemEdit.setVisible(true);
                         }
-                        if (ImagesActivity.this.menuItemSelect != null) {
-                            ImagesActivity.this.menuItemSelect.setVisible(false);
-                            ImagesActivity.this.menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
+                        if (menuItemSelect != null) {
+                            menuItemSelect.setVisible(false);
+                            menuItemSelect.setIcon(R.drawable.ic_check_box_outline_white_48dp);
                         }
-                        if (ImagesActivity.this.menuItemDelete != null) {
-                            ImagesActivity.this.menuItemDelete.setVisible(false);
+                        if (menuItemDelete != null) {
+                            menuItemDelete.setVisible(false);
                         }
                         ImagesActivity.this.isEditable = false;
                         if (getSupportActionBar() != null) {
